@@ -1,0 +1,22 @@
+name: "Setup maven"
+description: "Configures maven settings"
+
+inputs:
+  mgnl_nexus_user:
+    description: “Username for magnolia nexus”
+    required: true
+  mgnl_nexus_pass:
+    description: “Password for magnolia nexus”
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: s4u/maven-settings-action@v2
+      with:
+        servers: |
+          [{
+            "id": "magnolia.nexus.enterprise",
+            "username": "${{ inputs.mgnl_nexus_user }}",
+            "password": "${{ inputs.mgnl_nexus_pass }}"
+          }]

@@ -1,0 +1,13 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+_.*
+.project
+.idea
+/*.iml
+.vscode
+atlassian-ide-plugin.xml
+
+/target
