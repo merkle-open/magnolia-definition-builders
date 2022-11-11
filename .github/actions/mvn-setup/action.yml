@@ -16,7 +16,7 @@ runs:
       with:
         servers: |
           [{
-            "id": "magnolia.enterprise.group",
+            "id": "magnolia.nexus.enterprise",
             "username": "${{ inputs.mgnl_nexus_user }}",
             "password": "${{ inputs.mgnl_nexus_pass }}"
           }]
