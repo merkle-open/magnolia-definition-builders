@@ -10,3 +10,4 @@ _.*
 .vscode
 atlassian-ide-plugin.xml
 
+/target
