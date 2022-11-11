@@ -75,45 +75,55 @@
 			<artifactId>magnolia-ui-framework</artifactId>
 			<scope>compile</scope>
 		</dependency>
+<!--
 		<dependency>
 			<groupId>info.magnolia.ui</groupId>
 			<artifactId>magnolia-ui-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
+-->
 		<dependency>
 			<groupId>info.magnolia.ui</groupId>
 			<artifactId>magnolia-ui-framework-compatibility</artifactId>
 			<scope>compile</scope>
 		</dependency>
+<!--
 		<dependency>
 			<groupId>info.magnolia.workflow</groupId>
 			<artifactId>magnolia-workflow-compatibility</artifactId>
 			<version>${magnolia.workflow.version}</version>
 			<scope>compile</scope>
 		</dependency>
+-->
 
 		<!-- Magnolia provided -->
+<!--
 		<dependency>
 			<groupId>info.magnolia.blossom</groupId>
 			<artifactId>magnolia-module-blossom</artifactId>
 			<version>${magnolia.blossom.version}</version>
 			<scope>provided</scope>
 		</dependency>
+-->
 
 		<!-- Vaadin Compatibility -->
+<!--
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-compatibility-server</artifactId>
 			<scope>compile</scope>
 		</dependency>
 
+-->
 		<!-- Namics -->
+<!--
 		<dependency>
 			<groupId>com.namics.oss.magnolia</groupId>
 			<artifactId>magnolia-powernode</artifactId>
 			<version>${namics.powernode.version}</version>
 		</dependency>
 
+-->
 		<!-- Java Poet used to generate extended definitions for the app builder -->
 		<dependency>
 			<groupId>com.squareup</groupId>
