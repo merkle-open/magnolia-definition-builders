@@ -21,8 +21,8 @@ public class ComboBoxFieldDefinitionBuilderTest extends AbstractComboBoxFieldDef
 	public void testComboBoxFieldDefinitionBuilder() {
 		DatasourceDefinition dataSourceDefinition = new BaseDatasourceDefinition();
 		ComboBoxFieldDefinition fieldDefinition = builder.build(FIELDNAME, dataSourceDefinition);
-		super.testAbstractComboBoxFieldDefinitionBuilder(fieldDefinition);
 
+		super.testAbstractComboBoxFieldDefinitionBuilder(fieldDefinition);
 		Assertions.assertEquals(FIELDNAME, fieldDefinition.getName());
 		Assertions.assertEquals(dataSourceDefinition, fieldDefinition.getDatasource());
 	}
