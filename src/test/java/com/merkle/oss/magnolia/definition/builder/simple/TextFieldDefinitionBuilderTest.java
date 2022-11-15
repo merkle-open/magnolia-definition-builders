@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TextFieldDefinitionBuilderTest extends AbstractConfiguredFieldDefinitionBuilderTest {
+	private static final int MAX_LENGTH = 100;
+	private static final String FIELDNAME = "textfield";
+	private static final String PLACEHOLDER = "placeholder";
+	private static final int ROWS = 42;
 
 	private TextFieldDefinitionBuilder builder;
 	private TextFieldDefinition fieldDefinition;
@@ -16,32 +20,32 @@ public class TextFieldDefinitionBuilderTest extends AbstractConfiguredFieldDefin
 		builder = new TextFieldDefinitionBuilder();
 		builder = (TextFieldDefinitionBuilder) super.setup(builder);
 		builder = builder
-				.maxLength(100)
-				.rows(2)
-				.placeholder("placeholder");
+				.maxLength(MAX_LENGTH)
+				.rows(ROWS)
+				.placeholder(PLACEHOLDER);
 	}
 
 	@Test
 	public void testTextFieldDefinition() {
-		fieldDefinition = builder.build("textfield");
+		fieldDefinition = builder.build(FIELDNAME);
 		super.testAbstractConfiguredFieldDefinitionBuilder(fieldDefinition);
-		assertEquals(100, fieldDefinition.getMaxLength());
-		assertEquals(2, fieldDefinition.getRows());
-		assertEquals("placeholder", fieldDefinition.getPlaceholder());
-		assertEquals("textfield", fieldDefinition.getName());
+		assertEquals(MAX_LENGTH, fieldDefinition.getMaxLength());
+		assertEquals(ROWS, fieldDefinition.getRows());
+		assertEquals(PLACEHOLDER, fieldDefinition.getPlaceholder());
+		assertEquals(FIELDNAME, fieldDefinition.getName());
 	}
 
 	@Test
 	public void testTextFieldDefinitionBooleanValuesTrue() {
 		builder = (TextFieldDefinitionBuilder) super.setupBooleanValues(builder, true, true, true);
-		fieldDefinition = builder.build("textfield");
+		fieldDefinition = builder.build(FIELDNAME);
 		super.testBooleanValues(fieldDefinition, true, true, true);
 	}
 
 	@Test
 	public void testTextFieldDefinitionBooleanValuesFalse() {
 		builder = (TextFieldDefinitionBuilder) super.setupBooleanValues(builder, false, false, false);
-		fieldDefinition = builder.build("textfield");
+		fieldDefinition = builder.build(FIELDNAME);
 		super.testBooleanValues(fieldDefinition, false, false, false);
 	}
 }

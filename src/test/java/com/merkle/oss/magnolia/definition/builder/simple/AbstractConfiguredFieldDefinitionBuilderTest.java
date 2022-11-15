@@ -39,7 +39,6 @@ public abstract class AbstractConfiguredFieldDefinitionBuilderTest {
 	protected void testAbstractConfiguredFieldDefinitionBuilder(ConfiguredFieldDefinition fieldDefinition) {
 		assertTrue(fieldDefinition.isI18n());
 		assertEquals("default", fieldDefinition.getDefaultValue());
-		assertEquals("textfield", fieldDefinition.getName());
 		assertTrue(fieldDefinition.isReadOnly());
 		assertEquals("label", fieldDefinition.getLabel());
 		assertEquals("description", fieldDefinition.getDescription());
