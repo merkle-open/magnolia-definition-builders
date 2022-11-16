@@ -3,7 +3,7 @@ package com.merkle.oss.magnolia.definition.builder.simple;
 import info.magnolia.ui.datasource.DatasourceDefinition;
 import info.magnolia.ui.field.LinkFieldDefinition;
 
-public class LinkFieldDefinitionBuilder<T> extends AbstractComboBoxFieldDefinitionBuilder<T, LinkFieldDefinition<T>, LinkFieldDefinitionBuilder<T>> {
+public class LinkFieldDefinitionBuilder<T> extends AbstractLinkFieldDefinitionBuilder<T, LinkFieldDefinition<T>, LinkFieldDefinitionBuilder<T>> {
 
 	public LinkFieldDefinitionBuilder() {
 		super(LinkFieldDefinition::new);
