@@ -1,6 +1,7 @@
 package com.merkle.oss.magnolia.definition.builder.complex;
 
 import info.magnolia.ui.editor.ItemProviderDefinition;
+import info.magnolia.ui.field.ConfiguredComplexPropertyDefinition;
 import info.magnolia.ui.field.StaticFieldViewDefinition;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +28,7 @@ public class AbstractConfiguredComplexPropertyDefinitionBuilderTest {
 		return builder.i18n(i18n);
 	}
 
-	protected void testAbstractConfiguredComplexPropertyDefinitionBuilder(StaticFieldViewDefinition fieldViewDefinition) {
+	protected void testAbstractConfiguredComplexPropertyDefinitionBuilder(ConfiguredComplexPropertyDefinition fieldViewDefinition) {
 		assertEquals(LABEL, fieldViewDefinition.getLabel());
 		assertEquals(DESCRIPTION, fieldViewDefinition.getDescription());
 		assertEquals(STYLE_NAME, fieldViewDefinition.getStyleName());
