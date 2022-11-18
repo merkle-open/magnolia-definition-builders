@@ -5,6 +5,11 @@ import info.magnolia.ui.field.JcrMultiFieldDefinition;
 
 import javax.jcr.Node;
 
+/**
+ * builds a {@link JcrMultiFieldDefinition}
+ * @see <a href="https://docs.magnolia-cms.com/product-docs/6.2/Developing/Templating/Dialog-definition/Field-definition/List-of-fields/Multi-field.html">magnolia Docs - Multi field </a>
+ * @author Merkle DACH
+ */
 public class JcrMultiFieldDefinitionBuilder extends AbstractMultiFieldDefinitionBuilder<Node, JcrMultiFieldDefinition, JcrMultiFieldDefinitionBuilder> {
 
 	public JcrMultiFieldDefinitionBuilder() {

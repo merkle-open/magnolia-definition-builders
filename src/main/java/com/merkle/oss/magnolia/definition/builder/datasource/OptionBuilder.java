@@ -5,6 +5,11 @@ import info.magnolia.ui.datasource.optionlist.Option;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
+/**
+ * builds a {@link Option}
+ * @see <a href="https://nexus.magnolia-cms.com/service/local/repositories/magnolia.public.releases/archive/info/magnolia/ui/magnolia-ui-framework/6.2.26/magnolia-ui-framework-6.2.26-javadoc.jar/!/info/magnolia/ui/datasource/optionlist/Option.html">magnolia Docs - Option</a>
+ * @author Merkle DACH
+ */
 public class OptionBuilder {
 	@Nullable
 	private String label;

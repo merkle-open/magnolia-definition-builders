@@ -10,6 +10,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * builds a {@link OptionListDefinition} - Option list data source
+ * @see <a href="https://docs.magnolia-cms.com/product-docs/6.2/Apps/App-configuration/Data-source-definition/Option-list-data-source.html">magnolia Docs - Option list data source </a>
+ * @author Merkle DACH
+ */
 public class OptionListDefinitionBuilder extends AbstractBaseDatasourceDefinitionBuilder<OptionListDefinition, OptionListDefinitionBuilder>{
 	@Nullable
 	private List<Option> options;

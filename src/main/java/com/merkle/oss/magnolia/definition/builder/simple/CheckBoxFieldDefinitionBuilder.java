@@ -5,6 +5,11 @@ import info.magnolia.ui.field.CheckBoxFieldDefinition;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
+/**
+ * builds a {@link CheckBoxFieldDefinition}
+ * @see <a href="https://docs.magnolia-cms.com/product-docs/6.2/Developing/Templating/Dialog-definition/Field-definition/List-of-fields/Checkbox-field.html">magnolia Docs - Checkbox field </a>
+ * @author Merkle DACH
+ */
 public class CheckBoxFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitionBuilder<Boolean, CheckBoxFieldDefinition, CheckBoxFieldDefinitionBuilder> {
 	@Nullable
 	private String buttonLabel;

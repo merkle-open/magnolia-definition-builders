@@ -12,6 +12,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * builds a {@link JcrDatasourceDefinition}
+ * @see <a href="https://docs.magnolia-cms.com/product-docs/6.2/Apps/App-configuration/Data-source-definition/JCR-data-source.html">magnolia Docs - JCR data source </a>
+ * @author Merkle DACH
+ */
 public class JcrDatasourceDefinitionBuilder extends AbstractBaseDatasourceDefinitionBuilder<JcrDatasourceDefinition, JcrDatasourceDefinitionBuilder>{
 	@Nullable
 	private String rootPath;

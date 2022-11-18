@@ -10,6 +10,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * builds a {@link RichTextFieldDefinition}
+ * @see <a href="https://docs.magnolia-cms.com/product-docs/6.2/Developing/Templating/Dialog-definition/Field-definition/List-of-fields/Rich-text-field.html">magnolia Docs - Rich text field </a>
+ * @author Merkle DACH
+ */
 public class RichTextFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitionBuilder<String, RichTextFieldDefinition, RichTextFieldDefinitionBuilder> {
 	@Nullable
 	private Boolean alignment;

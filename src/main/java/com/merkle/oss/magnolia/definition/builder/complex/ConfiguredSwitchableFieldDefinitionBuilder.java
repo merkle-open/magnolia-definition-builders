@@ -14,6 +14,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * builds a {@link ConfiguredSwitchableFieldDefinition}
+ * @see <a href="https://docs.magnolia-cms.com/product-docs/6.2/Developing/Templating/Dialog-definition/Field-definition/List-of-fields/Switchable-field.html">magnolia Docs - Switchable field </a>
+ * @author Merkle DACH
+ */
 public class ConfiguredSwitchableFieldDefinitionBuilder<T> extends AbstractConfiguredComplexPropertyDefinitionBuilder<T, ConfiguredSwitchableFieldDefinition<T>, ConfiguredSwitchableFieldDefinitionBuilder<T>> {
 	@Nullable
 	private List<FormDefinition<T>> forms;

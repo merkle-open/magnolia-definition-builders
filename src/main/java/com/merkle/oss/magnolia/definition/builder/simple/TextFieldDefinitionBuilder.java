@@ -5,6 +5,11 @@ import info.magnolia.ui.field.TextFieldDefinition;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
+/**
+ * builds a {@link TextFieldDefinition}
+ * @see <a href="https://docs.magnolia-cms.com/product-docs/6.2/Developing/Templating/Dialog-definition/Field-definition/List-of-fields/Text-field.html">magnolia Docs - Text field </a>
+ * @author Merkle DACH
+ */
 public class TextFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitionBuilder<String, TextFieldDefinition, TextFieldDefinitionBuilder> {
 	@Nullable
 	private Integer rows;

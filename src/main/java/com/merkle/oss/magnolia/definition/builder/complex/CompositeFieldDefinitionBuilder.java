@@ -12,6 +12,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * builds a {@link CompositeFieldDefinition}
+ * @see <a href="https://docs.magnolia-cms.com/product-docs/6.2/Developing/Templating/Dialog-definition/Field-definition/List-of-fields/Composite-field.html">magnolia Docs - Composite field </a>
+ * @author Merkle DACH
+ */
 public class CompositeFieldDefinitionBuilder<T> extends AbstractConfiguredComplexPropertyDefinitionBuilder<T, CompositeFieldDefinition<T>, CompositeFieldDefinitionBuilder<T>> {
 	@Nullable
 	private List<EditorPropertyDefinition> properties;
