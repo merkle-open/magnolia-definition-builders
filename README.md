@@ -5,9 +5,7 @@ field definitions in Java,  which is less error-prone than using YAML, especiall
 
 ## Requirements
 * Java 11
-* Spring >=5
 * Magnolia >= 6.0
-* Blossom >= 3.2
 
 ## Installation
 
