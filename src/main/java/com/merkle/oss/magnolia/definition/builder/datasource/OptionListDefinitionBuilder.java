@@ -17,6 +17,8 @@ import java.util.stream.Stream;
  */
 public class OptionListDefinitionBuilder extends AbstractBaseDatasourceDefinitionBuilder<OptionListDefinition, OptionListDefinitionBuilder>{
 	@Nullable
+	private String name;
+	@Nullable
 	private List<Option> options;
 	@Nullable
 	private Boolean sort;
@@ -24,6 +26,12 @@ public class OptionListDefinitionBuilder extends AbstractBaseDatasourceDefinitio
 	public OptionListDefinitionBuilder() {
 		super(OptionListDefinition::new);
 	}
+
+	public OptionListDefinitionBuilder name(final String name) {
+		this.name = name;
+		return self();
+	}
+
 
 	public OptionListDefinitionBuilder sort(final boolean sort) {
 		this.sort = sort;
@@ -46,6 +54,7 @@ public class OptionListDefinitionBuilder extends AbstractBaseDatasourceDefinitio
 	@Override
 	public OptionListDefinition build() {
 		final OptionListDefinition definition = super.build();
+		Optional.ofNullable(name).ifPresent(definition::setName);
 		Optional.ofNullable(sort).ifPresent(definition::setSort);
 		Stream.ofNullable(options).flatMap(Collection::stream).forEach(definition.getOptions()::add);
 		return definition;
