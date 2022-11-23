@@ -1,84 +1,56 @@
 package com.merkle.oss.magnolia.definition.builder.simple;
 
+import com.merkle.oss.magnolia.definition.builder.AbstractFieldDefinitionBuilderTestCase;
+import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.ui.datasource.BaseDatasourceDefinition;
+import info.magnolia.ui.datasource.DatasourceDefinition;
+import info.magnolia.ui.field.ComboBoxFieldDefinition;
 import info.magnolia.ui.field.LinkFieldDefinition;
 import info.magnolia.ui.field.RichTextFieldDefinition;
+import info.magnolia.ui.field.SafeHtmlValidatorDefinition;
+import info.magnolia.ui.field.factory.ComboBoxFieldFactory;
+import info.magnolia.ui.field.factory.RichTextFieldFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class RichTextFieldDefinitionBuilderTest extends AbstractConfiguredFieldDefinitionBuilderTest {
+class RichTextFieldDefinitionBuilderTest extends AbstractFieldDefinitionBuilderTestCase {
 
-	private static final String FONTS = "Arial/Arial,sans-serif;Times New Roman/Times New Roman,serif";
-	private static final String FONTSIZES = "16/16px;24/24px;48/48px";
-	private static final String COLORS = "00923E,F8C100,28166F";
-	private static final String CONFIG_JS = "config-magnolia.js";
-	private static final long HEIGHT = 1234L;
-	private static final String FIELDNAME = "richtextfield";
-	private RichTextFieldDefinitionBuilder builder;
-	private Map<String, LinkFieldDefinition<?>> linkFieldDefinitions;
-	private LinkFieldDefinition<String> linkFieldDefinition1, linkFieldDefinition2;
-
-	@BeforeEach
-	public void setup() {
-		linkFieldDefinition1 = new LinkFieldDefinition<>();
-		linkFieldDefinition2 = new LinkFieldDefinition<>();
-		linkFieldDefinitions = new HashMap<>();
-		linkFieldDefinitions.put("1", linkFieldDefinition1);
-		linkFieldDefinitions.put("2", linkFieldDefinition2);
-		builder = new RichTextFieldDefinitionBuilder();
-		builder = (RichTextFieldDefinitionBuilder) super.setup(builder);
-		builder = builder
+	@Test
+	void testBuilder() {
+		final RichTextFieldDefinition definition = super.assertField(new RichTextFieldDefinitionBuilder(), (name, builder) -> builder.build(name))
 				.alignment(true)
 				.images(true)
-				.lists(true)
+				.lists(false)
 				.source(true)
 				.tables(true)
-				.height(HEIGHT)
-				.colors(COLORS)
-				.fonts(FONTS)
-				.fontSizes(FONTSIZES)
-				.configJsFile(CONFIG_JS);
-	}
+				.height(42)
+				.colors("someColors")
+				.fonts("someFonts")
+				.fontSizes("someFontSizes")
+				.configJsFile("someConfigJsFile")
+				.build("richText");
 
-	@Test
-	public void testRichTextFieldDefinition() {
-		RichTextFieldDefinition fieldDefinition = builder.build(FIELDNAME);
-		super.testAbstractConfiguredFieldDefinitionBuilder(fieldDefinition);
-		assertEquals(FIELDNAME, fieldDefinition.getName());
-		assertTrue(fieldDefinition.isAlignment());
-		assertTrue(fieldDefinition.isImages());
-		assertTrue(fieldDefinition.isLists());
-		assertTrue(fieldDefinition.isSource());
-		assertTrue(fieldDefinition.isTables());
-		assertEquals(HEIGHT, fieldDefinition.getHeight());
-		assertEquals(FONTS, fieldDefinition.getFonts());
-		assertEquals(FONTSIZES, fieldDefinition.getFontSizes());
-		assertEquals(COLORS, fieldDefinition.getColors());
-		assertEquals(CONFIG_JS, fieldDefinition.getConfigJsFile());
-	}
+		assertTrue(definition.isAlignment());
+		assertTrue(definition.isImages());
+		assertFalse(definition.isLists());
+		assertTrue(definition.isSource());
+		assertTrue(definition.isTables());
+		assertEquals(42, definition.getHeight());
+		assertEquals("someColors", definition.getColors());
+		assertEquals("someFonts", definition.getFonts());
+		assertEquals("someFontSizes", definition.getFontSizes());
+		assertEquals("someConfigJsFile", definition.getConfigJsFile());
 
-	@Test
-	public void testLinkFieldDefinitions1 (){
-		RichTextFieldDefinition fieldDefinition = builder
-				.linkFieldDefinition("1", linkFieldDefinition1)
-				.linkFieldDefinition("2", linkFieldDefinition2)
-				.build(FIELDNAME);
-		assertEquals(linkFieldDefinition1, fieldDefinition.getLinkFieldDefinitions().get("1"));
-		assertEquals(linkFieldDefinition2, fieldDefinition.getLinkFieldDefinitions().get("2"));
+		final RichTextFieldDefinition emptyDefinition = new RichTextFieldDefinitionBuilder().build("richText");
+		assertEquals(String.class, emptyDefinition.getType());
+		assertEquals(RichTextFieldFactory.class, emptyDefinition.getFactoryClass());
+		assertEquals(0, emptyDefinition.getValidators().size());
+		assertEquals(1, emptyDefinition.getLinkFieldDefinitions().size());
+		assertNotNull(emptyDefinition.getLinkFieldDefinitions().get(RepositoryConstants.WEBSITE));
 	}
-
-	@Test
-	public void testLinkFieldDefinitions2 (){
-		RichTextFieldDefinition fieldDefinition = builder
-				.linkFieldDefinitions(linkFieldDefinitions)
-				.build(FIELDNAME);
-		assertEquals(linkFieldDefinition1, fieldDefinition.getLinkFieldDefinitions().get("1"));
-		assertEquals(linkFieldDefinition2, fieldDefinition.getLinkFieldDefinitions().get("2"));
-	}
-
 }

@@ -1,66 +1,39 @@
 package com.merkle.oss.magnolia.definition.builder.complex;
 
-import info.magnolia.ui.field.*;
+import com.merkle.oss.magnolia.definition.builder.AbstractFieldDefinitionBuilderTestCase;
+import info.magnolia.ui.editor.FormView;
+import info.magnolia.ui.field.CompositeFieldDefinition;
+import info.magnolia.ui.field.EditorPropertyDefinition;
+import info.magnolia.ui.field.NoopNameDecorator;
 import info.magnolia.ui.framework.layout.FieldLayoutDefinition;
-import info.magnolia.ui.framework.layout.TabbedLayoutDefinition;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 
 
-public class CompositeFieldDefinitionBuilderTest extends AbstractConfiguredComplexPropertyDefinitionBuilderTest {
-	private static final String FIELDNAME = "fieldname";
-	private CompositeFieldDefinitionBuilder<String> builder;
-	private CompositeFieldDefinition<String> fieldDefinition;
-	private FieldLayoutDefinition layout;
-	private TextFieldDefinition textFieldDefinition;
-	private CodeFieldDefinition codeFieldDefinition;
-
-	@BeforeEach
-	public void setup() {
-		layout = new TabbedLayoutDefinition();
-		textFieldDefinition = new TextFieldDefinition();
-		codeFieldDefinition = new CodeFieldDefinition();
-		builder = new CompositeFieldDefinitionBuilder<>();
-		builder = (CompositeFieldDefinitionBuilder) super.setup(builder);
-		builder = builder
-				.propertyNameDecorator(PrefixNameDecorator.class)
-				.layout(layout);
-	}
+class CompositeFieldDefinitionBuilderTest extends AbstractFieldDefinitionBuilderTestCase {
 
 	@Test
-	public void testFieldDefinitionBuilder() {
-		fieldDefinition = builder.build(FIELDNAME);
-		super.testAbstractConfiguredComplexPropertyDefinitionBuilder(fieldDefinition);
-		assertEquals(FIELDNAME, fieldDefinition.getName());
-		assertEquals(PrefixNameDecorator.class, fieldDefinition.getPropertyNameDecorator());
-		assertEquals(layout, fieldDefinition.getLayout());
-	}
+	<T> void testBuilder() {
+		final FieldLayoutDefinition<?> layout = mock(FieldLayoutDefinition.class);
+		final EditorPropertyDefinition property1 = mock(EditorPropertyDefinition.class);
+		final EditorPropertyDefinition property2 = mock(EditorPropertyDefinition.class);
 
-	@Test
-	public void testFieldDefinitionBuilderProperty() {
-		builder = builder.property(textFieldDefinition);
-		fieldDefinition = builder.build(FIELDNAME);
-		assertFalse(fieldDefinition.getProperties().isEmpty());
-		assertEquals(textFieldDefinition, fieldDefinition.getProperties().get(0));
-		builder = builder.property(codeFieldDefinition);
-		fieldDefinition = builder.build(FIELDNAME);
-		assertEquals(2, fieldDefinition.getProperties().size());
-		assertTrue(fieldDefinition.getProperties().contains(textFieldDefinition));
-		assertTrue(fieldDefinition.getProperties().contains(codeFieldDefinition));
-	}
+		final CompositeFieldDefinition<T> definition = super.assertComplexField(new CompositeFieldDefinitionBuilder<T>(), (name, builder) -> builder.build(name))
+				.layout(layout)
+				.propertyNameDecorator(NoopNameDecorator.class)
+				.property(property1)
+				.property(property2)
+				.build("composite");
 
-	@Test
-	public void testFieldDefinitionBuilderProperties() {
-		List<EditorPropertyDefinition> properties = List.of(textFieldDefinition, codeFieldDefinition);
-		builder = builder.properties(properties);
-		fieldDefinition = builder.build(FIELDNAME);
-		assertEquals(2, fieldDefinition.getProperties().size());
-		assertTrue(fieldDefinition.getProperties().contains(textFieldDefinition));
-		assertTrue(fieldDefinition.getProperties().contains(codeFieldDefinition));
-	}
+		assertEquals(layout, definition.getLayout());
+		assertEquals(NoopNameDecorator.class, definition.getPropertyNameDecorator());
+		assertEquals(Arrays.asList(property1, property2), definition.getProperties());
 
+		final CompositeFieldDefinition<T> emptyDefinition = new CompositeFieldDefinitionBuilder<T>().build("composite");
+		assertEquals(FormView.class, emptyDefinition.getImplementationClass());
+	}
 }

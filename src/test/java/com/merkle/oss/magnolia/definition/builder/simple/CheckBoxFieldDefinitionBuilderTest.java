@@ -1,32 +1,24 @@
 package com.merkle.oss.magnolia.definition.builder.simple;
 
+import com.merkle.oss.magnolia.definition.builder.AbstractFieldDefinitionBuilderTestCase;
 import info.magnolia.ui.field.CheckBoxFieldDefinition;
+import info.magnolia.ui.field.factory.CheckBoxFieldFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CheckBoxFieldDefinitionBuilderTest extends AbstractConfiguredFieldDefinitionBuilderTest {
-	private static final String FIELDNAME = "checkbox";
-	private static final String LABEL = "Button Label";
-
-	private CheckBoxFieldDefinitionBuilder builder;
-
-	@BeforeEach
-	public void setup() {
-		builder = new CheckBoxFieldDefinitionBuilder();
-		builder = (CheckBoxFieldDefinitionBuilder) super.setup(builder);
-		builder = builder
-				.buttonLabel(LABEL);
-	}
+class CheckBoxFieldDefinitionBuilderTest extends AbstractFieldDefinitionBuilderTestCase {
 
 	@Test
-	public void testTextFieldDefinition() {
-		CheckBoxFieldDefinition fieldDefinition = builder.build(FIELDNAME);
-		super.testAbstractConfiguredFieldDefinitionBuilder(fieldDefinition);
-		assertEquals(LABEL, fieldDefinition.getButtonLabel());
-		assertEquals(FIELDNAME, fieldDefinition.getName());
+	void testBuilder() {
+		final CheckBoxFieldDefinition definition = super.assertField(new CheckBoxFieldDefinitionBuilder(), (name, builder) -> builder.build(name), false)
+				.buttonLabel("someLabel")
+				.build("checkbox");
+		assertEquals("someLabel", definition.getButtonLabel());
+
+		final CheckBoxFieldDefinition emptyDefinition = new CheckBoxFieldDefinitionBuilder().build("checkbox");
+		assertEquals(Boolean.class, emptyDefinition.getType());
+		assertEquals(CheckBoxFieldFactory.class, emptyDefinition.getFactoryClass());
 	}
-
-
 }

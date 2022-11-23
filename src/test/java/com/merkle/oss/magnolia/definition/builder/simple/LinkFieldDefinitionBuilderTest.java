@@ -1,46 +1,34 @@
 package com.merkle.oss.magnolia.definition.builder.simple;
 
+import com.merkle.oss.magnolia.definition.builder.AbstractFieldDefinitionBuilderTestCase;
+import com.vaadin.ui.ComboBox;
+import info.magnolia.ui.contentapp.FilteringMode;
 import info.magnolia.ui.datasource.BaseDatasourceDefinition;
 import info.magnolia.ui.datasource.DatasourceDefinition;
+import info.magnolia.ui.field.ComboBoxFieldDefinition;
+import info.magnolia.ui.field.LinkFieldBinder;
 import info.magnolia.ui.field.LinkFieldDefinition;
+import info.magnolia.ui.field.factory.ComboBoxFieldFactory;
+import info.magnolia.ui.field.factory.LinkFieldFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class LinkFieldDefinitionBuilderTest extends AbstractLinkFieldDefinitionBuilderTest {
-	private static final String FIELDNAME = "LinkField";
-	private LinkFieldDefinitionBuilder builder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-	@BeforeEach
-	public void setup() {
-		builder = new LinkFieldDefinitionBuilder<>();
-		builder = (LinkFieldDefinitionBuilder)super.setup(builder);
-	}
+class LinkFieldDefinitionBuilderTest extends AbstractFieldDefinitionBuilderTestCase {
 
 	@Test
-	public void testLinkFieldDefinitionBuilder() {
-		DatasourceDefinition dataSourceDefinition = new BaseDatasourceDefinition();
-		LinkFieldDefinition fieldDefinition = builder.build(FIELDNAME, dataSourceDefinition);
+	<T> void testBuilder() {
+		final DatasourceDefinition dataSourceDefinition = new BaseDatasourceDefinition();
+		super.assertLinkField(new LinkFieldDefinitionBuilder<T>(), (name, builder) -> builder.build(name, dataSourceDefinition));
 
-		super.testAbstractLinkFieldDefinitionBuilder(fieldDefinition);
-		super.testBooleanValues(fieldDefinition, true, true);
-	}
-
-	@Test
-	public void testLinkFieldDefinitionBuilderBooleanTrue() {
-		DatasourceDefinition dataSourceDefinition = new BaseDatasourceDefinition();
-		super.setupBooleanValues(builder, true, true);
-		LinkFieldDefinition fieldDefinition = builder.build(FIELDNAME, dataSourceDefinition);
-
-		super.testAbstractLinkFieldDefinitionBuilder(fieldDefinition);
-		super.testBooleanValues(fieldDefinition, true, true);
-	}
-	@Test
-	public void testLinkFieldDefinitionBuilderBooleanFalse() {
-		DatasourceDefinition dataSourceDefinition = new BaseDatasourceDefinition();
-		super.setupBooleanValues(builder, false, false);
-		LinkFieldDefinition fieldDefinition = builder.build(FIELDNAME, dataSourceDefinition);
-
-		super.testAbstractLinkFieldDefinitionBuilder(fieldDefinition);
-		super.testBooleanValues(fieldDefinition, false, false);
+		final LinkFieldDefinition<T> emptyDefinition = new LinkFieldDefinitionBuilder<T>().build("comboBox", dataSourceDefinition);
+		assertEquals("ui-framework-jcr:chooser", emptyDefinition.getChooserId());
+		assertTrue(emptyDefinition.isEditable());
+		assertEquals(LinkFieldFactory.class, emptyDefinition.getFactoryClass());
+		assertEquals(LinkFieldBinder.class, emptyDefinition.getFieldBinderClass());
+		assertEquals(FilteringMode.CONTAINS, emptyDefinition.getFilteringMode());
+		assertEquals(dataSourceDefinition, emptyDefinition.getDatasource());
 	}
 }

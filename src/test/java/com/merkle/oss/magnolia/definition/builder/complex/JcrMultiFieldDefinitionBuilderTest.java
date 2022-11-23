@@ -1,47 +1,28 @@
 package com.merkle.oss.magnolia.definition.builder.complex;
 
+import com.merkle.oss.magnolia.definition.builder.AbstractFieldDefinitionBuilderTestCase;
+import info.magnolia.ui.editor.DefaultJcrNodeOrderHandler;
+import info.magnolia.ui.editor.JcrChildNodeProviderDefinition;
+import info.magnolia.ui.editor.MultiFieldEntryResolution;
+import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.JcrMultiFieldDefinition;
-import info.magnolia.ui.field.TextFieldDefinition;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
-public class JcrMultiFieldDefinitionBuilderTest extends AbstractMultiFieldDefinitionBuilderTest {
-
-	private static final String FIELDNAME = "fieldname";
-
-	private JcrMultiFieldDefinitionBuilder builder;
-	private JcrMultiFieldDefinition fieldDefinition;
-	private TextFieldDefinition textFieldDefinition;
-
-
-	@BeforeEach
-	public void setup() {
-		builder = new JcrMultiFieldDefinitionBuilder();
-		textFieldDefinition = new TextFieldDefinition();
-		builder = (JcrMultiFieldDefinitionBuilder) super.setup(builder);
-	}
+class JcrMultiFieldDefinitionBuilderTest extends AbstractFieldDefinitionBuilderTestCase {
 
 	@Test
-	public void testFieldDefinitionBuilder() {
-		fieldDefinition = builder.build(FIELDNAME, textFieldDefinition);
-		super.testAbstractMultiFieldDefinitionBuilder(fieldDefinition);
-		assertEquals(FIELDNAME, fieldDefinition.getName());
-	}
+	void testBuilder() {
+		final EditorPropertyDefinition field = mock(EditorPropertyDefinition.class);
+		super.assertMultiField(new JcrMultiFieldDefinitionBuilder(), (name, builder) -> builder.build(name, field));
 
-	@Test
-	public void testBooleanTrue() {
-		fieldDefinition = ((JcrMultiFieldDefinitionBuilder)super.setupBoolean(builder, true, true))
-				.build(FIELDNAME, textFieldDefinition);
-		super.testBoolean(fieldDefinition, true, true);
+		final JcrMultiFieldDefinition emptyDefinition = new JcrMultiFieldDefinitionBuilder().build("multi", field);
+		assertEquals(MultiFieldEntryResolution.Definition.class, emptyDefinition.getEntryResolution().getClass());
+		assertEquals(DefaultJcrNodeOrderHandler.Definition.class, emptyDefinition.getOrderHandler().getClass());
+		assertEquals(JcrChildNodeProviderDefinition.class, emptyDefinition.getItemProvider().getClass());
+		assertTrue(emptyDefinition.isCanRemoveItems());
 	}
-
-	@Test
-	public void testBooleanFalse() {
-		fieldDefinition = ((JcrMultiFieldDefinitionBuilder)super.setupBoolean(builder, false, false))
-				.build(FIELDNAME, textFieldDefinition);
-		super.testBoolean(fieldDefinition, false, false);
-	}
-
 }

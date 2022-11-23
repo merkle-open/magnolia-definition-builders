@@ -1,28 +1,25 @@
 package com.merkle.oss.magnolia.definition.builder.simple;
 
+import com.merkle.oss.magnolia.definition.builder.AbstractFieldDefinitionBuilderTestCase;
 import info.magnolia.ui.datasource.BaseDatasourceDefinition;
 import info.magnolia.ui.datasource.DatasourceDefinition;
 import info.magnolia.ui.field.RadioButtonGroupFieldDefinition;
+import info.magnolia.ui.field.factory.RadioButtonGroupFieldFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class RadioButtonGroupFieldDefinitionBuilderTest extends AbstractOptionGroupFieldDefinitionBuilderTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-	private static final String FIELDNAME = "ComboBoxField";
-	private RadioButtonGroupFieldDefinitionBuilder builder;
-
-	@BeforeEach
-	public void setup() {
-		builder = new RadioButtonGroupFieldDefinitionBuilder<>();
-		builder = (RadioButtonGroupFieldDefinitionBuilder)super.setup(builder);
-	}
+class RadioButtonGroupFieldDefinitionBuilderTest extends AbstractFieldDefinitionBuilderTestCase {
 
 	@Test
-	public void testRadioButtonGroupFieldDefinitionBuilder() {
-		DatasourceDefinition dataSourceDefinition = new BaseDatasourceDefinition();
-		RadioButtonGroupFieldDefinition fieldDefinition = builder.build(FIELDNAME, dataSourceDefinition);
+	<T> void testBuilder() {
+		final DatasourceDefinition dataSourceDefinition = new BaseDatasourceDefinition();
+		assertOptionGroupField(new RadioButtonGroupFieldDefinitionBuilder<T>(), (name, builder) -> builder.build(name, dataSourceDefinition));
 
-		super.testAbstractOptionGroupFieldDefinitionBuilder(fieldDefinition);
 
+		final RadioButtonGroupFieldDefinition<T> emptyDefinition = new RadioButtonGroupFieldDefinitionBuilder<T>().build("radioButton", dataSourceDefinition);
+		assertEquals(RadioButtonGroupFieldFactory.class, emptyDefinition.getFactoryClass());
+		assertEquals(dataSourceDefinition, emptyDefinition.getDatasource());
 	}
 }

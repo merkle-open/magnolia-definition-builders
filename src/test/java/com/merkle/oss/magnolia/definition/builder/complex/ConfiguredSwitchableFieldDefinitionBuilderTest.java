@@ -1,62 +1,45 @@
 package com.merkle.oss.magnolia.definition.builder.complex;
 
+import com.merkle.oss.magnolia.definition.builder.AbstractFieldDefinitionBuilderTestCase;
+import info.magnolia.ui.datasource.optionlist.Option;
+import info.magnolia.ui.datasource.optionlist.OptionListDefinition;
 import info.magnolia.ui.editor.ConfiguredFormDefinition;
 import info.magnolia.ui.editor.FormDefinition;
+import info.magnolia.ui.editor.SwitchableFormView;
+import info.magnolia.ui.field.AbstractSelectFieldDefinition;
 import info.magnolia.ui.field.ConfiguredSwitchableFieldDefinition;
 import info.magnolia.ui.field.PrefixNameDecorator;
+import info.magnolia.ui.field.WithPropertyNameDecorator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 
-public class ConfiguredSwitchableFieldDefinitionBuilderTest extends AbstractConfiguredComplexPropertyDefinitionBuilderTest {
-	private static final String FIELDNAME = "fieldname";
-	private ConfiguredSwitchableFieldDefinitionBuilder<String> builder;
-	private ConfiguredSwitchableFieldDefinition<String> fieldDefinition;
-	private FormDefinition<String> formDefinition1, formDefinition2;
-
-	@BeforeEach
-	public void setup() {
-		formDefinition1 = new ConfiguredFormDefinition<>();
-		formDefinition2 = new ConfiguredFormDefinition<>();
-		builder = new ConfiguredSwitchableFieldDefinitionBuilder<>();
-		builder = (ConfiguredSwitchableFieldDefinitionBuilder) super.setup(builder);
-		builder = builder.propertyNameDecorator(PrefixNameDecorator.class);
-	}
+class ConfiguredSwitchableFieldDefinitionBuilderTest extends AbstractFieldDefinitionBuilderTestCase {
 
 	@Test
-	public void testFieldDefinitionBuilder() {
-		fieldDefinition = builder.build(FIELDNAME, null);
-		super.testAbstractConfiguredComplexPropertyDefinitionBuilder(fieldDefinition);
-		assertEquals(FIELDNAME, fieldDefinition.getName());
-		assertEquals(PrefixNameDecorator.class, fieldDefinition.getPropertyNameDecorator());
-	}
+	<T> void testBuilder() {
+		final AbstractSelectFieldDefinition<Option, OptionListDefinition> field = mock(AbstractSelectFieldDefinition.class);
+		final FormDefinition<T> form1 = mock(FormDefinition.class);
+		final FormDefinition<T> form2 = mock(FormDefinition.class);
+		final Class<WithPropertyNameDecorator.PropertyNameDecorator> propertyNameDecorator = WithPropertyNameDecorator.PropertyNameDecorator.class;
 
-	@Test
-	public void testFieldDefinitionBuilderForm() {
-		builder = builder.form(formDefinition1);
-		fieldDefinition = builder.build(FIELDNAME, null);
-		assertEquals(FIELDNAME, fieldDefinition.getName());
-		assertFalse(fieldDefinition.getForms().isEmpty());
-		assertEquals(formDefinition1, fieldDefinition.getForms().get(0));
-		builder = builder.form(formDefinition2);
-		fieldDefinition = builder.build(FIELDNAME, null);
-		assertEquals(2, fieldDefinition.getForms().size());
-		assertTrue(fieldDefinition.getForms().contains(formDefinition1));
-		assertTrue(fieldDefinition.getForms().contains(formDefinition2));
-	}
+		final ConfiguredSwitchableFieldDefinition<T> definition = super.assertComplexField(new ConfiguredSwitchableFieldDefinitionBuilder<T>(), (name, builder) -> builder.build(name, field))
+				.form(form1)
+				.form(form2)
+				.propertyNameDecorator(propertyNameDecorator)
+				.build("switchable", field);
 
-	@Test
-	public void testFieldDefinitionBuilderForms() {
-		List<FormDefinition<String>> formsList = List.of(formDefinition1, formDefinition2);
-		builder = builder.forms(formsList);
-		fieldDefinition = builder.build(FIELDNAME, null);
-		assertEquals(2, fieldDefinition.getForms().size());
-		assertTrue(fieldDefinition.getForms().contains(formDefinition1));
-		assertTrue(fieldDefinition.getForms().contains(formDefinition2));
-	}
+		assertEquals(field, definition.getField());
+		assertEquals(Arrays.asList(form1, form2), definition.getForms());
+		assertEquals(propertyNameDecorator, definition.getPropertyNameDecorator());
 
+		final ConfiguredSwitchableFieldDefinition<T> emptyDefinition = new ConfiguredSwitchableFieldDefinitionBuilder<T>().build("switchable", field);
+		assertEquals(SwitchableFormView.class, emptyDefinition.getImplementationClass());
+	}
 }
