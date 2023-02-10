@@ -32,6 +32,8 @@
 		<magnolia.version>6.2.22</magnolia.version>
 		<magnolia.blossom.version>3.6.0</magnolia.blossom.version>
 		<magnolia.workflow.version>6.0.8</magnolia.workflow.version>
+		<magnolia.dam.version>3.0.20</magnolia.dam.version>
+		<magnolia.pages.version>6.2.24</magnolia.pages.version>
 		<namics.powernode.version>1.0.8</namics.powernode.version>
 		<java.poet.version>1.12.1</java.poet.version>
 		<!--Test dependency versions-->
@@ -78,6 +80,18 @@
 		<dependency>
 			<groupId>info.magnolia.ui</groupId>
 			<artifactId>magnolia-ui-framework-compatibility</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.magnolia.dam</groupId>
+			<artifactId>magnolia-dam-app</artifactId>
+			<version>${magnolia.dam.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.magnolia.pages</groupId>
+			<artifactId>magnolia-pages-app</artifactId>
+			<version>${magnolia.pages.version}</version>
 			<scope>compile</scope>
 		</dependency>
 
