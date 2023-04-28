@@ -5,7 +5,7 @@
 
 	<groupId>com.namics.oss.magnolia</groupId>
 	<artifactId>magnolia-definition-builders</artifactId>
-	<version>1.0.5-SNAPSHOT</version>
+	<version>1.0.5</version>
 	<packaging>jar</packaging>
 
 	<name>${project.artifactId}</name>
