@@ -1,5 +1,6 @@
 package com.merkle.oss.magnolia.definition.builder.simple;
 
+import com.merkle.oss.magnolia.definition.builder.datasource.OptionListDefinitionBuilder;
 import info.magnolia.ui.datasource.DatasourceDefinition;
 import info.magnolia.ui.field.ComboBoxFieldDefinition;
 
@@ -12,6 +13,10 @@ public class ComboBoxFieldDefinitionBuilder<T> extends AbstractComboBoxFieldDefi
 
 	public ComboBoxFieldDefinitionBuilder() {
 		super(ComboBoxFieldDefinition::new);
+	}
+
+	public <O extends OptionListDefinitionBuilder.OptionEnum> ComboBoxFieldDefinition<T> build(final String name, final Class<O> optionsClass, final O... excludeOptions) {
+		return build(name, new OptionListDefinitionBuilder().options(optionsClass, excludeOptions).build());
 	}
 
 	public ComboBoxFieldDefinition<T> build(final String name, final DatasourceDefinition datasourceDefinition) {

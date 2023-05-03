@@ -4,18 +4,18 @@ import info.magnolia.ui.datasource.optionlist.Option;
 import info.magnolia.ui.datasource.optionlist.OptionListDefinition;
 
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
  * builds a {@link OptionListDefinition} - Option list data source
- * @see <a href="https://docs.magnolia-cms.com/product-docs/6.2/Apps/App-configuration/Data-source-definition/Option-list-data-source.html">magnolia Docs - Option list data source </a>
+ *
  * @author Merkle DACH
+ * @see <a href="https://docs.magnolia-cms.com/product-docs/6.2/Apps/App-configuration/Data-source-definition/Option-list-data-source.html">magnolia Docs - Option list data source </a>
  */
-public class OptionListDefinitionBuilder extends AbstractBaseDatasourceDefinitionBuilder<OptionListDefinition, OptionListDefinitionBuilder>{
+public class OptionListDefinitionBuilder extends AbstractBaseDatasourceDefinitionBuilder<OptionListDefinition, OptionListDefinitionBuilder> {
 	@Nullable
 	private String name;
 	@Nullable
@@ -50,6 +50,34 @@ public class OptionListDefinitionBuilder extends AbstractBaseDatasourceDefinitio
 		return self();
 	}
 
+	public OptionListDefinitionBuilder option(final OptionEnum option) {
+		return option(create(option));
+	}
+
+	public OptionListDefinitionBuilder options(final OptionEnum... options) {
+		return options(Arrays
+				.stream(options)
+				.map(this::create)
+				.collect(Collectors.toList())
+		);
+	}
+
+	public <T extends OptionEnum> OptionListDefinitionBuilder options(final Class<T> optionsClass, final T... excludeOptions) {
+		final Set<T> excludes = Set.of(excludeOptions);
+		return options(Arrays
+				.stream(optionsClass.getEnumConstants())
+				.filter(Predicate.not(excludes::contains))
+				.map(this::create)
+				.sorted()
+				.collect(Collectors.toList())
+		);
+	}
+
+	private Option create(final OptionEnum option) {
+		return new OptionBuilder()
+				.label(option.getLabel())
+				.build(option.getValue(), option.getValue());
+	}
 
 	@Override
 	public OptionListDefinition build() {
@@ -58,5 +86,10 @@ public class OptionListDefinitionBuilder extends AbstractBaseDatasourceDefinitio
 		Optional.ofNullable(sort).ifPresent(definition::setSort);
 		Stream.ofNullable(options).flatMap(Collection::stream).forEach(definition.getOptions()::add);
 		return definition;
+	}
+
+	public interface OptionEnum {
+		String getLabel();
+		String getValue();
 	}
 }

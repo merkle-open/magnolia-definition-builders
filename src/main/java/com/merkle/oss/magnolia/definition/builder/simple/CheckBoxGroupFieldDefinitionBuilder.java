@@ -1,5 +1,7 @@
 package com.merkle.oss.magnolia.definition.builder.simple;
 
+import com.merkle.oss.magnolia.definition.builder.datasource.OptionListDefinitionBuilder;
+import com.merkle.oss.magnolia.definition.builder.datasource.OptionListDefinitionBuilder.OptionEnum;
 import info.magnolia.ui.datasource.DatasourceDefinition;
 import info.magnolia.ui.field.CheckBoxGroupFieldDefinition;
 
@@ -13,6 +15,10 @@ import java.util.Set;
 public class CheckBoxGroupFieldDefinitionBuilder<T> extends AbstractOptionGroupFieldDefinitionBuilder<Set<T>, CheckBoxGroupFieldDefinition<T>, CheckBoxGroupFieldDefinitionBuilder<T>> {
 	public CheckBoxGroupFieldDefinitionBuilder() {
 		super(CheckBoxGroupFieldDefinition::new);
+	}
+
+	public <O extends OptionEnum> CheckBoxGroupFieldDefinition<T> build(final String name, final Class<O> optionsClass, final O... excludeOptions) {
+		return build(name, new OptionListDefinitionBuilder().options(optionsClass, excludeOptions).build());
 	}
 
 	public CheckBoxGroupFieldDefinition<T> build(final String name, final DatasourceDefinition datasourceDefinition) {
