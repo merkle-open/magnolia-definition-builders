@@ -68,7 +68,6 @@ public class OptionListDefinitionBuilder extends AbstractBaseDatasourceDefinitio
 				.stream(optionsClass.getEnumConstants())
 				.filter(Predicate.not(excludes::contains))
 				.map(this::create)
-				.sorted()
 				.collect(Collectors.toList())
 		);
 	}
