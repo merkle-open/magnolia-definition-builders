@@ -19,7 +19,7 @@ class AssetLinkDefinitionBuilderTest extends AbstractFieldDefinitionBuilderTestC
 	<T> void testBuilder() {
 		super.assertLinkField(new AssetLinkDefinitionBuilder(), (name, builder) -> builder.build(name));
 
-		final LinkFieldDefinition<Item>emptyDefinition = new AssetLinkDefinitionBuilder().build("comboBox");
+		final DamLinkFieldDefinition emptyDefinition = new AssetLinkDefinitionBuilder().build("comboBox");
 		assertEquals("dam-app-core:chooser", emptyDefinition.getChooserId());
 		assertTrue(emptyDefinition.isEditable());
 		assertEquals(LinkFieldFactory.class, emptyDefinition.getFactoryClass());
