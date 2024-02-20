@@ -11,3 +11,4 @@ _.*
 atlassian-ide-plugin.xml
 
 /magnolia-builders/target
+/custom-definitions/target

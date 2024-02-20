@@ -29,6 +29,7 @@
 	</developers>
 	<modules>
 		<module>magnolia-builders</module>
+		<module>custom-definitions</module>
 	</modules>
 
 	<properties>
