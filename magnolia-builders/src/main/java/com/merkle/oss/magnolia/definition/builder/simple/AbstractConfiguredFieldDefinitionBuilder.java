@@ -35,6 +35,7 @@ public abstract class AbstractConfiguredFieldDefinitionBuilder<T, D extends Conf
 	private String styleName;
 	@Nullable
 	private Class<? extends Converter<T, ?>> converterClass;
+	@Nullable
 	private List<FieldValidatorDefinition> validators;
 
 	protected AbstractConfiguredFieldDefinitionBuilder(final Provider<D> factory) {
