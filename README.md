@@ -14,7 +14,7 @@ field definitions in Java,  which is less error-prone than using YAML, especiall
 <dependency>
     <groupId>com.namics.oss.magnolia</groupId>
     <artifactId>magnolia-definition-builders</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
 </dependency>
 ```
 
