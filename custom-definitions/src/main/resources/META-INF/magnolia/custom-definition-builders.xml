@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd" >
+<module>
+    <name>custom-definition-builders</name>
+    <displayName>custom definition builders</displayName>
+    <version>${project.version}</version>
+
+    <components>
+        <id>main</id>
+        <configurer>
+            <class>com.merkle.oss.magnolia.definition.custom.configuration.CustomDefinitionBuildersGuiceComponentConfigurer</class>
+        </configurer>
+    </components>
+</module>
