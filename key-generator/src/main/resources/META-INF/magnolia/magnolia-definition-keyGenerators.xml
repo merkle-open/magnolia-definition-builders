@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd" >
+<module>
+    <name>magnolia-definition-keyGenerators</name>
+    <displayName>magnolia definition key-generators</displayName>
+    <version>${project.version}</version>
+
+    <components>
+        <id>main</id>
+        <configurer>
+            <class>com.merkle.oss.magnolia.definition.key.generator.configuration.KeyGeneratorGuiceComponentConfigurer</class>
+        </configurer>
+        <component>
+            <type>com.merkle.oss.magnolia.definition.key.generator.KeyGeneratorUtil</type>
+            <implementation>com.merkle.oss.magnolia.definition.key.generator.KeyGeneratorUtil</implementation>
+        </component>
+    </components>
+</module>

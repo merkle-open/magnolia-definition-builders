@@ -30,7 +30,8 @@
 	<modules>
 		<module>magnolia-builders</module>
 		<module>custom-definitions</module>
-	</modules>
+        <module>key-generator</module>
+    </modules>
 
 	<properties>
 		<!-- (check for new versions:  mvn versions:display-property-updates )-->
