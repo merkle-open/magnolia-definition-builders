@@ -10,5 +10,38 @@
         <configurer>
             <class>com.merkle.oss.magnolia.definition.custom.configuration.CustomDefinitionBuildersGuiceComponentConfigurer</class>
         </configurer>
+        <component>
+            <type>com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider</type>
+            <implementation>com.merkle.oss.magnolia.definition.custom.configuration.DefaultLocaleProvider</implementation>
+        </component>
+        <component>
+            <type>com.merkle.oss.magnolia.definition.custom.configuration.LinkUtil</type>
+            <implementation>com.merkle.oss.magnolia.definition.custom.configuration.DefaultLinkUtil</implementation>
+        </component>
+
+        <component>
+            <type>com.merkle.oss.magnolia.definition.custom.linkset.model.LinkModelFactory</type>
+            <implementation>com.merkle.oss.magnolia.definition.custom.linkset.model.LinkModelFactory</implementation>
+        </component>
+        <component>
+            <type>com.merkle.oss.magnolia.definition.custom.linkset.model.InternalLinkFactory</type>
+            <implementation>com.merkle.oss.magnolia.definition.custom.linkset.model.InternalLinkFactory</implementation>
+        </component>
+        <component>
+            <type>com.merkle.oss.magnolia.definition.custom.linkset.model.ExternalLinkFactory</type>
+            <implementation>com.merkle.oss.magnolia.definition.custom.linkset.model.ExternalLinkFactory</implementation>
+        </component>
+        <component>
+            <type>com.merkle.oss.magnolia.definition.custom.linkset.model.AssetLinkFactory</type>
+            <implementation>com.merkle.oss.magnolia.definition.custom.linkset.model.AssetLinkFactory</implementation>
+        </component>
+        <component>
+            <type>com.merkle.oss.magnolia.definition.custom.linkset.model.util.ExtendedLinkQueryParamModifier</type>
+            <implementation>com.merkle.oss.magnolia.definition.custom.linkset.model.util.ExtendedLinkQueryParamModifier</implementation>
+        </component>
+        <component>
+            <type>com.merkle.oss.magnolia.definition.custom.linkset.model.util.ExtendedLinkAnchorModifier</type>
+            <implementation>com.merkle.oss.magnolia.definition.custom.linkset.model.util.ExtendedLinkAnchorModifier</implementation>
+        </component>
     </components>
 </module>

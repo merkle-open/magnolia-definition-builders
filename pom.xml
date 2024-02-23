@@ -41,7 +41,7 @@
 		<magnolia.workflow.version>6.0.8</magnolia.workflow.version>
 		<magnolia.dam.version>3.0.29</magnolia.dam.version>
 		<magnolia.pages.version>6.2.34</magnolia.pages.version>
-		<namics.powernode.version>1.0.8</namics.powernode.version>
+		<merkle.powernode.version>2.0.6</merkle.powernode.version>
 		<java.poet.version>1.12.1</java.poet.version>
 		<!--Test dependency versions-->
 		<junit.version>5.10.2</junit.version>
@@ -79,6 +79,11 @@
 				<groupId>info.magnolia.pages</groupId>
 				<artifactId>magnolia-pages-app</artifactId>
 				<version>${magnolia.pages.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.namics.oss.magnolia</groupId>
+				<artifactId>magnolia-powernode</artifactId>
+				<version>${merkle.powernode.version}</version>
 			</dependency>
 
 			<!-- TESTING DEPENDENCIES -->

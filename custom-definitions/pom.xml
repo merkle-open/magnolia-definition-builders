@@ -17,6 +17,18 @@
             <artifactId>magnolia-definition-builders</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.namics.oss.magnolia</groupId>
+            <artifactId>magnolia-powernode</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia.site</groupId>
+            <artifactId>magnolia-site</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia.dam</groupId>
+            <artifactId>magnolia-dam-templating</artifactId>
+        </dependency>
 
         <!-- TESTING DEPENDENCIES -->
         <dependency>
