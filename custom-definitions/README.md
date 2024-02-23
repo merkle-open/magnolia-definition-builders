@@ -4,6 +4,7 @@
  - Extened richtext
  - Separator 
  - [LinkSet](src/main/java/com/merkle/oss/magnolia/definition/custom/linkset/README.md)
+ - [ImageSet](src/main/java/com/merkle/oss/magnolia/definition/custom/imageset/README.md)
 
 ## Configuration
 
