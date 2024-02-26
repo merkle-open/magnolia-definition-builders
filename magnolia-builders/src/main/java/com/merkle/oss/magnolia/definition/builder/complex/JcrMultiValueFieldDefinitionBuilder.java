@@ -7,13 +7,10 @@ import javax.jcr.Property;
 
 public class JcrMultiValueFieldDefinitionBuilder extends AbstractMultiFieldDefinitionBuilder<Property, JcrMultiValueFieldDefinition, JcrMultiValueFieldDefinitionBuilder> {
 
-	public JcrMultiValueFieldDefinitionBuilder() {
-		super(JcrMultiValueFieldDefinition::new);
-	}
-
 	public JcrMultiValueFieldDefinition build(final String name, final EditorPropertyDefinition field) {
-		JcrMultiValueFieldDefinition fd = super.build(name, field);
-		fd.init();
-		return fd;
+		final JcrMultiValueFieldDefinition definition = new JcrMultiValueFieldDefinition();
+		super.populate(definition, name, field);
+		definition.init();
+		return definition;
 	}
 }

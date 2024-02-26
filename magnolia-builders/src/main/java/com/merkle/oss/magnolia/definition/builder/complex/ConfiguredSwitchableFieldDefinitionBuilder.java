@@ -25,10 +25,6 @@ public class ConfiguredSwitchableFieldDefinitionBuilder<T> extends AbstractConfi
 	@Nullable
 	private Class<? extends WithPropertyNameDecorator.PropertyNameDecorator> propertyNameDecorator;
 
-	public ConfiguredSwitchableFieldDefinitionBuilder() {
-		super(ConfiguredSwitchableFieldDefinition::new);
-	}
-
 	public ConfiguredSwitchableFieldDefinitionBuilder<T> propertyNameDecorator(final Class<? extends WithPropertyNameDecorator.PropertyNameDecorator> propertyNameDecorator) {
 		this.propertyNameDecorator = propertyNameDecorator;
 		return self();
@@ -47,7 +43,8 @@ public class ConfiguredSwitchableFieldDefinitionBuilder<T> extends AbstractConfi
 	}
 
 	public ConfiguredSwitchableFieldDefinition<T> build(final String name, final AbstractSelectFieldDefinition<Option, OptionListDefinition> field) {
-		final ConfiguredSwitchableFieldDefinition<T> definition = super.build(name);
+		final ConfiguredSwitchableFieldDefinition<T> definition = new ConfiguredSwitchableFieldDefinition<>();
+		super.populate(definition, name);
 		definition.setField(field);
 		Optional.ofNullable(propertyNameDecorator).map(Class.class::cast).ifPresent(definition::setPropertyNameDecorator);
 		Stream.ofNullable(forms).flatMap(Collection::stream).forEach(definition.getForms()::add);

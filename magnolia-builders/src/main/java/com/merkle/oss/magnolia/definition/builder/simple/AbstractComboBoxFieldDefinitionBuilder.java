@@ -5,7 +5,6 @@ import info.magnolia.ui.datasource.DatasourceDefinition;
 import info.magnolia.ui.field.ComboBoxFieldDefinition;
 
 import javax.annotation.Nullable;
-import javax.inject.Provider;
 import java.util.Optional;
 
 public abstract class AbstractComboBoxFieldDefinitionBuilder<T, D extends ComboBoxFieldDefinition<T>, B extends AbstractComboBoxFieldDefinitionBuilder<T, D, B>> extends AbstractSelectFieldDefinitionBuilder<T, DatasourceDefinition, D, B> {
@@ -25,10 +24,6 @@ public abstract class AbstractComboBoxFieldDefinitionBuilder<T, D extends ComboB
 	private String placeholder;
 	@Nullable
 	private Class<? extends ComboBox.NewItemProvider<T>> newItemProviderClass;
-
-	protected AbstractComboBoxFieldDefinitionBuilder(final Provider<D> factory) {
-		super(factory);
-	}
 
 	public B textInputAllowed() {
 		return textInputAllowed(true);
@@ -82,8 +77,9 @@ public abstract class AbstractComboBoxFieldDefinitionBuilder<T, D extends ComboB
 		return self();
 	}
 
-	protected D build(final String name, final DatasourceDefinition datasourceDefinition) {
-		final D definition = super.build(name, datasourceDefinition);
+	@Override
+	protected void populate(final D definition, final String name, final DatasourceDefinition datasourceDefinition) {
+		super.populate(definition, name, datasourceDefinition);
 		Optional.ofNullable(textInputAllowed).ifPresent(definition::setTextInputAllowed);
 		Optional.ofNullable(pageLength).ifPresent(definition::setPageLength);
 		Optional.ofNullable(emptySelectionCaption).ifPresent(definition::setEmptySelectionCaption);
@@ -92,6 +88,5 @@ public abstract class AbstractComboBoxFieldDefinitionBuilder<T, D extends ComboB
 		Optional.ofNullable(popWidth).ifPresent(definition::setPopWidth);
 		Optional.ofNullable(placeholder).ifPresent(definition::setPlaceholder);
 		Optional.ofNullable(newItemProviderClass).ifPresent(definition::setNewItemProviderClass);
-		return definition;
 	}
 }

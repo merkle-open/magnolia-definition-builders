@@ -16,10 +16,6 @@ public class CodeFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitio
 	@Nullable
 	private Integer height;
 
-	public CodeFieldDefinitionBuilder() {
-		super(CodeFieldDefinition::new);
-	}
-
 	public CodeFieldDefinitionBuilder height(final int height) {
 		this.height = height;
 		return self();
@@ -31,7 +27,8 @@ public class CodeFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitio
 	}
 
 	public CodeFieldDefinition build(final String name) {
-		final CodeFieldDefinition definition = super.build(name);
+		final CodeFieldDefinition definition = new CodeFieldDefinition();
+		super.populate(definition, name);
 		Optional.ofNullable(height).ifPresent(definition::setHeight);
 		Optional.ofNullable(language).ifPresent(definition::setLanguage);
 		return definition;

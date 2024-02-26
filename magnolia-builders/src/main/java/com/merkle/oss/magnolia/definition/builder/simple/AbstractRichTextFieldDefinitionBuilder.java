@@ -4,7 +4,6 @@ import info.magnolia.ui.field.LinkFieldDefinition;
 import info.magnolia.ui.field.RichTextFieldDefinition;
 
 import javax.annotation.Nullable;
-import javax.inject.Provider;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -39,10 +38,6 @@ public abstract class AbstractRichTextFieldDefinitionBuilder<D extends RichTextF
 	private String configJsFile;
 	@Nullable
 	private Map<String, LinkFieldDefinition<?>> linkFieldDefinitions;
-
-	protected AbstractRichTextFieldDefinitionBuilder(final Provider<D> factory) {
-		super(factory);
-	}
 
 	public B alignment(final boolean alignment) {
 		this.alignment = alignment;
@@ -106,8 +101,9 @@ public abstract class AbstractRichTextFieldDefinitionBuilder<D extends RichTextF
 		return self();
 	}
 
-	protected D build(final String name) {
-		final D definition = super.build(name);
+	@Override
+	protected void populate(final D definition, final String name) {
+		super.populate(definition, name);
 		Optional.ofNullable(alignment).ifPresent(definition::setAlignment);
 		Optional.ofNullable(images).ifPresent(definition::setImages);
 		Optional.ofNullable(lists).ifPresent(definition::setLists);
@@ -121,6 +117,5 @@ public abstract class AbstractRichTextFieldDefinitionBuilder<D extends RichTextF
 		Stream.ofNullable(linkFieldDefinitions).map(Map::entrySet).flatMap(Collection::stream).forEach(entry ->
 				definition.getLinkFieldDefinitions().put(entry.getKey(), entry.getValue())
 		);
-		return definition;
 	}
 }

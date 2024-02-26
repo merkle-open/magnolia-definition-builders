@@ -3,7 +3,6 @@ package com.merkle.oss.magnolia.definition.builder.simple;
 import com.merkle.oss.magnolia.definition.builder.datasource.OptionListDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.builder.datasource.OptionListDefinitionBuilder.OptionEnum;
 import info.magnolia.ui.datasource.DatasourceDefinition;
-import info.magnolia.ui.field.ComboBoxFieldDefinition;
 import info.magnolia.ui.field.RadioButtonGroupFieldDefinition;
 
 /**
@@ -13,15 +12,13 @@ import info.magnolia.ui.field.RadioButtonGroupFieldDefinition;
  */
 public class RadioButtonGroupFieldDefinitionBuilder<T> extends AbstractOptionGroupFieldDefinitionBuilder<T, RadioButtonGroupFieldDefinition<T>, RadioButtonGroupFieldDefinitionBuilder<T>> {
 
-	public RadioButtonGroupFieldDefinitionBuilder() {
-		super(RadioButtonGroupFieldDefinition::new);
-	}
-
 	public <O extends OptionEnum> RadioButtonGroupFieldDefinition<T> build(final String name, final Class<O> optionsClass, final O... excludeOptions) {
 		return build(name, new OptionListDefinitionBuilder().options(optionsClass, excludeOptions).build());
 	}
 
 	public RadioButtonGroupFieldDefinition<T> build(final String name, final DatasourceDefinition datasourceDefinition) {
-		return super.build(name, datasourceDefinition);
+		final RadioButtonGroupFieldDefinition<T> definition = new RadioButtonGroupFieldDefinition<>();
+		super.populate(definition, name, datasourceDefinition);
+		return definition;
 	}
 }

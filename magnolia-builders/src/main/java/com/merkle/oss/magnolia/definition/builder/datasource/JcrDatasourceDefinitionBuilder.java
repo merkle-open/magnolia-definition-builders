@@ -39,10 +39,6 @@ public class JcrDatasourceDefinitionBuilder extends AbstractBaseDatasourceDefini
 	@Nullable
 	private Map<String, SortDirection> sortBy;
 
-	public JcrDatasourceDefinitionBuilder() {
-		super(JcrDatasourceDefinition::new);
-	}
-
 	public JcrDatasourceDefinitionBuilder rootPath(final String rootPath) {
 		this.rootPath = rootPath;
 		return self();
@@ -107,9 +103,9 @@ public class JcrDatasourceDefinitionBuilder extends AbstractBaseDatasourceDefini
 		return self();
 	}
 
-	@Override
 	public JcrDatasourceDefinition build() {
-		final JcrDatasourceDefinition definition = super.build();
+		final JcrDatasourceDefinition definition = new JcrDatasourceDefinition();
+		super.populate(definition);
 		Optional.ofNullable(rootPath).ifPresent(definition::setRootPath);
 		Optional.ofNullable(workspace).ifPresent(definition::setWorkspace);
 		Optional.ofNullable(includeProperties).ifPresent(definition::setIncludeProperties);

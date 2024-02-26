@@ -6,10 +6,9 @@ import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.MultiFieldDefinition;
 
 import javax.annotation.Nullable;
-import javax.inject.Provider;
 import java.util.Optional;
 
-public class AbstractMultiFieldDefinitionBuilder<T, D extends MultiFieldDefinition<T>, B extends AbstractMultiFieldDefinitionBuilder<T, D, B>> extends AbstractConfiguredComplexPropertyDefinitionBuilder<T, D, B> {
+public abstract class AbstractMultiFieldDefinitionBuilder<T, D extends MultiFieldDefinition<T>, B extends AbstractMultiFieldDefinitionBuilder<T, D, B>> extends AbstractConfiguredComplexPropertyDefinitionBuilder<T, D, B> {
 	@Nullable
 	private MultiFormView.EntryResolution.Definition<T> entryResolution;
 	@Nullable
@@ -30,10 +29,6 @@ public class AbstractMultiFieldDefinitionBuilder<T, D extends MultiFieldDefiniti
 	private Integer minItems;
 	@Nullable
 	private Integer maxItems;
-
-	protected AbstractMultiFieldDefinitionBuilder(final Provider<D> factory) {
-		super(factory);
-	}
 
 	public B entryResolution(final MultiFormView.EntryResolution.Definition<T> entryResolution) {
 		this.entryResolution = entryResolution;
@@ -93,8 +88,8 @@ public class AbstractMultiFieldDefinitionBuilder<T, D extends MultiFieldDefiniti
 		return self();
 	}
 
-	protected D build(final String name, final EditorPropertyDefinition field) {
-		final D definition = super.build(name);
+	protected void populate(final D definition, final String name, final EditorPropertyDefinition field) {
+		super.populate(definition, name);
 		definition.setField(field);
 		Optional.ofNullable(entryResolution).ifPresent(definition::setEntryResolution);
 		Optional.ofNullable(orderHandler).ifPresent(definition::setOrderHandler);
@@ -106,6 +101,5 @@ public class AbstractMultiFieldDefinitionBuilder<T, D extends MultiFieldDefiniti
 		Optional.ofNullable(itemCountErrorMessage).ifPresent(definition::setItemCountErrorMessage);
 		Optional.ofNullable(minItems).ifPresent(definition::setMinItems);
 		Optional.ofNullable(maxItems).ifPresent(definition::setMaxItems);
-		return definition;
 	}
 }

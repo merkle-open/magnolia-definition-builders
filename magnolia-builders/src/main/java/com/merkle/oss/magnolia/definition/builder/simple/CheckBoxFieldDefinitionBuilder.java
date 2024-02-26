@@ -14,17 +14,14 @@ public class CheckBoxFieldDefinitionBuilder extends AbstractConfiguredFieldDefin
 	@Nullable
 	private String buttonLabel;
 
-	public CheckBoxFieldDefinitionBuilder() {
-		super(CheckBoxFieldDefinition::new);
-	}
-
 	public CheckBoxFieldDefinitionBuilder buttonLabel(final String buttonLabel) {
 		this.buttonLabel = buttonLabel;
 		return self();
 	}
 
 	public CheckBoxFieldDefinition build(final String name) {
-		final CheckBoxFieldDefinition definition = super.build(name);
+		final CheckBoxFieldDefinition definition = new CheckBoxFieldDefinition();
+		super.populate(definition, name);
 		Optional.ofNullable(buttonLabel).ifPresent(definition::setButtonLabel);
 		return definition;
 	}

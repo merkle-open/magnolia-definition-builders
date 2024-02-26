@@ -14,17 +14,14 @@ public class StaticFieldViewDefinitionBuilder<T> extends AbstractConfiguredCompl
 	@Nullable
 	private String value;
 
-	public StaticFieldViewDefinitionBuilder() {
-		super(StaticFieldViewDefinition::new);
-	}
-
 	public StaticFieldViewDefinitionBuilder<T> value(final String value) {
 		this.value = value;
 		return self();
 	}
 
 	public StaticFieldViewDefinition<T> build(final String name) {
-		final StaticFieldViewDefinition<T> definition = super.build(name);
+		final StaticFieldViewDefinition<T> definition = new StaticFieldViewDefinition<>();
+		super.populate(definition, name);
 		Optional.ofNullable(value).ifPresent(definition::setValue);
 		return definition;
 	}

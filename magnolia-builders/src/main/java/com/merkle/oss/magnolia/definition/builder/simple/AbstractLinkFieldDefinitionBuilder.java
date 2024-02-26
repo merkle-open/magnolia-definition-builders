@@ -22,10 +22,6 @@ public abstract class AbstractLinkFieldDefinitionBuilder<T, D extends LinkFieldD
 	@Nullable
 	private Boolean showOptions;
 
-	protected AbstractLinkFieldDefinitionBuilder(final Provider<D> factory) {
-		super(factory);
-	}
-
 	public B chooserId(final String chooserId) {
 		this.chooserId = chooserId;
 		return self();
@@ -64,14 +60,14 @@ public abstract class AbstractLinkFieldDefinitionBuilder<T, D extends LinkFieldD
 		return self();
 	}
 
-	public D build(final String name, final DatasourceDefinition datasourceDefinition) {
-		final D definition = super.build(name, datasourceDefinition);
+	@Override
+	protected void populate(final D definition, final String name, final DatasourceDefinition datasourceDefinition) {
+		super.populate(definition, name, datasourceDefinition);
 		Optional.ofNullable(chooserId).ifPresent(definition::setChooserId);
 		Optional.ofNullable(buttonSelectNewLabel).ifPresent(definition::setButtonSelectNewLabel);
 		Optional.ofNullable(buttonSelectOtherLabel).ifPresent(definition::setButtonSelectOtherLabel);
 		Optional.ofNullable(preview).ifPresent(definition::setPreview);
 		Optional.ofNullable(editable).ifPresent(definition::setEditable);
 		Optional.ofNullable(showOptions).ifPresent(definition::setShowOptions);
-		return definition;
 	}
 }

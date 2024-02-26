@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SafeHtmlValidatorDefinitionBuilder extends AbstractConfiguredFieldValidatorDefinitionBuilder<SafeHtmlValidatorDefinition, SafeHtmlValidatorDefinitionBuilder>{
-
 	@Nullable
 	private List<String> allowedTags;
 	@Nullable
@@ -22,10 +21,6 @@ public class SafeHtmlValidatorDefinitionBuilder extends AbstractConfiguredFieldV
 	private List<Attribute> allowedAttributes;
 	@Nullable
 	private List<Protocol> allowedProtocols;
-
-	public SafeHtmlValidatorDefinitionBuilder() {
-		super(SafeHtmlValidatorDefinition::new);
-	}
 
 	public SafeHtmlValidatorDefinitionBuilder allowedTag(final String allowedTag) {
 		return item(this::allowedTags, allowedTags, allowedTag);
@@ -83,7 +78,8 @@ public class SafeHtmlValidatorDefinitionBuilder extends AbstractConfiguredFieldV
 		return build("safeHtmlValidator");
 	}
 	public SafeHtmlValidatorDefinition build(final String name) {
-		final SafeHtmlValidatorDefinition definition = super.build(name);
+		final SafeHtmlValidatorDefinition definition = new SafeHtmlValidatorDefinition();
+		super.populate(definition, name);
 		Stream.ofNullable(allowedTags).flatMap(Collection::stream).forEach(definition.getAllowedTags()::add);
 		Stream.ofNullable(globallyAllowedAttributes).flatMap(Collection::stream).forEach(definition.getGloballyAllowedAttributes()::add);
 		Stream.ofNullable(allowedAttributes).flatMap(Collection::stream).forEach(definition.getAllowedAttributes()::add);

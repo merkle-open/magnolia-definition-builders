@@ -9,11 +9,9 @@ import info.magnolia.ui.field.RichTextFieldDefinition;
  */
 public class RichTextFieldDefinitionBuilder extends AbstractRichTextFieldDefinitionBuilder<RichTextFieldDefinition, RichTextFieldDefinitionBuilder> {
 
-	public RichTextFieldDefinitionBuilder() {
-		super(RichTextFieldDefinition::new);
-	}
-
 	public RichTextFieldDefinition build(final String name) {
-		return super.build(name);
+		final RichTextFieldDefinition definition = new RichTextFieldDefinition();
+		super.populate(definition, name);
+		return definition;
 	}
 }

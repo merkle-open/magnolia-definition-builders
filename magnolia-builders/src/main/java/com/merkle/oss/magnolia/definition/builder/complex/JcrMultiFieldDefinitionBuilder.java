@@ -12,11 +12,10 @@ import javax.jcr.Node;
  */
 public class JcrMultiFieldDefinitionBuilder extends AbstractMultiFieldDefinitionBuilder<Node, JcrMultiFieldDefinition, JcrMultiFieldDefinitionBuilder> {
 
-	public JcrMultiFieldDefinitionBuilder() {
-		super(JcrMultiFieldDefinition::new);
-	}
-
 	public JcrMultiFieldDefinition build(final String name, final EditorPropertyDefinition field) {
-		return super.build(name, field);
+		final JcrMultiFieldDefinition definition = new JcrMultiFieldDefinition();
+		super.populate(definition, name, field);
+		definition.init();
+		return definition;
 	}
 }

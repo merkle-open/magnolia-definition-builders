@@ -13,15 +13,14 @@ import java.util.Set;
  * @author Merkle DACH
  */
 public class CheckBoxGroupFieldDefinitionBuilder<T> extends AbstractOptionGroupFieldDefinitionBuilder<Set<T>, CheckBoxGroupFieldDefinition<T>, CheckBoxGroupFieldDefinitionBuilder<T>> {
-	public CheckBoxGroupFieldDefinitionBuilder() {
-		super(CheckBoxGroupFieldDefinition::new);
-	}
 
 	public <O extends OptionEnum> CheckBoxGroupFieldDefinition<T> build(final String name, final Class<O> optionsClass, final O... excludeOptions) {
 		return build(name, new OptionListDefinitionBuilder().options(optionsClass, excludeOptions).build());
 	}
 
 	public CheckBoxGroupFieldDefinition<T> build(final String name, final DatasourceDefinition datasourceDefinition) {
-		return super.build(name, datasourceDefinition);
+		final CheckBoxGroupFieldDefinition<T> definition = new CheckBoxGroupFieldDefinition<>();
+		super.populate(definition, name, datasourceDefinition);
+		return definition;
 	}
 }

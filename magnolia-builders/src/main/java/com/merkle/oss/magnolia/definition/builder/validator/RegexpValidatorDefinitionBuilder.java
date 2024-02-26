@@ -6,13 +6,8 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class RegexpValidatorDefinitionBuilder extends AbstractConfiguredFieldValidatorDefinitionBuilder<RegexpValidatorDefinition, RegexpValidatorDefinitionBuilder>{
-
 	@Nullable
 	private String pattern;
-
-	public RegexpValidatorDefinitionBuilder() {
-		super(RegexpValidatorDefinition::new);
-	}
 
 	public RegexpValidatorDefinitionBuilder pattern(final String pattern) {
 		this.pattern = pattern;
@@ -23,7 +18,8 @@ public class RegexpValidatorDefinitionBuilder extends AbstractConfiguredFieldVal
 		return build("regexpValidator");
 	}
 	public RegexpValidatorDefinition build(final String name) {
-		final RegexpValidatorDefinition definition = super.build(name);
+		final RegexpValidatorDefinition definition = new RegexpValidatorDefinition();
+		super.populate(definition, name);
 		Optional.ofNullable(pattern).ifPresent(definition::setPattern);
 		return definition;
 	}

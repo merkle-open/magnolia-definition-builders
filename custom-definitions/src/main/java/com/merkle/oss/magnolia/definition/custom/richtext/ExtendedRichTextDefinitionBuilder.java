@@ -36,10 +36,6 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractRichTextFieldDefi
 	private final Map<String, String> extraConfig = new HashMap<>();
 	private final Map<String, String> externalPlugins = new HashMap<>();
 
-	public ExtendedRichTextDefinitionBuilder() {
-		super(ExtendedRichTextDefinition::new);
-	}
-
 	public ExtendedRichTextDefinitionBuilder formatTags(final String formatTags) {
 		this.formatTags = formatTags;
 		return self();
@@ -110,8 +106,9 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractRichTextFieldDefi
 		return self();
 	}
 
-	public ExtendedRichTextDefinition build(String name) {
-		final ExtendedRichTextDefinition definition = super.build(name);
+	public ExtendedRichTextDefinition build(final String name) {
+		final ExtendedRichTextDefinition definition = new ExtendedRichTextDefinition();
+		super.populate(definition, name);
 		Optional.ofNullable(formatTags).ifPresent(definition::setFormatTags);
 		Optional.ofNullable(customStyleSet).ifPresent(definition::setCustomStyleSet);
 		Optional.ofNullable(customTemplates).ifPresent(definition::setCustomTemplates);

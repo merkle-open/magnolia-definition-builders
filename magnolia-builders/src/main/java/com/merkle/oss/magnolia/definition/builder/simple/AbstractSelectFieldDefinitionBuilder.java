@@ -12,19 +12,15 @@ public abstract class AbstractSelectFieldDefinitionBuilder<T, S extends Datasour
 	@Nullable
 	private FilteringMode filteringMode;
 
-	protected AbstractSelectFieldDefinitionBuilder(final Provider<D> factory) {
-		super(factory);
-	}
 
 	public B filteringMode(final FilteringMode filteringMode) {
 		this.filteringMode = filteringMode;
 		return self();
 	}
 
-	protected D build(final String name, final S datasourceDefinition) {
-		final D definition = super.build(name);
+	protected void populate(final D definition, final String name, final S datasourceDefinition) {
+		super.populate(definition, name);
 		definition.setDatasource(datasourceDefinition);
 		Optional.ofNullable(filteringMode).ifPresent(definition::setFilteringMode);
-		return definition;
 	}
 }

@@ -18,10 +18,6 @@ public class TextFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitio
 	@Nullable
 	private String placeholder;
 
-	public TextFieldDefinitionBuilder() {
-		super(TextFieldDefinition::new);
-	}
-
 	public TextFieldDefinitionBuilder rows(final int rows) {
 		this.rows = rows;
 		return self();
@@ -38,7 +34,8 @@ public class TextFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitio
 	}
 
 	public TextFieldDefinition build(final String name) {
-		final TextFieldDefinition definition = super.build(name);
+		final TextFieldDefinition definition = new TextFieldDefinition();
+		super.populate(definition, name);
 		Optional.ofNullable(rows).ifPresent(definition::setRows);
 		Optional.ofNullable(maxLength).ifPresent(definition::setMaxLength);
 		Optional.ofNullable(placeholder).ifPresent(definition::setPlaceholder);

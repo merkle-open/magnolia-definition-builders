@@ -8,15 +8,10 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class NodeNameValidatorDefinitionBuilder extends AbstractConfiguredFieldValidatorDefinitionBuilder<NodeNameValidatorDefinition, NodeNameValidatorDefinitionBuilder>{
-
 	@Nullable
 	private String pattern;
 	@Nullable
 	private Mode mode;
-
-	public NodeNameValidatorDefinitionBuilder() {
-		super(NodeNameValidatorDefinition::new);
-	}
 
 	public NodeNameValidatorDefinitionBuilder pattern(final String pattern) {
 		this.pattern = pattern;
@@ -32,7 +27,8 @@ public class NodeNameValidatorDefinitionBuilder extends AbstractConfiguredFieldV
 		return build("nodeNameValidator");
 	}
 	public NodeNameValidatorDefinition build(final String name) {
-		final NodeNameValidatorDefinition definition = super.build(name);
+		final NodeNameValidatorDefinition definition = new NodeNameValidatorDefinition();
+		super.populate(definition, name);
 		Optional.ofNullable(mode).ifPresent(definition::setMode);
 		Optional.ofNullable(pattern).ifPresent(definition::setPattern);
 		return definition;

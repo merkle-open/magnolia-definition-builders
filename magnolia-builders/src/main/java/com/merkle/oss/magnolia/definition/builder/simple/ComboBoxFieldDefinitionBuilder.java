@@ -11,15 +11,14 @@ import info.magnolia.ui.field.ComboBoxFieldDefinition;
  */
 public class ComboBoxFieldDefinitionBuilder<T> extends AbstractComboBoxFieldDefinitionBuilder<T, ComboBoxFieldDefinition<T>, ComboBoxFieldDefinitionBuilder<T>> {
 
-	public ComboBoxFieldDefinitionBuilder() {
-		super(ComboBoxFieldDefinition::new);
-	}
 
 	public <O extends OptionListDefinitionBuilder.OptionEnum> ComboBoxFieldDefinition<T> build(final String name, final Class<O> optionsClass, final O... excludeOptions) {
 		return build(name, new OptionListDefinitionBuilder().options(optionsClass, excludeOptions).build());
 	}
 
 	public ComboBoxFieldDefinition<T> build(final String name, final DatasourceDefinition datasourceDefinition) {
-		return super.build(name, datasourceDefinition);
+		final ComboBoxFieldDefinition<T> definition = new ComboBoxFieldDefinition<>();
+		super.populate(definition, name, datasourceDefinition);
+		return definition;
 	}
 }

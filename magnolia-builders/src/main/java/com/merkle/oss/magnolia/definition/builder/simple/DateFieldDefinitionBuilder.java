@@ -21,10 +21,6 @@ public class DateFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitio
 	@Nullable
 	private String timeFormat;
 
-	public DateFieldDefinitionBuilder() {
-		super(DateFieldDefinition::new);
-	}
-
 	public DateFieldDefinitionBuilder time(final boolean time) {
 		this.time = time;
 		return self();
@@ -46,7 +42,8 @@ public class DateFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitio
 	}
 
 	public DateFieldDefinition build(final String name) {
-		final DateFieldDefinition definition = super.build(name);
+		final DateFieldDefinition definition = new DateFieldDefinition();
+		super.populate(definition, name);
 		Optional.ofNullable(time).ifPresent(definition::setTime);
 		Optional.ofNullable(inISO8061Format).ifPresent(definition::setInISO8061Format);
 		Optional.ofNullable(dateFormat).ifPresent(definition::setDateFormat);

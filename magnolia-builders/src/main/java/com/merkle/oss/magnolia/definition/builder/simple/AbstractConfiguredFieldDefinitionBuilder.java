@@ -13,8 +13,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class AbstractConfiguredFieldDefinitionBuilder<T, D extends ConfiguredFieldDefinition<T>, B extends AbstractConfiguredFieldDefinitionBuilder<T, D, B>> {
-	private final Provider<D> factory;
-
 	@Nullable
 	private String label;
 	@Nullable
@@ -37,10 +35,6 @@ public abstract class AbstractConfiguredFieldDefinitionBuilder<T, D extends Conf
 	private Class<? extends Converter<T, ?>> converterClass;
 	@Nullable
 	private List<FieldValidatorDefinition> validators;
-
-	protected AbstractConfiguredFieldDefinitionBuilder(final Provider<D> factory) {
-		this.factory = factory;
-	}
 
 	public B label(final String label) {
 		this.label = label;
@@ -121,8 +115,7 @@ public abstract class AbstractConfiguredFieldDefinitionBuilder<T, D extends Conf
 		return (B) this;
 	}
 
-	protected D build(final String name) {
-		final D definition = factory.get();
+	protected void populate(final D definition, final String name) {
 		definition.setName(name);
 		Optional.ofNullable(label).ifPresent(definition::setLabel);
 		Optional.ofNullable(i18n).ifPresent(definition::setI18n);
@@ -135,6 +128,5 @@ public abstract class AbstractConfiguredFieldDefinitionBuilder<T, D extends Conf
 		Optional.ofNullable(styleName).ifPresent(definition::setStyleName);
 		Optional.ofNullable(converterClass).ifPresent(definition::setConverterClass);
 		Stream.ofNullable(validators).flatMap(Collection::stream).forEach(definition.getValidators()::add);
-		return definition;
 	}
 }

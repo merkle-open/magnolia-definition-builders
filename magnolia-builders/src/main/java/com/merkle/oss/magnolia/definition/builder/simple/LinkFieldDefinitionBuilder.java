@@ -10,11 +10,9 @@ import info.magnolia.ui.field.LinkFieldDefinition;
  */
 public class LinkFieldDefinitionBuilder<T> extends AbstractLinkFieldDefinitionBuilder<T, LinkFieldDefinition<T>, LinkFieldDefinitionBuilder<T>> {
 
-	public LinkFieldDefinitionBuilder() {
-		super(LinkFieldDefinition::new);
-	}
-
 	public LinkFieldDefinition<T> build(final String name, final DatasourceDefinition datasourceDefinition) {
-		return super.build(name, datasourceDefinition);
+		final LinkFieldDefinition<T> definition = new LinkFieldDefinition<>();
+		super.populate(definition, name, datasourceDefinition);
+		return definition;
 	}
 }

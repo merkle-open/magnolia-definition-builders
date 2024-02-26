@@ -23,10 +23,6 @@ public class OptionListDefinitionBuilder extends AbstractBaseDatasourceDefinitio
 	@Nullable
 	private Boolean sort;
 
-	public OptionListDefinitionBuilder() {
-		super(OptionListDefinition::new);
-	}
-
 	public OptionListDefinitionBuilder name(final String name) {
 		this.name = name;
 		return self();
@@ -78,9 +74,9 @@ public class OptionListDefinitionBuilder extends AbstractBaseDatasourceDefinitio
 				.build(option.getValue(), option.getValue());
 	}
 
-	@Override
 	public OptionListDefinition build() {
-		final OptionListDefinition definition = super.build();
+		final OptionListDefinition definition = new OptionListDefinition();
+		super.populate(definition);
 		Optional.ofNullable(name).ifPresent(definition::setName);
 		Optional.ofNullable(sort).ifPresent(definition::setSort);
 		Stream.ofNullable(options).flatMap(Collection::stream).forEach(definition.getOptions()::add);

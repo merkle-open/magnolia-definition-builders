@@ -25,10 +25,6 @@ public class CompositeFieldDefinitionBuilder<T> extends AbstractConfiguredComple
 	@Nullable
 	private Class<? extends WithPropertyNameDecorator.PropertyNameDecorator> propertyNameDecorator;
 
-	public CompositeFieldDefinitionBuilder() {
-		super(CompositeFieldDefinition::new);
-	}
-
 	public CompositeFieldDefinitionBuilder<T> layout(final FieldLayoutDefinition<?> layout) {
 		this.layout = layout;
 		return self();
@@ -52,7 +48,8 @@ public class CompositeFieldDefinitionBuilder<T> extends AbstractConfiguredComple
 	}
 
 	public CompositeFieldDefinition<T> build(final String name) {
-		final CompositeFieldDefinition<T> definition = super.build(name);
+		final CompositeFieldDefinition<T> definition = new CompositeFieldDefinition<>();
+		super.populate(definition, name);
 		Optional.ofNullable(layout).ifPresent(definition::setLayout);
 		Optional.ofNullable(propertyNameDecorator).ifPresent(definition::setPropertyNameDecorator);
 		Stream.ofNullable(properties).flatMap(Collection::stream).forEach(definition.getProperties()::add);
