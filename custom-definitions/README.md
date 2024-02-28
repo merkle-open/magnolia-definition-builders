@@ -10,6 +10,7 @@
 ## validators
  - MimeType
  - NodeType
+ - Template
 
 ## Configuration
 
