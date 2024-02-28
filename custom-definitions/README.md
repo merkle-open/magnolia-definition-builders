@@ -7,6 +7,9 @@
  - [ImageSet](src/main/java/com/merkle/oss/magnolia/definition/custom/imageset/README.md)
  - [VideoSet](src/main/java/com/merkle/oss/magnolia/definition/custom/videoset/README.md)
 
+## validators
+ - MimeType
+
 ## Configuration
 
 ```java
