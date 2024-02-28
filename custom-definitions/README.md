@@ -9,6 +9,7 @@
 
 ## validators
  - MimeType
+ - NodeType
 
 ## Configuration
 
