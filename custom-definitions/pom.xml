@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.namics.oss.magnolia</groupId>
         <artifactId>magnolia-definition-builders-parent</artifactId>
-        <version>1.0.10-SNAPSHOT</version>
+        <version>1.0.10</version>
     </parent>
 
     <artifactId>custom-definition-builders</artifactId>
