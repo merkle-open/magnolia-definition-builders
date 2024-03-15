@@ -26,7 +26,7 @@ public class DamVideoSourceTransformer implements VideoSourceTransformer {
 	@Override
 	public Optional<VideoSource> transform(final Locale locale, final String src) {
 		return Optional.ofNullable(damTemplatingFunctions.getAsset(src)).map(asset ->
-			new VideoSource(asset.getLink(), asset.getCaption())
+			new VideoSource(asset.getLink())
 		);
 	}
 }

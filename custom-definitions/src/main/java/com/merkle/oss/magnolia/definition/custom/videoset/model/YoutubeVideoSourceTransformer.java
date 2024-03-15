@@ -20,7 +20,7 @@ public class YoutubeVideoSourceTransformer implements VideoSourceTransformer {
 	@Override
 	public Optional<VideoSource> transform(final Locale locale, final String src) {
 		if (StringUtils.startsWith(src, YoutubeTextValueConverter.PREFIX)) {
-			return Optional.of(new VideoSource(StringUtils.removeStart(src, YoutubeTextValueConverter.PREFIX), null));
+			return Optional.of(new VideoSource(StringUtils.removeStart(src, YoutubeTextValueConverter.PREFIX)));
 		}
 		return Optional.empty();
 	}

@@ -18,19 +18,15 @@ public class VideoModel {
 	private final String src;
 	private final VideoType videoType;
 	@Nullable
-	private final String altText;
-	@Nullable
 	private final ImageReferenceModel previewImage;
 
 	public VideoModel(
 			final String src,
 			final VideoType videoType,
-			@Nullable final String altText,
 			@Nullable final ImageReferenceModel previewImage
 	) {
 		this.src = src;
 		this.videoType = videoType;
-		this.altText = altText;
 		this.previewImage = previewImage;
 	}
 
@@ -42,9 +38,6 @@ public class VideoModel {
 		return videoType;
 	}
 
-	public Optional<String> getAltText() {
-		return Optional.ofNullable(altText);
-	}
 
 	public Optional<ImageReferenceModel> getPreviewImage() {
 		return Optional.ofNullable(previewImage);
@@ -54,13 +47,13 @@ public class VideoModel {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		VideoModel video = (VideoModel) o;
-		return Objects.equals(src, video.src) && Objects.equals(videoType, video.videoType) && Objects.equals(altText, video.altText) && Objects.equals(previewImage, video.previewImage);
+		VideoModel that = (VideoModel) o;
+		return Objects.equals(src, that.src) && Objects.equals(videoType, that.videoType) && Objects.equals(previewImage, that.previewImage);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(src, videoType, altText, previewImage);
+		return Objects.hash(src, videoType, previewImage);
 	}
 
 	@Override
@@ -68,7 +61,6 @@ public class VideoModel {
 		return "Video{" +
 				"src='" + src + '\'' +
 				", videoType=" + videoType +
-				", altText='" + altText + '\'' +
 				", previewImage=" + previewImage +
 				'}';
 	}
@@ -104,7 +96,6 @@ public class VideoModel {
 					new VideoModel(
 							videoSource.src,
 							videoReference.getVideoType(),
-							videoReference.getAltText().orElse(videoSource.altText),
 							videoReference.getPreviewImage().orElse(null)
 					)
 			);
@@ -125,12 +116,9 @@ public class VideoModel {
 
 	public static class VideoSource {
 		private final String src;
-		@Nullable
-		private final String altText;
 
-		public VideoSource(final String src, @Nullable final String altText) {
+		public VideoSource(final String src) {
 			this.src = src;
-			this.altText = altText;
 		}
 	}
 }

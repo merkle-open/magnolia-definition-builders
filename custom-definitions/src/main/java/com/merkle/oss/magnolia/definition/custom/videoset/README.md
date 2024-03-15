@@ -1,5 +1,5 @@
 # VideoSet
-A videoSet groups the fields video-source, alternative-text and previewImage [imageSet](../imageset/README.md) for different video types, from which the author can choose from.
+A videoSet groups the fields video-source and previewImage [imageSet](../imageset/README.md) for different video types, from which the author can choose from.
 
 ## Usage
 ### Dialog
@@ -154,8 +154,7 @@ Vimeo video, specified by ID.
       @Override
       public Optional<VideoModel.VideoSource> transform(final Locale locale, final String assetId) {
          return Optional.of(new VideoModel.VideoSource(
-                 "https://aprimo.com/asset/"+assetId,
-                 null
+                 "https://aprimo.com/asset/"+assetId
          ));
       }
    

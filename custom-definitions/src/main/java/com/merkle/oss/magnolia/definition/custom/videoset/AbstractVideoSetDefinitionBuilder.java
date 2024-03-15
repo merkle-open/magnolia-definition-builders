@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 
 public abstract class AbstractVideoSetDefinitionBuilder<B extends AbstractVideoSetDefinitionBuilder<B>> extends AbstractConfiguredComplexPropertyDefinitionBuilder<Node, VideoSetDefinition, B> {
 	public static final String SELECTION_SUFFIX = "_selection";
-	public static final String ALT_TEXT_SUFFIX = "_alt";
 	public static final String PREVIEW_IMAGE_SUFFIX = "_previewImage";
 	private final AbstractImageSetDefinitionBuilder<?> imageSetDefinitionBuilder;
 	private final String labelPrefix;
@@ -110,9 +109,6 @@ public abstract class AbstractVideoSetDefinitionBuilder<B extends AbstractVideoS
 						.fieldOptions(Stream.ofNullable(videoOptions).flatMap(Collection::stream).map(this::createFieldOption).collect(Collectors.toList()))
 						.label(labelPrefix + "video.label")
 						.build(name),
-				new TextFieldDefinitionBuilder()
-						.label(labelPrefix + "altText.label")
-						.build(name + ALT_TEXT_SUFFIX),
 				imageSetDefinitionBuilder
 						.label(labelPrefix + "previewImage.label")
 						.build(name + PREVIEW_IMAGE_SUFFIX)

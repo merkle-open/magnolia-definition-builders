@@ -18,19 +18,15 @@ public class VideoReferenceModel {
 	private final String assetId;
 	private final VideoType videoType;
 	@Nullable
-	private final String altText;
-	@Nullable
 	private final ImageReferenceModel previewImage;
 
 	public VideoReferenceModel(
 			final String assetId,
 			final VideoType videoType,
-			@Nullable final String altText,
 			@Nullable final ImageReferenceModel previewImage
 	) {
 		this.assetId = assetId;
 		this.videoType = videoType;
-		this.altText = altText;
 		this.previewImage = previewImage;
 	}
 
@@ -42,10 +38,6 @@ public class VideoReferenceModel {
 		return videoType;
 	}
 
-	public Optional<String> getAltText() {
-		return Optional.ofNullable(altText);
-	}
-
 	public Optional<ImageReferenceModel> getPreviewImage() {
 		return Optional.ofNullable(previewImage);
 	}
@@ -55,12 +47,12 @@ public class VideoReferenceModel {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		VideoReferenceModel that = (VideoReferenceModel) o;
-		return Objects.equals(assetId, that.assetId) && Objects.equals(videoType, that.videoType) && Objects.equals(altText, that.altText) && Objects.equals(previewImage, that.previewImage);
+		return Objects.equals(assetId, that.assetId) && Objects.equals(videoType, that.videoType) && Objects.equals(previewImage, that.previewImage);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(assetId, videoType, altText, previewImage);
+		return Objects.hash(assetId, videoType, previewImage);
 	}
 
 	@Override
@@ -68,7 +60,6 @@ public class VideoReferenceModel {
 		return "VideoReference{" +
 				"assetId='" + assetId + '\'' +
 				", videoType=" + videoType +
-				", altText='" + altText + '\'' +
 				", previewImage=" + previewImage +
 				'}';
 	}
@@ -99,7 +90,6 @@ public class VideoReferenceModel {
 							new VideoReferenceModel(
 									assetId,
 									videoType,
-									video.getProperty(propertyName + VideoSetDefinitionBuilder.ALT_TEXT_SUFFIX, dialogLocale, ValueConverter::getString).orElse(null),
 									imageReferenceFactory
 											.create(propertyName + VideoSetDefinitionBuilder.PREVIEW_IMAGE_SUFFIX, dialogLocale, video)
 											.orElse(null)

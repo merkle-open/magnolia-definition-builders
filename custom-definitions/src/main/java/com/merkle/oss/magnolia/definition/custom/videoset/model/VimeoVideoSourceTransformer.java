@@ -20,7 +20,7 @@ public class VimeoVideoSourceTransformer implements VideoSourceTransformer {
 	@Override
 	public Optional<VideoSource> transform(final Locale locale, final String src) {
 		if (StringUtils.startsWith(src, VimeoTextValueConverter.PREFIX)) {
-			return Optional.of(new VideoSource(StringUtils.removeStart(src, VimeoTextValueConverter.PREFIX), null));
+			return Optional.of(new VideoSource(StringUtils.removeStart(src, VimeoTextValueConverter.PREFIX)));
 		}
 		return Optional.empty();
 	}

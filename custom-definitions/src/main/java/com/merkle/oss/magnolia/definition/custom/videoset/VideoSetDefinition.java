@@ -18,7 +18,6 @@ import java.util.List;
 
 public class VideoSetDefinition extends ConfiguredComplexPropertyDefinition<Node> implements FormDefinition<Node> {
 	private final SwitchableDefinition video;
-	private final TextFieldDefinition altText;
 	private final ImageSetDefinition previewImage;
 	private boolean readOnly;
 	private boolean required;
@@ -27,11 +26,9 @@ public class VideoSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 
 	public VideoSetDefinition(
 			final SwitchableDefinition video,
-			final TextFieldDefinition altText,
 			final ImageSetDefinition previewImage
 	) {
 		this.video = video;
-		this.altText = altText;
 		this.previewImage = previewImage;
 		setImplementationClass((Class) FormView.class);
 		setItemProvider(new CurrentItemProviderDefinition<>());
@@ -41,17 +38,13 @@ public class VideoSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 		return video;
 	}
 
-	public TextFieldDefinition getAltTextField() {
-		return altText;
-	}
-
 	public ImageSetDefinition getPreviewImage() {
 		return previewImage;
 	}
 
 	@Override
 	public List<EditorPropertyDefinition> getProperties() {
-		return List.of(video, altText, previewImage);
+		return List.of(video, previewImage);
 	}
 
 	@Override
@@ -63,14 +56,12 @@ public class VideoSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 	public void setI18n(final boolean i18n) {
 		super.setI18n(i18n);
 		video.setI18n(i18n);
-		altText.setI18n(i18n);
 		previewImage.setI18n(i18n);
 	}
 
 	public void setReadOnly(final boolean readOnly) {
 		this.readOnly = readOnly;
 		video.setReadOnly(readOnly);
-		altText.setReadOnly(readOnly);
 		previewImage.setReadOnly(readOnly);
 	}
 
