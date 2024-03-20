@@ -16,7 +16,7 @@ public class LinkSetGuiceModule implements Module {
 	@Override
 	public void configure(final Binder binder) {
 		final Multibinder<LinkType.Resolver> linkTypeResolversMultibinder = Multibinder.newSetBinder(binder, LinkType.Resolver.class);
-		linkTypeResolversMultibinder.addBinding().toProvider(() -> LinkTypes::fromValue);
+		linkTypeResolversMultibinder.addBinding().to(LinkTypes.Resolver.class);
 
 		final Multibinder<LinkModelFactory.LinkFactory> linkFactoriesMultibinder = Multibinder.newSetBinder(binder, LinkModelFactory.LinkFactory.class);
 		linkFactoriesMultibinder.addBinding().to(ExternalLinkFactory.class);

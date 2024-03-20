@@ -27,10 +27,13 @@ public enum LinkTypes implements LinkType {
 		return value;
 	}
 
-	public static Optional<LinkType> fromValue(final String value) {
-		return Arrays.stream(values())
-				.filter(type -> Objects.equals(type.getValue(), value))
-				.findFirst()
-				.map(linkType -> linkType);
+	public static class Resolver implements LinkType.Resolver {
+		@Override
+		public Optional<LinkType> resolve(final String value) {
+			return Arrays.stream(values())
+					.filter(type -> Objects.equals(type.getValue(), value))
+					.findFirst()
+					.map(linkType -> linkType);
+		}
 	}
 }

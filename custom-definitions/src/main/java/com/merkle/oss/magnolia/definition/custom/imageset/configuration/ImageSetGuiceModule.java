@@ -14,7 +14,7 @@ public class ImageSetGuiceModule implements Module {
 	@Override
 	public void configure(final Binder binder) {
 		final Multibinder<ImageType.Resolver> imageTypeResolversMultibinder = Multibinder.newSetBinder(binder, ImageType.Resolver.class);
-		imageTypeResolversMultibinder.addBinding().toProvider(() -> ImageTypes::fromValue);
+		imageTypeResolversMultibinder.addBinding().to(ImageTypes.Resolver.class);
 
 		final Multibinder<ImageModel.ImageSourceTransformer> imageSourceTransformersMultibinder = Multibinder.newSetBinder(binder, ImageModel.ImageSourceTransformer.class);
 		imageSourceTransformersMultibinder.addBinding().to(DamImageSourceTransformer.class);

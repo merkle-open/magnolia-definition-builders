@@ -28,10 +28,13 @@ public enum VideoTypes implements VideoType {
 		return value;
 	}
 
-	public static Optional<VideoType> fromValue(final String value) {
-		return Arrays.stream(values())
-				.filter(type -> Objects.equals(type.getValue(), value))
-				.findFirst()
-				.map(videoType -> videoType);
+	public static class Resolver implements VideoType.Resolver {
+		@Override
+		public Optional<VideoType> resolve(String value) {
+			return Arrays.stream(values())
+					.filter(type -> Objects.equals(type.getValue(), value))
+					.findFirst()
+					.map(videoType -> videoType);
+		}
 	}
 }

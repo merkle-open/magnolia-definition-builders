@@ -14,7 +14,7 @@ public class VideoSetGuiceModule implements Module {
 	@Override
 	public void configure(final Binder binder) {
 		final Multibinder<VideoType.Resolver> videoTypeResolversMultibinder = Multibinder.newSetBinder(binder, VideoType.Resolver.class);
-		videoTypeResolversMultibinder.addBinding().toProvider(() -> VideoTypes::fromValue);
+		videoTypeResolversMultibinder.addBinding().to(VideoTypes.Resolver.class);
 
 		final Multibinder<VideoModel.VideoSourceTransformer> videoSourceTransformersMultibinder = Multibinder.newSetBinder(binder, VideoModel.VideoSourceTransformer.class);
 		videoSourceTransformersMultibinder.addBinding().to(DamVideoSourceTransformer.class);

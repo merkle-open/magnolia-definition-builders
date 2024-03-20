@@ -25,10 +25,13 @@ public enum ImageTypes implements ImageType {
 		return value;
 	}
 
-	public static Optional<ImageType> fromValue(final String value) {
-		return Arrays.stream(values())
-				.filter(type -> Objects.equals(type.getValue(), value))
-				.findFirst()
-				.map(imageType -> imageType);
+	public static class Resolver implements ImageType.Resolver {
+		@Override
+		public Optional<ImageType> resolve(String value) {
+			return Arrays.stream(values())
+					.filter(type -> Objects.equals(type.getValue(), value))
+					.findFirst()
+					.map(imageType -> imageType);
+		}
 	}
 }
