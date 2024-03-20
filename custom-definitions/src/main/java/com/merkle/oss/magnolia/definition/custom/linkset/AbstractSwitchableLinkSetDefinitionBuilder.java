@@ -30,10 +30,10 @@ public abstract class AbstractSwitchableLinkSetDefinitionBuilder<B extends Abstr
 
 	protected abstract FieldOption<LinkType> createFieldOption(LinkType linkType);
 
-	public B linkOption(final LinkType imageOption) {
+	public B linkOption(final LinkType linkOption) {
 		return linkOptions(Stream.concat(
 				Stream.ofNullable(linkOptions).flatMap(Collection::stream),
-				Stream.of(imageOption)
+				Stream.of(linkOption)
 		).collect(Collectors.toList()));
 	}
 

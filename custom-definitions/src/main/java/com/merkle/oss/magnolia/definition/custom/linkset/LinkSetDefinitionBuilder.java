@@ -25,49 +25,49 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 	@Override
 	protected FieldOption<LinkType> createFieldOption(final LinkType linkType) {
 		if(LinkTypes.INTERNAL.equals(linkType)) {
-			return internal();
+			return internal(linkType);
 		}
 		if(LinkTypes.EXTERNAL.equals(linkType)) {
-			return external();
+			return external(linkType);
 		}
 		if(LinkTypes.ASSET_DAM.equals(linkType)) {
-			return asset();
+			return asset(linkType);
 		}
 		throw new IllegalArgumentException("Unsupported link type " + linkType);
 	}
 
-	protected FieldOption<LinkType> internal() {
+	protected FieldOption<LinkType> internal(final LinkType linkType) {
 		return new FieldOption<>(
-				LinkTypes.INTERNAL,
+				linkType,
 				name -> new BasicLinkSetDefinitionBuilder<>()
 						.anchorId(anchor(name))
 						.linkText(linkText(name))
 						.openInNewWindow(openInNewTab(name))
 						.label("")
-						.build(name, new InternalLinkDefinitionBuilder().label(LABEL_PREFIX + LinkTypes.INTERNAL.getLabel()).build(name))
+						.build(name, new InternalLinkDefinitionBuilder().label(LABEL_PREFIX + linkType.getLabel()).build(name))
 		);
 	}
 
-	protected FieldOption<LinkType> external() {
+	protected FieldOption<LinkType> external(final LinkType linkType) {
 		return new FieldOption<>(
-				LinkTypes.EXTERNAL,
+				linkType,
 				name -> new BasicLinkSetDefinitionBuilder<>()
 						.anchorId(anchor(name))
 						.linkText(linkText(name))
 						.openInNewWindow(openInNewTab(name))
 						.label("")
-						.build(name, new TextFieldDefinitionBuilder().label(LABEL_PREFIX + LinkTypes.EXTERNAL.getLabel()).build(name))
+						.build(name, new TextFieldDefinitionBuilder().label(LABEL_PREFIX + linkType.getLabel()).build(name))
 		);
 	}
 
-	protected FieldOption<LinkType> asset() {
+	protected FieldOption<LinkType> asset(final LinkType linkType) {
 		return new FieldOption<>(
-				LinkTypes.ASSET_DAM,
+				linkType,
 				name -> new BasicLinkSetDefinitionBuilder<>()
 						.linkText(linkText(name))
 						.openInNewWindow(openInNewTab(name))
 						.label("")
-						.build(name, new AssetLinkDefinitionBuilder().label(LABEL_PREFIX + LinkTypes.ASSET_DAM.getLabel()).build(name))
+						.build(name, new AssetLinkDefinitionBuilder().label(LABEL_PREFIX + linkType.getLabel()).build(name))
 		);
 	}
 
