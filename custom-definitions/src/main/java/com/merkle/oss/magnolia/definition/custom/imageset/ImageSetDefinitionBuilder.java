@@ -6,6 +6,7 @@ import com.merkle.oss.magnolia.definition.custom.switchable.SingleSwitchableForm
 
 public class ImageSetDefinitionBuilder extends AbstractImageSetDefinitionBuilder<ImageSetDefinitionBuilder> {
 	protected static final String LABEL_PREFIX = "merkle.customDefinitions.imageSet.";
+	protected static final String FIELD_LABEL_PREFIX = LABEL_PREFIX + "field.";
 
 	public ImageSetDefinitionBuilder() {
 		super(LABEL_PREFIX);
@@ -24,7 +25,7 @@ public class ImageSetDefinitionBuilder extends AbstractImageSetDefinitionBuilder
 				ImageTypes.DAM,
 				n -> new SingleSwitchableForm<>(
 						new AssetLinkDefinitionBuilder()
-								.label(LABEL_PREFIX + ImageTypes.DAM.getLabel())
+								.label(FIELD_LABEL_PREFIX + ImageTypes.DAM.getLabel())
 								.build(n)
 				)
 		);

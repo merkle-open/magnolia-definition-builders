@@ -11,6 +11,7 @@ import javax.inject.Provider;
 
 public class VideoSetDefinitionBuilder extends AbstractVideoSetDefinitionBuilder<VideoSetDefinitionBuilder> {
 	protected static final String LABEL_PREFIX = "merkle.customDefinitions.videoSet.";
+	protected static final String FIELD_LABEL_PREFIX = LABEL_PREFIX + "field.";
 
 	public VideoSetDefinitionBuilder() {
 		this(new ImageSetDefinitionBuilder());
@@ -39,7 +40,7 @@ public class VideoSetDefinitionBuilder extends AbstractVideoSetDefinitionBuilder
 				VideoTypes.VIMEO,
 				name -> new SingleSwitchableForm<>(
 						new TextFieldDefinitionBuilder()
-								.label(LABEL_PREFIX + VideoTypes.VIMEO.getLabel())
+								.label(FIELD_LABEL_PREFIX + VideoTypes.VIMEO.getLabel())
 								.converterClass(VimeoTextValueConverter.class)
 								.build(name)
 				)
@@ -51,7 +52,7 @@ public class VideoSetDefinitionBuilder extends AbstractVideoSetDefinitionBuilder
 				VideoTypes.YOUTUBE,
 				name -> new SingleSwitchableForm<>(
 						new TextFieldDefinitionBuilder()
-								.label(LABEL_PREFIX + VideoTypes.YOUTUBE.getLabel())
+								.label(FIELD_LABEL_PREFIX + VideoTypes.YOUTUBE.getLabel())
 								.converterClass(YoutubeTextValueConverter.class)
 								.build(name)
 				)
@@ -63,7 +64,7 @@ public class VideoSetDefinitionBuilder extends AbstractVideoSetDefinitionBuilder
 				VideoTypes.DAM,
 				name -> new SingleSwitchableForm<>(
 						new AssetLinkDefinitionBuilder()
-								.label(LABEL_PREFIX + VideoTypes.DAM.getLabel())
+								.label(FIELD_LABEL_PREFIX + VideoTypes.DAM.getLabel())
 								.build(name)
 				)
 		);

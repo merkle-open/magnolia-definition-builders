@@ -17,6 +17,7 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 	public static final UnaryOperator<String> LINK_TEXT_PROPERTY_NAME_PROVIDER = name -> name + "_text";
 	public static final UnaryOperator<String> OPEN_IN_NEW_TAB_PROPERTY_NAME_PROVIDER = name -> name + "_in_new_window";
 	protected static final String LABEL_PREFIX = "merkle.customDefinitions.linkSet.";
+	protected static final String FIELD_LABEL_PREFIX = LABEL_PREFIX + "field.";
 
 	public LinkSetDefinitionBuilder() {
 		super(LABEL_PREFIX);
@@ -44,7 +45,7 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 						.linkText(linkText(name))
 						.openInNewWindow(openInNewTab(name))
 						.label("")
-						.build(name, new InternalLinkDefinitionBuilder().label(LABEL_PREFIX + linkType.getLabel()).build(name))
+						.build(name, new InternalLinkDefinitionBuilder().label(FIELD_LABEL_PREFIX + linkType.getLabel()).build(name))
 		);
 	}
 
@@ -56,7 +57,7 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 						.linkText(linkText(name))
 						.openInNewWindow(openInNewTab(name))
 						.label("")
-						.build(name, new TextFieldDefinitionBuilder().label(LABEL_PREFIX + linkType.getLabel()).build(name))
+						.build(name, new TextFieldDefinitionBuilder().label(FIELD_LABEL_PREFIX + linkType.getLabel()).build(name))
 		);
 	}
 
@@ -67,7 +68,7 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 						.linkText(linkText(name))
 						.openInNewWindow(openInNewTab(name))
 						.label("")
-						.build(name, new AssetLinkDefinitionBuilder().label(LABEL_PREFIX + linkType.getLabel()).build(name))
+						.build(name, new AssetLinkDefinitionBuilder().label(FIELD_LABEL_PREFIX + linkType.getLabel()).build(name))
 		);
 	}
 
