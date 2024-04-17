@@ -104,7 +104,7 @@ public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, 
 		final SwitchableDefinition definition =new SwitchableDefinition(
 				propertyNameDecorator != null ? propertyNameDecorator : PrefixNameDecorator.class,
 				new RadioButtonGroupFieldDefinitionBuilder<Option>()
-						.defaultValue(getDefault(fieldOptions, selected).map(OptionEnum::getValue).orElse(null))
+						.defaultValue(Optional.ofNullable(fieldOptions).flatMap(options -> getDefault(options, selected)).map(OptionEnum::getValue).orElse(null))
 						.layout(Layout.horizontal)
 						.build(
 								Optional.ofNullable(optionPropertyNameDecorator).orElseGet(NoopNameDecorator::new).apply(name),
