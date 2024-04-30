@@ -1,23 +1,27 @@
 package com.merkle.oss.magnolia.definition.custom.richtext;
 
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
-import com.vaadin.server.VaadinService;
+import info.magnolia.dam.api.AssetProviderRegistry;
+import info.magnolia.dam.app.field.factory.DamRichTextFieldFactory;
 import info.magnolia.i18nsystem.I18nizer;
 import info.magnolia.i18nsystem.SimpleTranslator;
 import info.magnolia.ui.dialog.DialogDefinitionRegistry;
-import info.magnolia.ui.field.factory.RichTextFieldFactory;
 import info.magnolia.ui.framework.ioc.UiComponentProvider;
 import info.magnolia.ui.vaadin.ckeditor.MagnoliaCKEditorConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nullable;
-import javax.inject.Inject;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class ExtendedRichTextFactory extends RichTextFieldFactory {
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
+import com.vaadin.server.VaadinService;
+
+public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 	private static final Logger LOG = LoggerFactory.getLogger(ExtendedRichTextFactory.class);
 
 	@Inject
@@ -26,9 +30,10 @@ public class ExtendedRichTextFactory extends RichTextFieldFactory {
 			final UiComponentProvider componentProvider,
 			final SimpleTranslator i18n,
 			final DialogDefinitionRegistry dialogDefinitionRegistry,
-			final I18nizer i18nizer
+			final I18nizer i18nizer,
+			final AssetProviderRegistry assetProviderRegistry
 	) {
-		super(definition, componentProvider, i18n, dialogDefinitionRegistry, i18nizer);
+		super(definition, componentProvider, i18n, dialogDefinitionRegistry, i18nizer, assetProviderRegistry);
 	}
 
 	@Override

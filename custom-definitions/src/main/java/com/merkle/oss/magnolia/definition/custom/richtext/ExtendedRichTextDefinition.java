@@ -1,14 +1,16 @@
 package com.merkle.oss.magnolia.definition.custom.richtext;
 
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
-import info.magnolia.ui.field.RichTextFieldDefinition;
+import info.magnolia.dam.app.field.DamRichTextFieldDefinition;
 
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
-public class ExtendedRichTextDefinition extends RichTextFieldDefinition {
+import javax.annotation.Nullable;
+
+import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
+
+public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
 	@Nullable
 	private String formatTags;
 	@Nullable
