@@ -50,7 +50,7 @@ public class FieldValidatorDefinitionKeyGenerator extends info.magnolia.ui.field
 			final ConfiguredFieldValidatorDefinition definition,
 			final AnnotatedElement el) {
 		return Stream.of(
-				Stream.of(dialogName),
+				Stream.of(dialogName, "field"),
 				Stream.of(
 						replaceColons(fieldDefinition.getName()),
 						replaceColons(definition.getName()),
