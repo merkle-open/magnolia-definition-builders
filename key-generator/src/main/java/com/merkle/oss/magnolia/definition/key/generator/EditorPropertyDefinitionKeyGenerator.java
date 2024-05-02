@@ -13,66 +13,72 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class EditorPropertyDefinitionKeyGenerator extends info.magnolia.ui.editor.i18n.EditorPropertyDefinitionKeyGenerator {
-	private final KeyGeneratorUtil keyGeneratorUtil;
-	private final FieldDefinitionKeyGenerator fieldDefinitionKeyGenerator;
 
-	public EditorPropertyDefinitionKeyGenerator() {
-		// can't inject anything in keyGenerators -.- see I18nKeyGeneratorFactory
-		this(Components.getComponent(KeyGeneratorUtil.class), new FieldDefinitionKeyGenerator());
-	}
+    private final KeyGeneratorUtil keyGeneratorUtil;
+    private final FieldDefinitionKeyGenerator fieldDefinitionKeyGenerator;
+    private final KeyPrefixer keyPrefixer;
 
-	public EditorPropertyDefinitionKeyGenerator(
-			final KeyGeneratorUtil keyGeneratorUtil,
-			final FieldDefinitionKeyGenerator fieldDefinitionKeyGenerator
-	) {
-		this.keyGeneratorUtil = keyGeneratorUtil;
-		this.fieldDefinitionKeyGenerator = fieldDefinitionKeyGenerator;
-	}
+    public EditorPropertyDefinitionKeyGenerator() {
+        // can't inject anything in keyGenerators -.- see I18nKeyGeneratorFactory
+        this(Components.getComponent(KeyGeneratorUtil.class), new FieldDefinitionKeyGenerator(), new KeyPrefixer());
+    }
 
-	@Override
-	public String[] keysFor(final String undecoratedResult, final EditorPropertyDefinition definition, final AnnotatedElement el) {
-		if(definition instanceof FieldDefinition) {
-			return fieldDefinitionKeyGenerator.keysFor(undecoratedResult, definition, el);
-		}
-		return super.keysFor(undecoratedResult, definition, el);
-	}
+    public EditorPropertyDefinitionKeyGenerator(
+            final KeyGeneratorUtil keyGeneratorUtil,
+            final FieldDefinitionKeyGenerator fieldDefinitionKeyGenerator,
+            final KeyPrefixer keyPrefixer
+    ) {
+        this.keyGeneratorUtil = keyGeneratorUtil;
+        this.fieldDefinitionKeyGenerator = fieldDefinitionKeyGenerator;
+        this.keyPrefixer = keyPrefixer;
+    }
 
-	@Override
-	protected void keysFor(
-			final List<String> list,
-			final EditorPropertyDefinition definition,
-			final AnnotatedElement el) {
-		final String dialogName = keyGeneratorUtil.getDialogName(definition);
+    @Override
+    public String[] keysFor(final String undecoratedResult, final EditorPropertyDefinition definition, final AnnotatedElement el) {
+        if (definition instanceof FieldDefinition) {
+            return fieldDefinitionKeyGenerator.keysFor(undecoratedResult, definition, el);
+        }
+        return super.keysFor(undecoratedResult, definition, el);
+    }
 
-		if(keyGeneratorUtil.isMagnoliaModule(definition)) {
-			super.keysFor(list, definition, el);
-		} else {
-			addKey(list, getKeys(dialogName, definition, el));
-			addKey(list, getKeys(keyGeneratorUtil.getFallbackDialogName(), definition, el));
-		}
-	}
+    @Override
+    protected void keysFor(
+            final List<String> list,
+            final EditorPropertyDefinition definition,
+            final AnnotatedElement el) {
+        final String dialogName = keyGeneratorUtil.getDialogName(definition);
 
-	private String[] getKeys(final String dialogName, final EditorPropertyDefinition definition, final AnnotatedElement el) {
-		return Stream.of(
-				Stream.of(dialogName, "field"),
-				streamNames(definition),
-				Stream.of(
-						replaceColons(definition.getName()),
-						fieldOrGetterName(el)
-				)
-		).flatMap(Function.identity()).sequential().toArray(String[]::new);
-	}
+        if (keyGeneratorUtil.isMagnoliaModule(definition)) {
+            super.keysFor(list, definition, el);
+        } else {
+            addKey(list, getKeys(dialogName, definition, el));
+            addKey(list, getKeys(keyGeneratorUtil.getFallbackDialogName(), definition, el));
+        }
+    }
 
-	private Stream<String> streamNames(final Object definition) {
-		final List<Object> ancestors = getAncestors(definition);
-		Collections.reverse(ancestors);
-		return ancestors.stream()
-				.filter(ancestor ->
-						keyGeneratorUtil.getExcludedAncestors().stream().noneMatch(excluded -> excluded.isInstance(ancestor))
-				)
-				.filter(NamedDefinition.class::isInstance)
-				.map(NamedDefinition.class::cast)
-				.map(NamedDefinition::getName)
-				.distinct();
-	}
+    private String[] getKeys(final String dialogName, final EditorPropertyDefinition definition, final AnnotatedElement el) {
+        return Stream.of(
+                Stream.of(dialogName),
+                keyPrefixer.getKeyPrefix(definition),
+                Stream.of("field"),
+                streamNames(definition),
+                Stream.of(
+                        replaceColons(definition.getName()),
+                        fieldOrGetterName(el)
+                )
+        ).flatMap(Function.identity()).sequential().toArray(String[]::new);
+    }
+
+    private Stream<String> streamNames(final Object definition) {
+        final List<Object> ancestors = getAncestors(definition);
+        Collections.reverse(ancestors);
+        return ancestors.stream()
+                .filter(ancestor ->
+                        keyGeneratorUtil.getExcludedAncestors().stream().noneMatch(excluded -> excluded.isInstance(ancestor))
+                )
+                .filter(NamedDefinition.class::isInstance)
+                .map(NamedDefinition.class::cast)
+                .map(NamedDefinition::getName)
+                .distinct();
+    }
 }

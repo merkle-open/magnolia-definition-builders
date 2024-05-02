@@ -80,3 +80,35 @@ public class GuiceComponentConfigurer extends AbstractGuiceComponentConfigurer {
 	}
 }
 ```
+
+## Custom key prefix
+The generated keys can be prefixed, which can be useful if you e.g. have 2 different dialogs with same field names, but want to use the fallbackDialogName.
+
+### Dialog
+```java
+import info.magnolia.ui.field.EditorPropertyDefinition;
+import info.magnolia.module.blossom.annotation.TabFactory;
+
+import com.merkle.oss.magnolia.definition.builder.simple.TextFieldDefinitionBuilder;
+import com.merkle.oss.magnolia.definition.builder.validator.RegexpValidatorDefinitionBuilder;
+import com.merkle.oss.magnolia.definition.key.generator.KeyPrefixer;
+
+@TabFactory("someTab")
+public List<EditorPropertyDefinition> someTab() {
+    return List.of(
+            KeyPrefixer.keyPrefix(
+                    new TextFieldDefinitionBuilder()
+                        .validator(new RegexpValidatorDefinitionBuilder().pattern("^[a-zA-Z0-9]*$").build())
+                        .build("title"), 
+                    "somePrefix"
+            )
+    );
+}
+```
+### Key
+```properties
+<DIALOG_NAME>.somePrefix.field.title.label=Title
+<DIALOG_NAME>.somePrefix.field.title.regexpValidator.errorMessage=Must be alphanumeric
+<FALLBACK_DIALOG_NAME>.somePrefix.field.title.label=Title
+<FALLBACK_DIALOG_NAME>.somePrefix.field.title.regexpValidator.errorMessage=Must be alphanumeric
+```
