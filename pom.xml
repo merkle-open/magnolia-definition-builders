@@ -36,20 +36,19 @@
 	<properties>
 		<!-- (check for new versions:  mvn versions:display-property-updates )-->
 
-		<magnolia.version>6.2.42</magnolia.version>
-		<magnolia.blossom.version>3.6.0</magnolia.blossom.version>
+		<magnolia.version>6.2.44</magnolia.version>
 		<magnolia.workflow.version>6.0.8</magnolia.workflow.version>
-		<magnolia.dam.version>3.0.29</magnolia.dam.version>
+		<magnolia.dam.version>3.0.31</magnolia.dam.version>
 		<magnolia.pages.version>6.2.34</magnolia.pages.version>
-		<merkle.powernode.version>2.0.6</merkle.powernode.version>
+		<merkle.powernode.version>2.0.7</merkle.powernode.version>
 		<java.poet.version>1.12.1</java.poet.version>
 		<!--Test dependency versions-->
 		<junit.version>5.10.2</junit.version>
-		<mockito.version>5.10.0</mockito.version>
+		<mockito.version>5.11.0</mockito.version>
 
 		<!-- Maven Plugins -->
-		<mvn.compiler.plugin.version>3.12.1</mvn.compiler.plugin.version>
-		<mvn.source.plugin.version>3.3.0</mvn.source.plugin.version>
+		<mvn.compiler.plugin.version>3.13.0</mvn.compiler.plugin.version>
+		<mvn.source.plugin.version>3.3.1</mvn.source.plugin.version>
 		<mvn.surefire.plugin.version>3.2.5</mvn.surefire.plugin.version>
 		<mvn.javadoc.version>3.5.0</mvn.javadoc.version>
 		<mvn.gpg.plugin.version>3.0.1</mvn.gpg.plugin.version>
