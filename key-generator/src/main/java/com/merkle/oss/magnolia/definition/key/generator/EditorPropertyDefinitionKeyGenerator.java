@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+
 public class EditorPropertyDefinitionKeyGenerator extends info.magnolia.ui.editor.i18n.EditorPropertyDefinitionKeyGenerator {
 
     private final KeyGeneratorUtil keyGeneratorUtil;
@@ -23,6 +26,7 @@ public class EditorPropertyDefinitionKeyGenerator extends info.magnolia.ui.edito
         this(Components.getComponent(KeyGeneratorUtil.class), new FieldDefinitionKeyGenerator(), new KeyPrefixer());
     }
 
+    @Inject
     public EditorPropertyDefinitionKeyGenerator(
             final KeyGeneratorUtil keyGeneratorUtil,
             final FieldDefinitionKeyGenerator fieldDefinitionKeyGenerator,
@@ -34,7 +38,7 @@ public class EditorPropertyDefinitionKeyGenerator extends info.magnolia.ui.edito
     }
 
     @Override
-    public String[] keysFor(final String undecoratedResult, final EditorPropertyDefinition definition, final AnnotatedElement el) {
+    public String[] keysFor(@Nullable final String undecoratedResult, final EditorPropertyDefinition definition, final AnnotatedElement el) {
         if (definition instanceof FieldDefinition) {
             return fieldDefinitionKeyGenerator.keysFor(undecoratedResult, definition, el);
         }
@@ -45,7 +49,8 @@ public class EditorPropertyDefinitionKeyGenerator extends info.magnolia.ui.edito
     protected void keysFor(
             final List<String> list,
             final EditorPropertyDefinition definition,
-            final AnnotatedElement el) {
+            final AnnotatedElement el
+    ) {
         final String dialogName = keyGeneratorUtil.getDialogName(definition);
 
         if (keyGeneratorUtil.isMagnoliaModule(definition)) {
@@ -56,7 +61,7 @@ public class EditorPropertyDefinitionKeyGenerator extends info.magnolia.ui.edito
         }
     }
 
-    private String[] getKeys(final String dialogName, final EditorPropertyDefinition definition, final AnnotatedElement el) {
+    protected String[] getKeys(final String dialogName, final EditorPropertyDefinition definition, final AnnotatedElement el) {
         return Stream.of(
                 Stream.of(dialogName),
                 keyPrefixer.getKeyPrefix(definition),
