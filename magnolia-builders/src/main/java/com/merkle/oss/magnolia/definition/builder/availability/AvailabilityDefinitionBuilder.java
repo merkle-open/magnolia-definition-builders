@@ -33,6 +33,18 @@ public class AvailabilityDefinitionBuilder {
 	@Nullable
 	private Boolean writePermissionRequired;
 
+	public AvailabilityDefinitionBuilder() {}
+	public AvailabilityDefinitionBuilder(final AvailabilityDefinition availability) {
+		root(availability.isRoot());
+		properties(availability.isProperties());
+		nodes(availability.isNodes());
+		multiple(availability.isMultiple());
+		nodeTypes(availability.getNodeTypes());
+		access(availability.getAccess());
+		rules(availability.getRules());
+		writePermissionRequired(availability.isWritePermissionRequired());
+	}
+
 	public AvailabilityDefinitionBuilder root(final boolean root) {
 		this.root = root;
 		return this;
@@ -60,7 +72,7 @@ public class AvailabilityDefinitionBuilder {
 		).collect(Collectors.toList()));
 	}
 
-	public AvailabilityDefinitionBuilder nodeTypes(final List<String> nodeTypes) {
+	public AvailabilityDefinitionBuilder nodeTypes(final Collection<String> nodeTypes) {
 		this.nodeTypes = nodeTypes;
 		return this;
 	}
@@ -84,7 +96,7 @@ public class AvailabilityDefinitionBuilder {
 		).collect(Collectors.toList()));
 	}
 
-	public AvailabilityDefinitionBuilder rules(final List<AvailabilityRuleDefinition> rules) {
+	public AvailabilityDefinitionBuilder rules(final Collection<? extends AvailabilityRuleDefinition> rules) {
 		this.rules = rules;
 		return this;
 	}
