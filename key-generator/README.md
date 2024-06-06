@@ -13,13 +13,29 @@
 validators.<VALIDATOR_NAME>.errorMessage
 ```
 
+## ColumnDefinitionKeyGenerator
+```properties
+<APP_NAME>.<SUBAPP_NAME>.views.<COLUMN_NAME>.label
+<APP_NAME>.<SUBAPP_NAME>.views.<COLUMN_NAME>
+<MODULE_NAME>.dialogs.<DIALOG_NAME>.views.<COLUMN_NAME>.label
+<MODULE_NAME>.dialogs.<DIALOG_NAME>.views.<COLUMN_NAME>
+chooser.views.<COLUMN_NAME>.label
+chooser.views.<COLUMN_NAME>
+views.<COLUMN_NAME>.label
+views.<COLUMN_NAME>
+```
+
 ## Setup
+
 ```java
+import com.merkle.oss.magnolia.definition.key.generator.ColumnDefinitionKeyGenerator;
 import com.merkle.oss.magnolia.definition.key.generator.EditorPropertyDefinitionKeyGenerator;
 import com.merkle.oss.magnolia.definition.key.generator.FieldValidatorDefinitionKeyGenerator;
 import com.merkle.oss.magnolia.definition.key.generator.KeyGeneratorUpdater;
+
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleLifecycleContext;
+import info.magnolia.ui.contentapp.configuration.column.ColumnDefinition;
 import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.FieldValidatorDefinition;
 import info.magnolia.ui.form.field.definition.FieldDefinition;
@@ -27,19 +43,20 @@ import info.magnolia.ui.form.field.definition.FieldDefinition;
 import javax.inject.Inject;
 
 public class SomeModule implements ModuleLifecycle {
-	private final KeyGeneratorUpdater keyGeneratorUpdater;
+    private final KeyGeneratorUpdater keyGeneratorUpdater;
 
-	@Inject
-	public SomeModule(final KeyGeneratorUpdater keyGeneratorUpdater) {
-		this.keyGeneratorUpdater = keyGeneratorUpdater;
-	}
+    @Inject
+    public SomeModule(final KeyGeneratorUpdater keyGeneratorUpdater) {
+        this.keyGeneratorUpdater = keyGeneratorUpdater;
+    }
 
-	@Override
-	public void start(ModuleLifecycleContext moduleLifecycleContext) {
-		keyGeneratorUpdater.update(FieldDefinition.class, EditorPropertyDefinitionKeyGenerator.class);
-		keyGeneratorUpdater.update(EditorPropertyDefinition.class, EditorPropertyDefinitionKeyGenerator.class);
-		keyGeneratorUpdater.update(FieldValidatorDefinition.class, FieldValidatorDefinitionKeyGenerator.class);
-	}
+    @Override
+    public void start(ModuleLifecycleContext moduleLifecycleContext) {
+        keyGeneratorUpdater.update(FieldDefinition.class, EditorPropertyDefinitionKeyGenerator.class);
+        keyGeneratorUpdater.update(EditorPropertyDefinition.class, EditorPropertyDefinitionKeyGenerator.class);
+        keyGeneratorUpdater.update(FieldValidatorDefinition.class, FieldValidatorDefinitionKeyGenerator.class);
+        keyGeneratorUpdater.update(ColumnDefinition.class, ColumnDefinitionKeyGenerator.class);
+    }
 }
 ```
 
