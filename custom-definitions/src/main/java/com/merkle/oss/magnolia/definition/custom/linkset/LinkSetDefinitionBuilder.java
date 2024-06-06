@@ -18,9 +18,15 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 	public static final UnaryOperator<String> OPEN_IN_NEW_TAB_PROPERTY_NAME_PROVIDER = name -> name + "_in_new_window";
 	protected static final String LABEL_PREFIX = "merkle.customDefinitions.linkSet.";
 	protected static final String FIELD_LABEL_PREFIX = LABEL_PREFIX + "field.";
+	private final boolean singleTree;
 
 	public LinkSetDefinitionBuilder() {
+		this(false);
+	}
+
+	protected LinkSetDefinitionBuilder(final boolean singleTree) {
 		super(LABEL_PREFIX);
+		this.singleTree = singleTree;
 	}
 
 	@Override
@@ -41,6 +47,7 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 		return new FieldOption<>(
 				linkType,
 				name -> new BasicLinkSetDefinitionBuilder<>()
+						.singleTree(singleTree)
 						.anchorId(anchor(name))
 						.linkText(linkText(name))
 						.openInNewWindow(openInNewTab(name))

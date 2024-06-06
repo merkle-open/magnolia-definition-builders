@@ -15,6 +15,7 @@ import java.util.Optional;
 
 public class BasicLinkSetDefinition<L extends ConfiguredFieldDefinition<?>> extends ConfiguredComplexPropertyDefinition<Node> implements SwitchableForm {
 	private final L link;
+	private final boolean singleTree;
 	@Nullable
 	private TextFieldDefinition anchorId;
 	@Nullable
@@ -22,9 +23,10 @@ public class BasicLinkSetDefinition<L extends ConfiguredFieldDefinition<?>> exte
 	@Nullable
 	private CheckBoxFieldDefinition openInNewWindow;
 
-	public BasicLinkSetDefinition(final L link) {
+	public BasicLinkSetDefinition(final L link, final boolean singleTree) {
 		this.link = link;
-		setImplementationClass((Class) FormView.class);
+        this.singleTree = singleTree;
+        setImplementationClass((Class) FormView.class);
 		setItemProvider(new CurrentItemProviderDefinition<>());
 	}
 
@@ -74,10 +76,12 @@ public class BasicLinkSetDefinition<L extends ConfiguredFieldDefinition<?>> exte
 	@Override
 	public void setI18n(final boolean i18n) {
 		super.setI18n(i18n);
-		link.setI18n(i18n);
-		getAnchorId().ifPresent(definition ->
-				definition.setI18n(i18n)
-		);
+		if(!singleTree) {
+			link.setI18n(i18n);
+			getAnchorId().ifPresent(definition ->
+					definition.setI18n(i18n)
+			);
+		}
 		getLinkText().ifPresent(definition ->
 				definition.setI18n(i18n)
 		);

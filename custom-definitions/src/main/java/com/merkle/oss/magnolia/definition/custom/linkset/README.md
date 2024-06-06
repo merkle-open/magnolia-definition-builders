@@ -53,6 +53,30 @@ Link to an internal DAM asset.
 <br>
 <img alt="jcr-structure" src='assets/type_asset-jcr_structure.png' width='1000'>
 
+## SingleTree
+1. Extend LinkSetDefinitionBuilder
+```java
+   import com.merkle.oss.magnolia.definition.custom.linkset.LinkSetDefinitionBuilder;
+   
+   public class CustomLinkSetDefinitionBuilder extends LinkSetDefinitionBuilder {
+      public CustomLinkSetDefinitionBuilder() {
+         super(true, false);
+      }
+   }
+```
+2. Extend LinkModelFactory
+```java
+   import com.merkle.oss.magnolia.definition.custom.linkset.LinkTypes;
+   import com.merkle.oss.magnolia.definition.custom.linkset.model.LinkModelFactory;
+
+   public class CustomLinkModelFactory extends LinkModelFactory {
+      @Override
+      protected boolean isSingleTree(final LinkType linkType) {
+         return LinkTypes.INTERNAL.equals(linkType);
+      }
+   }
+```
+
 ## Custom link-types
 1. Define custom link types
     ```java

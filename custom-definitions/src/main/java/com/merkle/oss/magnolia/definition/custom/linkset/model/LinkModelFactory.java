@@ -1,18 +1,20 @@
 package com.merkle.oss.magnolia.definition.custom.linkset.model;
 
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Predicate;
+
+import javax.inject.Inject;
+
+import org.apache.commons.lang.NotImplementedException;
+
 import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
 import com.merkle.oss.magnolia.definition.custom.linkset.LinkSetDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.linkset.LinkType;
 import com.merkle.oss.magnolia.definition.custom.linkset.model.util.ExtendedLinkAnchorModifier;
 import com.merkle.oss.magnolia.powernode.PowerNode;
 import com.merkle.oss.magnolia.powernode.ValueConverter;
-import org.apache.commons.lang.NotImplementedException;
-
-import javax.inject.Inject;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Predicate;
 
 public class LinkModelFactory {
 	private final LocaleProvider localeProvider;
@@ -47,11 +49,19 @@ public class LinkModelFactory {
 				.getChild(propertyName)
 				.flatMap(linkNode ->
 						linkNode.getProperty(LinkSetDefinitionBuilder.LINK_TYPE_PROPERTY, dialogLocale, ValueConverter::getString).flatMap(this::resolve).flatMap(linkType ->
-								getLinkFactory(linkType).create(locale, dialogLocale, linkNode, linkType.getValue()).map(extendedLink ->
-										wrapAnchor(extendedLink, dialogLocale, linkNode, linkType)
-								)
+								create(locale, isSingleTree(linkType) ? localeProvider.getDefaultLocale(node) : dialogLocale, linkNode, linkType)
 						)
 				);
+	}
+
+	private Optional<Link> create(final Locale locale, final Locale dialogLocale, final PowerNode linkNode, final LinkType linkType) {
+		return getLinkFactory(linkType).create(locale, dialogLocale, linkNode, linkType.getValue()).map(extendedLink ->
+				wrapAnchor(extendedLink, dialogLocale, linkNode, linkType)
+		);
+	}
+
+	protected boolean isSingleTree(final LinkType linkType) {
+		return false;
 	}
 
 	private Optional<LinkType> resolve(final String type) {

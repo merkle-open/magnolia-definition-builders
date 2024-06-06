@@ -24,6 +24,12 @@ public class BasicLinkSetDefinitionBuilder<L extends ConfiguredFieldDefinition<?
 	private Boolean required;
 	@Nullable
 	private List<FieldValidatorDefinition> validators;
+	private boolean singleTree;
+
+	public BasicLinkSetDefinitionBuilder<L> singleTree(final boolean singleTree) {
+        this.singleTree = singleTree;
+		return self();
+	}
 
 	public BasicLinkSetDefinitionBuilder<L> anchorId(@Nullable final TextFieldDefinition anchorId) {
 		this.anchorId = anchorId;
@@ -71,14 +77,14 @@ public class BasicLinkSetDefinitionBuilder<L extends ConfiguredFieldDefinition<?
 	}
 
 	public BasicLinkSetDefinition<L> build(final String name, final L link) {
-		final BasicLinkSetDefinition<L> definition = new BasicLinkSetDefinition<>(link);
-		super.populate(definition, name);
+		final BasicLinkSetDefinition<L> definition = new BasicLinkSetDefinition<>(link, singleTree);
 		Optional.ofNullable(anchorId).ifPresent(definition::setAnchorId);
 		Optional.ofNullable(linkText).ifPresent(definition::setLinkText);
 		Optional.ofNullable(openInNewWindow).ifPresent(definition::setOpenInNewWindow);
 		Optional.ofNullable(readOnly).ifPresent(definition::setReadOnly);
 		Optional.ofNullable(required).ifPresent(definition::setRequired);
 		Stream.ofNullable(validators).flatMap(Collection::stream).forEach(definition.getValidators()::add);
+		super.populate(definition, name);
 		return definition;
 	}
 }
