@@ -4,6 +4,6 @@ import com.merkle.oss.magnolia.definition.builder.datasource.OptionListDefinitio
 
 public class SwitchableDefinitionBuilder<T extends OptionEnum> extends AbstractSwitchableDefinitionBuilder<T, SwitchableDefinitionBuilder<T>> {
 	public SwitchableDefinitionBuilder(final String labelPrefix) {
-		super(labelPrefix);
+		super(labelPrefix, true);
 	}
 }

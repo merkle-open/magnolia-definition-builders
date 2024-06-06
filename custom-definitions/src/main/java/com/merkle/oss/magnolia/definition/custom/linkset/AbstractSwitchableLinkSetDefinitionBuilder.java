@@ -1,16 +1,18 @@
 package com.merkle.oss.magnolia.definition.custom.linkset;
 
-import com.merkle.oss.magnolia.definition.custom.switchable.AbstractSwitchableDefinitionBuilder;
-import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
-import com.merkle.oss.magnolia.definition.custom.switchable.SwitchableDefinition;
 import info.magnolia.ui.editor.JcrChildNodeProviderDefinition;
 import info.magnolia.ui.field.NoopNameDecorator;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.annotation.Nullable;
+
+import com.merkle.oss.magnolia.definition.custom.switchable.AbstractSwitchableDefinitionBuilder;
+import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
+import com.merkle.oss.magnolia.definition.custom.switchable.SwitchableDefinition;
 
 public abstract class AbstractSwitchableLinkSetDefinitionBuilder<B extends AbstractSwitchableLinkSetDefinitionBuilder<B>> extends AbstractSwitchableDefinitionBuilder<LinkType, B> {
 	public static final String LINK_TYPE_PROPERTY = "link";
@@ -18,8 +20,8 @@ public abstract class AbstractSwitchableLinkSetDefinitionBuilder<B extends Abstr
 	@Nullable
 	private List<LinkType> linkOptions;
 
-	protected AbstractSwitchableLinkSetDefinitionBuilder(final String labelPrefix) {
-		super(labelPrefix);
+	protected AbstractSwitchableLinkSetDefinitionBuilder(final String labelPrefix, final boolean switchableFieldI18n) {
+		super(labelPrefix, switchableFieldI18n);
 		final JcrChildNodeProviderDefinition childNodeProvider = new JcrChildNodeProviderDefinition();
 		childNodeProvider.setSupportI18N(false);
 		itemProvider(childNodeProvider);

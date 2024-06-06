@@ -77,6 +77,36 @@ Link to an internal DAM asset.
    }
 ```
 
+## SwitchableFieldI18n
+1. Extend LinkSetDefinitionBuilder
+```java
+   import com.merkle.oss.magnolia.definition.custom.linkset.LinkSetDefinitionBuilder;
+   
+   public class CustomLinkSetDefinitionBuilder extends LinkSetDefinitionBuilder {
+      public CustomLinkSetDefinitionBuilder() {
+         super(false, false);
+      }
+   }
+```
+2. Extend LinkModelFactory
+
+```java
+   import com.merkle.oss.magnolia.definition.custom.linkset.LinkTypes;
+   import com.merkle.oss.magnolia.definition.custom.linkset.model.LinkModelFactory;
+
+   public class CustomLinkModelFactory extends LinkModelFactory {
+      @Inject
+      public LinkModelFactory(
+              final LocaleProvider localeProvider,
+              final ExtendedLinkAnchorModifier extendedLinkAnchorModifier,
+              final Set<LinkType.Resolver> linkTypeResolvers,
+              final Set<LinkFactory> linkFactories
+      ) {
+         this(localeProvider, extendedLinkAnchorModifier, linkTypeResolvers, linkFactories, false);
+      }
+   }
+```
+
 ## Custom link-types
 1. Define custom link types
     ```java

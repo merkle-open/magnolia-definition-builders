@@ -23,6 +23,7 @@ import java.util.stream.Stream;
 
 public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, B extends AbstractSwitchableDefinitionBuilder<T, B>> extends AbstractConfiguredComplexPropertyDefinitionBuilder<Node, SwitchableDefinition, B> {
 	private final String labelPrefix;
+	private final boolean fieldI18n;
 
 	@Nullable
 	private Class<? extends PropertyNameDecorator> propertyNameDecorator;
@@ -39,8 +40,9 @@ public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, 
 	@Nullable
 	private List<FieldValidatorDefinition> validators;
 
-	protected AbstractSwitchableDefinitionBuilder(final String labelPrefix) {
+	protected AbstractSwitchableDefinitionBuilder(final String labelPrefix, final boolean fieldI18n) {
 		this.labelPrefix = labelPrefix;
+		this.fieldI18n = fieldI18n;
 	}
 
 	public B propertyNameDecorator(@Nullable final Class<? extends PropertyNameDecorator> propertyNameDecorator) {
@@ -121,7 +123,8 @@ public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, 
 				Optional.ofNullable(fieldOptions).stream()
 						.flatMap(Collection::stream)
 						.map(FieldOption::getField)
-						.collect(Collectors.toList())
+						.collect(Collectors.toList()),
+				fieldI18n
 		);
 		super.populate(definition, name);
 		Optional.ofNullable(readOnly).ifPresent(definition::setReadOnly);

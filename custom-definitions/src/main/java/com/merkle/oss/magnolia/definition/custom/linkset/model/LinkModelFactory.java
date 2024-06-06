@@ -21,6 +21,7 @@ public class LinkModelFactory {
 	private final ExtendedLinkAnchorModifier extendedLinkAnchorModifier;
 	private final Set<LinkType.Resolver> linkTypeResolvers;
 	private final Set<LinkFactory> linkFactories;
+	private final boolean switchableFieldI18n;
 
 	@Inject
 	public LinkModelFactory(
@@ -29,10 +30,21 @@ public class LinkModelFactory {
 			final Set<LinkType.Resolver> linkTypeResolvers,
 			final Set<LinkFactory> linkFactories
 	) {
+		this(localeProvider, extendedLinkAnchorModifier, linkTypeResolvers, linkFactories, true);
+	}
+
+	protected LinkModelFactory(
+			final LocaleProvider localeProvider,
+			final ExtendedLinkAnchorModifier extendedLinkAnchorModifier,
+			final Set<LinkType.Resolver> linkTypeResolvers,
+			final Set<LinkFactory> linkFactories,
+			final boolean switchableFieldI18n
+	) {
 		this.localeProvider = localeProvider;
 		this.extendedLinkAnchorModifier = extendedLinkAnchorModifier;
 		this.linkTypeResolvers = linkTypeResolvers;
 		this.linkFactories = linkFactories;
+		this.switchableFieldI18n = switchableFieldI18n;
 	}
 
 	public Optional<Link> create(final Locale locale, final PowerNode node, final String propertyName) {
@@ -48,7 +60,7 @@ public class LinkModelFactory {
 		return node
 				.getChild(propertyName)
 				.flatMap(linkNode ->
-						linkNode.getProperty(LinkSetDefinitionBuilder.LINK_TYPE_PROPERTY, dialogLocale, ValueConverter::getString).flatMap(this::resolve).flatMap(linkType ->
+						linkNode.getProperty(LinkSetDefinitionBuilder.LINK_TYPE_PROPERTY, switchableFieldI18n ? dialogLocale : localeProvider.getDefaultLocale(node), ValueConverter::getString).flatMap(this::resolve).flatMap(linkType ->
 								create(locale, isSingleTree(linkType) ? localeProvider.getDefaultLocale(node) : dialogLocale, linkNode, linkType)
 						)
 				);

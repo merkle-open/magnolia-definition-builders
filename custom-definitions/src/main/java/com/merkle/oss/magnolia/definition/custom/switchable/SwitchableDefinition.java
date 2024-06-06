@@ -21,6 +21,7 @@ public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<No
 	private final Class<? extends PropertyNameDecorator> propertyNameDecoratorClass;
 	private final AbstractSelectFieldDefinition optionsField; // Can't add generics because magnolia is stripping type info in AbstractOptionGroupFieldDefinition
 	private final List<SwitchableForm> forms;
+	private final boolean fieldI18n;
 	private boolean readOnly;
 	private boolean required;
 	private List<FieldValidatorDefinition> validators;
@@ -28,11 +29,13 @@ public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<No
 	public SwitchableDefinition(
 			final Class<? extends PropertyNameDecorator> propertyNameDecoratorClass,
 			final AbstractSelectFieldDefinition optionsField,
-			final List<SwitchableForm> forms
+			final List<SwitchableForm> forms,
+			final boolean fieldI18n
 	) {
 		this.propertyNameDecoratorClass = propertyNameDecoratorClass;
 		this.optionsField = optionsField;
 		this.forms = forms;
+		this.fieldI18n = fieldI18n;
 		setImplementationClass((Class) SwitchableFormView.class);
 		setItemProvider(new CurrentItemProviderDefinition<>());
 	}
@@ -54,8 +57,10 @@ public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<No
 
 	@Override
 	public void setI18n(boolean i18n) {
-		super.setI18n(i18n);
-		applyField(field -> field.setI18n(i18n));
+		if(fieldI18n) {
+			super.setI18n(i18n);
+			applyField(field -> field.setI18n(i18n));
+		}
 		applyForms(switchableForm -> switchableForm.setI18n(i18n));
 	}
 

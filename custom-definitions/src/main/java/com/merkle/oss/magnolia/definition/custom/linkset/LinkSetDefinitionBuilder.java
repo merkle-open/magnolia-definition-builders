@@ -21,13 +21,14 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 	private final boolean singleTree;
 
 	public LinkSetDefinitionBuilder() {
-		this(false);
+		this(false, true);
 	}
 
-	protected LinkSetDefinitionBuilder(final boolean singleTree) {
-		super(LABEL_PREFIX);
+	protected LinkSetDefinitionBuilder(final boolean singleTree, final boolean switchableFieldI18n) {
+		super(LABEL_PREFIX, switchableFieldI18n);
 		this.singleTree = singleTree;
 	}
+
 
 	@Override
 	protected FieldOption<LinkType> createFieldOption(final LinkType linkType) {
