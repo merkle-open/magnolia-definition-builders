@@ -153,6 +153,16 @@ public abstract class AbstractFieldDefinitionBuilderTestCase {
 		return builder;
 	}
 
+	public <T, D extends TwinColSelectFieldDefinition<T>, B extends AbstractMultiselectFieldDefinitionBuilder<T, ?, D, B>> B assertTwinColSelectField(final B builder, final BiFunction<String, B, D> buildFunction) {
+		final D definition = buildFunction.apply(
+				"someName",
+				assertField(builder, buildFunction, null)
+						.label("someLabel")
+		);
+		assertEquals("someLabel", definition.getLabel());
+		return builder;
+	}
+
 	public <D extends ConfiguredFieldDefinition<String>, B extends AbstractConfiguredFieldDefinitionBuilder<String, D, B>> B assertField(final B builder, final BiFunction<String, B, D> buildFunction) {
 		return assertField(builder, buildFunction, "42");
 	}
