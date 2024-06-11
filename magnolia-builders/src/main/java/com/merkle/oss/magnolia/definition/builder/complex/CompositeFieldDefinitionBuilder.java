@@ -25,6 +25,14 @@ public class CompositeFieldDefinitionBuilder<T> extends AbstractConfiguredComple
 	@Nullable
 	private Class<? extends WithPropertyNameDecorator.PropertyNameDecorator> propertyNameDecorator;
 
+	public CompositeFieldDefinitionBuilder() {}
+	public CompositeFieldDefinitionBuilder(final CompositeFieldDefinition<T> definition) {
+		super(definition);
+		properties(definition.getProperties());
+		layout(definition.getLayout());
+		propertyNameDecorator(definition.getPropertyNameDecorator());
+	}
+
 	public CompositeFieldDefinitionBuilder<T> layout(final FieldLayoutDefinition<?> layout) {
 		this.layout = layout;
 		return self();

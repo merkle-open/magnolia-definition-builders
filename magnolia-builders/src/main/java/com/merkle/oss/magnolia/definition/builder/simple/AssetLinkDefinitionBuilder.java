@@ -11,6 +11,11 @@ import info.magnolia.ui.field.LinkFieldDefinition;
  */
 public class AssetLinkDefinitionBuilder extends AbstractLinkFieldDefinitionBuilder<Item, DamLinkFieldDefinition, AssetLinkDefinitionBuilder> {
 
+	public AssetLinkDefinitionBuilder() {}
+	public AssetLinkDefinitionBuilder(final DamLinkFieldDefinition definition) {
+		super(definition);
+	}
+
 	public DamLinkFieldDefinition build(final String name) {
 		final DamLinkFieldDefinition definition = new DamLinkFieldDefinition();
 		super.populate(definition, name, definition.getDatasource());

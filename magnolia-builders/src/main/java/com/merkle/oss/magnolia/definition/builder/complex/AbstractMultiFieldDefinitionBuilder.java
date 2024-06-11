@@ -30,6 +30,21 @@ public abstract class AbstractMultiFieldDefinitionBuilder<T, D extends MultiFiel
 	@Nullable
 	private Integer maxItems;
 
+	protected AbstractMultiFieldDefinitionBuilder() {}
+	protected AbstractMultiFieldDefinitionBuilder(final D definition) {
+		super(definition);
+		entryResolution(definition.getEntryResolution());
+		orderHandler(definition.getOrderHandler());
+		canRemoveItems(definition.isCanRemoveItems());
+		buttonSelectAddLabel(definition.getButtonSelectAddLabel());
+		buttonSelectRemoveLabel(definition.getButtonSelectRemoveLabel());
+		required(definition.isRequired());
+		requiredErrorMessage(definition.getRequiredErrorMessage());
+		itemCountErrorMessage(definition.getItemCountErrorMessage());
+		minItems(definition.getMinItems());
+		maxItems(definition.getMaxItems());
+	}
+
 	public B entryResolution(final MultiFormView.EntryResolution.Definition<T> entryResolution) {
 		this.entryResolution = entryResolution;
 		return self();

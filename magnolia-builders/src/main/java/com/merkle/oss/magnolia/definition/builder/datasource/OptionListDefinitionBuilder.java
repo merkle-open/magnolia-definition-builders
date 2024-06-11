@@ -23,6 +23,14 @@ public class OptionListDefinitionBuilder extends AbstractBaseDatasourceDefinitio
 	@Nullable
 	private Boolean sort;
 
+	public OptionListDefinitionBuilder() {}
+	public OptionListDefinitionBuilder(final OptionListDefinition definition) {
+		super(definition);
+		name(definition.getName());
+		options(definition.getOptions());
+		sort(definition.isSort());
+	}
+
 	public OptionListDefinitionBuilder name(final String name) {
 		this.name = name;
 		return self();

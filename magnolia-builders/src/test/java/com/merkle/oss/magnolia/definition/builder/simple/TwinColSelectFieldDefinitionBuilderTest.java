@@ -15,8 +15,8 @@ public class TwinColSelectFieldDefinitionBuilderTest extends AbstractFieldDefini
 	<T> void testBuilder() {
 		final DatasourceDefinition dataSourceDefinition = new BaseDatasourceDefinition();
 		final TwinColSelectFieldDefinition<T> definition = assertSelectField(new TwinColSelectFieldDefinitionBuilder<T>(), (name, builder) -> builder.build(name, dataSourceDefinition))
-				.setLeftColumnCaption("someLeftColumnCaption")
-				.setRightColumnCaption("someRightColumnCaption")
+				.leftColumnCaption("someLeftColumnCaption")
+				.rightColumnCaption("someRightColumnCaption")
 				.build("someName", dataSourceDefinition);
 		assertEquals("someLeftColumnCaption", definition.getLeftColumnCaption());
 		assertEquals("someRightColumnCaption", definition.getRightColumnCaption());

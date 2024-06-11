@@ -25,6 +25,13 @@ public class ConfiguredSwitchableFieldDefinitionBuilder<T> extends AbstractConfi
 	@Nullable
 	private Class<? extends WithPropertyNameDecorator.PropertyNameDecorator> propertyNameDecorator;
 
+	public ConfiguredSwitchableFieldDefinitionBuilder() {}
+	public ConfiguredSwitchableFieldDefinitionBuilder(final ConfiguredSwitchableFieldDefinition<T> definition) {
+		super(definition);
+		forms(definition.getForms());
+		propertyNameDecorator(definition.getPropertyNameDecorator());
+	}
+
 	public ConfiguredSwitchableFieldDefinitionBuilder<T> propertyNameDecorator(final Class<? extends WithPropertyNameDecorator.PropertyNameDecorator> propertyNameDecorator) {
 		this.propertyNameDecorator = propertyNameDecorator;
 		return self();

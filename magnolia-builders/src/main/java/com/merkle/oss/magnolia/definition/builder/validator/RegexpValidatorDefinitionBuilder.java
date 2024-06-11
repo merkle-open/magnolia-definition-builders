@@ -9,6 +9,12 @@ public class RegexpValidatorDefinitionBuilder extends AbstractConfiguredFieldVal
 	@Nullable
 	private String pattern;
 
+	public RegexpValidatorDefinitionBuilder() {}
+	public RegexpValidatorDefinitionBuilder(final RegexpValidatorDefinition definition) {
+		super(definition);
+		pattern(definition.getPattern());
+	}
+
 	public RegexpValidatorDefinitionBuilder pattern(final String pattern) {
 		this.pattern = pattern;
 		return self();

@@ -13,12 +13,19 @@ public class TwinColSelectFieldDefinitionBuilder<T> extends AbstractMultiselectF
 	@Nullable
 	private String rightColumnCaption;
 
-	public TwinColSelectFieldDefinitionBuilder<T> setLeftColumnCaption(final String leftColumnCaption) {
+	public TwinColSelectFieldDefinitionBuilder() {}
+	public TwinColSelectFieldDefinitionBuilder(final TwinColSelectFieldDefinition<T> definition) {
+		super(definition);
+		leftColumnCaption(definition.getLeftColumnCaption());
+		rightColumnCaption(definition.getRightColumnCaption());
+	}
+
+	public TwinColSelectFieldDefinitionBuilder<T> leftColumnCaption(final String leftColumnCaption) {
 		this.leftColumnCaption = leftColumnCaption;
 		return self();
 	}
 
-	public TwinColSelectFieldDefinitionBuilder<T> setRightColumnCaption(final String rightColumnCaption) {
+	public TwinColSelectFieldDefinitionBuilder<T> rightColumnCaption(final String rightColumnCaption) {
 		this.rightColumnCaption = rightColumnCaption;
 		return self();
 	}

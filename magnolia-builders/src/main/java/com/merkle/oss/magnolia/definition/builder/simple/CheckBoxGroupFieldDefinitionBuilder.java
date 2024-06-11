@@ -14,6 +14,11 @@ import java.util.Set;
  */
 public class CheckBoxGroupFieldDefinitionBuilder<T> extends AbstractOptionGroupFieldDefinitionBuilder<Set<T>, CheckBoxGroupFieldDefinition<T>, CheckBoxGroupFieldDefinitionBuilder<T>> {
 
+	public CheckBoxGroupFieldDefinitionBuilder() {}
+	public CheckBoxGroupFieldDefinitionBuilder(final CheckBoxGroupFieldDefinition<T> definition) {
+		super(definition);
+	}
+
 	public <O extends OptionEnum> CheckBoxGroupFieldDefinition<T> build(final String name, final Class<O> optionsClass, final O... excludeOptions) {
 		return build(name, new OptionListDefinitionBuilder().options(optionsClass, excludeOptions).build());
 	}

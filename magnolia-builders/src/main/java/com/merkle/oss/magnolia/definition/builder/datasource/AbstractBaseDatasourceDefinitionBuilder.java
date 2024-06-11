@@ -6,6 +6,9 @@ import javax.inject.Provider;
 
 public abstract class AbstractBaseDatasourceDefinitionBuilder<D extends BaseDatasourceDefinition, B extends AbstractBaseDatasourceDefinitionBuilder<D, B>> {
 
+	protected AbstractBaseDatasourceDefinitionBuilder() {}
+	protected AbstractBaseDatasourceDefinitionBuilder(final D definition) {}
+
 	@SuppressWarnings("unchecked")
 	protected B self() {
 		return (B) this;

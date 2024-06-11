@@ -16,6 +16,12 @@ public class OptionBuilder {
 	@Nullable
 	private String iconSrc;
 
+	public OptionBuilder() {}
+	public OptionBuilder(final Option definition) {
+		label(definition.getLabel());
+		iconSrc(definition.getIconSrc());
+	}
+
 	public OptionBuilder label(final String label) {
 		this.label = label;
 		return this;

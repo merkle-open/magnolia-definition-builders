@@ -8,6 +8,12 @@ import info.magnolia.ui.field.HiddenFieldDefinition;
  * @author Merkle DACH
  */
 public class HiddenFieldDefinitionBuilder<T> extends AbstractConfiguredFieldDefinitionBuilder<T, HiddenFieldDefinition<T>, HiddenFieldDefinitionBuilder<T>> {
+
+	public HiddenFieldDefinitionBuilder() {}
+	public HiddenFieldDefinitionBuilder(final HiddenFieldDefinition<T> definition) {
+		super(definition);
+	}
+
 	public HiddenFieldDefinition<T> build(final String name, final Class<T> type) {
 		final HiddenFieldDefinition<T> definition = new HiddenFieldDefinition<>();
 		definition.setType(type);

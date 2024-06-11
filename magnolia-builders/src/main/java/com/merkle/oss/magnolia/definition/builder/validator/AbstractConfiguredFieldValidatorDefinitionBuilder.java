@@ -9,6 +9,11 @@ public abstract class AbstractConfiguredFieldValidatorDefinitionBuilder<D extend
 	@Nullable
 	private String errorMessage;
 
+	protected AbstractConfiguredFieldValidatorDefinitionBuilder() {}
+	protected AbstractConfiguredFieldValidatorDefinitionBuilder(final D definition) {
+		errorMessage(definition.getErrorMessage());
+	}
+
 	public B errorMessage(final String errorMessage) {
 		this.errorMessage = errorMessage;
 		return self();

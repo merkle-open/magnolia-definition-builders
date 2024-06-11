@@ -39,6 +39,22 @@ public abstract class AbstractConfiguredFieldDefinitionBuilder<T, D extends Conf
 	@Nullable
 	private List<FieldValidatorDefinition> validators;
 
+	protected AbstractConfiguredFieldDefinitionBuilder() {}
+	protected AbstractConfiguredFieldDefinitionBuilder(final D definition) {
+		label(definition.getLabel());
+		i18n(definition.isI18n());
+		description(definition.getDescription());
+		required(definition.isRequired());
+		requiredErrorMessage(definition.getRequiredErrorMessage());
+		conversionErrorMessage(definition.getConversionErrorMessage());
+		readOnly(definition.isReadOnly());
+		defaultValue(definition.getDefaultValue());
+		styleName(definition.getStyleName());
+		converterClass(definition.getConverterClass());
+		fieldBinderClass(definition.getFieldBinderClass());
+		validators(definition.getValidators());
+	}
+
 	public B label(final String label) {
 		this.label = label;
 		return self();

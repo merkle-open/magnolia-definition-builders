@@ -12,6 +12,11 @@ import info.magnolia.ui.field.RadioButtonGroupFieldDefinition;
  */
 public class RadioButtonGroupFieldDefinitionBuilder<T> extends AbstractOptionGroupFieldDefinitionBuilder<T, RadioButtonGroupFieldDefinition<T>, RadioButtonGroupFieldDefinitionBuilder<T>> {
 
+	public RadioButtonGroupFieldDefinitionBuilder() {}
+	public RadioButtonGroupFieldDefinitionBuilder(final RadioButtonGroupFieldDefinition<T> definition) {
+		super(definition);
+	}
+
 	public <O extends OptionEnum> RadioButtonGroupFieldDefinition<T> build(final String name, final Class<O> optionsClass, final O... excludeOptions) {
 		return build(name, new OptionListDefinitionBuilder().options(optionsClass, excludeOptions).build());
 	}

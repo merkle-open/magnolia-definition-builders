@@ -19,6 +19,15 @@ public abstract class AbstractConfiguredComplexPropertyDefinitionBuilder<T, D ex
 	@Nullable
 	private ItemProviderDefinition<T, T> itemProvider;
 
+	protected AbstractConfiguredComplexPropertyDefinitionBuilder() {}
+	protected AbstractConfiguredComplexPropertyDefinitionBuilder(final D definition) {
+		label(definition.getLabel());
+		description(definition.getDescription());
+		i18n(definition.isI18n());
+		styleName(definition.getStyleName());
+		itemProvider(definition.getItemProvider());
+	}
+
 	public B label(final String label) {
 		this.label = label;
 		return self();

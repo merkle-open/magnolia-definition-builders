@@ -21,6 +21,15 @@ public class DateFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitio
 	@Nullable
 	private String timeFormat;
 
+	public DateFieldDefinitionBuilder() {}
+	public DateFieldDefinitionBuilder(final DateFieldDefinition definition) {
+		super(definition);
+		time(definition.isTime());
+		inISO8061Format(definition.isInISO8061Format());
+		dateFormat(definition.getDateFormat());
+		timeFormat(definition.getTimeFormat());
+	}
+
 	public DateFieldDefinitionBuilder time(final boolean time) {
 		this.time = time;
 		return self();

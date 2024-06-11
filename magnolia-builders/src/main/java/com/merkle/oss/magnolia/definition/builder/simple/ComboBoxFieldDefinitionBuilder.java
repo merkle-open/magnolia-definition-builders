@@ -11,6 +11,10 @@ import info.magnolia.ui.field.ComboBoxFieldDefinition;
  */
 public class ComboBoxFieldDefinitionBuilder<T> extends AbstractComboBoxFieldDefinitionBuilder<T, ComboBoxFieldDefinition<T>, ComboBoxFieldDefinitionBuilder<T>> {
 
+	public ComboBoxFieldDefinitionBuilder() {}
+	public ComboBoxFieldDefinitionBuilder(final ComboBoxFieldDefinition<T> definition) {
+		super(definition);
+	}
 
 	public <O extends OptionListDefinitionBuilder.OptionEnum> ComboBoxFieldDefinition<T> build(final String name, final Class<O> optionsClass, final O... excludeOptions) {
 		return build(name, new OptionListDefinitionBuilder().options(optionsClass, excludeOptions).build());

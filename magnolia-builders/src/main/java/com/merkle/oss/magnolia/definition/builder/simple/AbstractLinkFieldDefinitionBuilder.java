@@ -22,6 +22,17 @@ public abstract class AbstractLinkFieldDefinitionBuilder<T, D extends LinkFieldD
 	@Nullable
 	private Boolean showOptions;
 
+	protected AbstractLinkFieldDefinitionBuilder() {}
+	protected AbstractLinkFieldDefinitionBuilder(final D definition) {
+		super(definition);
+		chooserId(definition.getChooserId());
+		buttonSelectNewLabel(definition.getButtonSelectNewLabel());
+		buttonSelectOtherLabel(definition.getButtonSelectNewLabel());
+		preview(definition.getPreview());
+		editable(definition.isEditable());
+		showOptions(definition.isShowOptions());
+	}
+
 	public B chooserId(final String chooserId) {
 		this.chooserId = chooserId;
 		return self();

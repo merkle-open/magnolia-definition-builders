@@ -10,6 +10,11 @@ import info.magnolia.ui.field.RichTextFieldDefinition;
  */
 public class RichTextFieldDefinitionBuilder extends AbstractRichTextFieldDefinitionBuilder<DamRichTextFieldDefinition, RichTextFieldDefinitionBuilder> {
 
+	public RichTextFieldDefinitionBuilder() {}
+	public RichTextFieldDefinitionBuilder(final DamRichTextFieldDefinition definition) {
+		super(definition);
+	}
+
 	public DamRichTextFieldDefinition build(final String name) {
 		final DamRichTextFieldDefinition definition = new DamRichTextFieldDefinition();
 		super.populate(definition, name);

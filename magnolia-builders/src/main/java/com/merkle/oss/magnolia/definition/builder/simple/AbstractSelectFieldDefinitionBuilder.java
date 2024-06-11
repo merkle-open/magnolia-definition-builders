@@ -12,6 +12,11 @@ public abstract class AbstractSelectFieldDefinitionBuilder<T, S extends Datasour
 	@Nullable
 	private FilteringMode filteringMode;
 
+	protected AbstractSelectFieldDefinitionBuilder() {}
+	protected AbstractSelectFieldDefinitionBuilder(final D definition) {
+		super(definition);
+		filteringMode(definition.getFilteringMode());
+	}
 
 	public B filteringMode(final FilteringMode filteringMode) {
 		this.filteringMode = filteringMode;

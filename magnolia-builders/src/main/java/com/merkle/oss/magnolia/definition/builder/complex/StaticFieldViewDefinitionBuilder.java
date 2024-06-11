@@ -14,6 +14,12 @@ public class StaticFieldViewDefinitionBuilder<T> extends AbstractConfiguredCompl
 	@Nullable
 	private String value;
 
+	public StaticFieldViewDefinitionBuilder() {}
+	public StaticFieldViewDefinitionBuilder(final StaticFieldViewDefinition<T> definition) {
+		super(definition);
+		value(definition.getValue());
+	}
+
 	public StaticFieldViewDefinitionBuilder<T> value(final String value) {
 		this.value = value;
 		return self();

@@ -36,6 +36,25 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractRichTextFieldDefi
 	private final Map<String, String> extraConfig = new HashMap<>();
 	private final Map<String, String> externalPlugins = new HashMap<>();
 
+	public ExtendedRichTextDefinitionBuilder() {}
+	public ExtendedRichTextDefinitionBuilder(final ExtendedRichTextDefinition definition) {
+		super(definition);
+		definition.getFormatTags().ifPresent(this::formatTags);
+		definition.getCustomStyleSet().ifPresent(this::customStyleSet);
+		definition.getCustomTemplates().ifPresent(this::customTemplates);
+		definition.getTemplate().ifPresent(this::template);
+		definition.getEnterMode().ifPresent(this::enterMode);
+		definition.getContentCss().ifPresent(this::contentCss);
+		definition.getExtraAllowedContent().ifPresent(this::extraAllowedContent);
+		forcePasteAsPlainText(definition.isForcePasteAsPlainText());
+		pasteFromWordRemoveFontStyles(definition.isPasteFromWordRemoveFontStyles());
+		pasteFromWordPromptCleanup(definition.isPasteFromWordPromptCleanup());
+		definition.getBodyClass().ifPresent(this::bodyClass);
+		definition.getToolbarConfig().ifPresent(this::toolbarConfig);
+		definition.getExtraConfig().forEach(this::extraConfig);
+		definition.getExternalPlugins().forEach(this::externalPlugin);
+	}
+
 	public ExtendedRichTextDefinitionBuilder formatTags(final String formatTags) {
 		this.formatTags = formatTags;
 		return self();

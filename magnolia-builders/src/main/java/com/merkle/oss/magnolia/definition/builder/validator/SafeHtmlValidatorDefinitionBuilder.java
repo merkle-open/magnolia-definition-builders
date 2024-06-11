@@ -22,6 +22,15 @@ public class SafeHtmlValidatorDefinitionBuilder extends AbstractConfiguredFieldV
 	@Nullable
 	private List<Protocol> allowedProtocols;
 
+	public SafeHtmlValidatorDefinitionBuilder() {}
+	public SafeHtmlValidatorDefinitionBuilder(final SafeHtmlValidatorDefinition definition) {
+		super(definition);
+		allowedTags(definition.getAllowedTags());
+		globallyAllowedAttributes(definition.getGloballyAllowedAttributes());
+		allowedAttributes(definition.getAllowedAttributes());
+		allowedProtocols(definition.getAllowedProtocols());
+	}
+
 	public SafeHtmlValidatorDefinitionBuilder allowedTag(final String allowedTag) {
 		return item(this::allowedTags, allowedTags, allowedTag);
 	}

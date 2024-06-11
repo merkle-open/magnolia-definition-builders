@@ -11,6 +11,12 @@ public abstract class AbstractOptionGroupFieldDefinitionBuilder<T, D extends Abs
 	@Nullable
 	private Layout layout;
 
+	protected AbstractOptionGroupFieldDefinitionBuilder() {}
+	protected AbstractOptionGroupFieldDefinitionBuilder(final D definition) {
+		super(definition);
+		layout(definition.getLayout());
+	}
+
 	public B layout(final Layout layout) {
 		this.layout = layout;
 		return self();

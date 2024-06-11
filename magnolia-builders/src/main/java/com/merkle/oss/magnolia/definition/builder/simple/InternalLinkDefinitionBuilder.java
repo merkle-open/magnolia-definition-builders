@@ -7,6 +7,11 @@ import javax.jcr.Node;
 
 public class InternalLinkDefinitionBuilder extends AbstractLinkFieldDefinitionBuilder<Node, LinkFieldDefinition<Node>, InternalLinkDefinitionBuilder> {
 
+	public InternalLinkDefinitionBuilder() {}
+	public InternalLinkDefinitionBuilder(final LinkFieldDefinition<Node> definition) {
+		super(definition);
+	}
+
 	public LinkFieldDefinition<Node> build(final String name) {
 		final PageLinkFieldDefinition definition = new PageLinkFieldDefinition();
 		super.populate(definition, name, definition.getDatasource());

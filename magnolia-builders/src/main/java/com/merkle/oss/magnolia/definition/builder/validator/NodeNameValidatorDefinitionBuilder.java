@@ -13,6 +13,13 @@ public class NodeNameValidatorDefinitionBuilder extends AbstractConfiguredFieldV
 	@Nullable
 	private Mode mode;
 
+	public NodeNameValidatorDefinitionBuilder() {}
+	public NodeNameValidatorDefinitionBuilder(final NodeNameValidatorDefinition definition) {
+		super(definition);
+		pattern(definition.getPattern());
+		mode(definition.getMode());
+	}
+
 	public NodeNameValidatorDefinitionBuilder pattern(final String pattern) {
 		this.pattern = pattern;
 		return self();

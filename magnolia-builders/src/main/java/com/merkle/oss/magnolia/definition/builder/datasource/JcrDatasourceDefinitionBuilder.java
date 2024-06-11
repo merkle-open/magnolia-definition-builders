@@ -39,6 +39,21 @@ public class JcrDatasourceDefinitionBuilder extends AbstractBaseDatasourceDefini
 	@Nullable
 	private Map<String, SortDirection> sortBy;
 
+	public JcrDatasourceDefinitionBuilder() {}
+	public JcrDatasourceDefinitionBuilder(final JcrDatasourceDefinition definition) {
+		super(definition);
+		rootPath(definition.getRootPath());
+		workspace(definition.getWorkspace());
+		includeProperties(definition.isIncludeProperties());
+		includeSystemProperties(definition.isIncludeSystemProperties());
+		includeSystemNodes(definition.isIncludeSystemNodes());
+		allowedNodeTypes(definition.getAllowedNodeTypes());
+		describeByProperty(definition.getDescribeByProperty());
+		preview(definition.getPreview());
+		nodeNameProperty(definition.getNodeNameProperty());
+		sortBy(definition.getSortBy());
+	}
+
 	public JcrDatasourceDefinitionBuilder rootPath(final String rootPath) {
 		this.rootPath = rootPath;
 		return self();

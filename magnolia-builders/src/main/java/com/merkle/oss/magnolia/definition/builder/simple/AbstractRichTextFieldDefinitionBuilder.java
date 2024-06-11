@@ -39,6 +39,22 @@ public abstract class AbstractRichTextFieldDefinitionBuilder<D extends RichTextF
 	@Nullable
 	private Map<String, LinkFieldDefinition<?>> linkFieldDefinitions;
 
+	protected AbstractRichTextFieldDefinitionBuilder() {}
+	protected AbstractRichTextFieldDefinitionBuilder(final D definition) {
+		super(definition);
+		alignment(definition.isAlignment());
+		images(definition.isImages());
+		lists(definition.isLists());
+		source(definition.isSource());
+		tables(definition.isTables());
+		height(definition.getHeight());
+		colors(definition.getColors());
+		fonts(definition.getFonts());
+		fontSizes(definition.getFontSizes());
+		configJsFile(definition.getConfigJsFile());
+		linkFieldDefinitions(definition.getLinkFieldDefinitions());
+	}
+
 	public B alignment(final boolean alignment) {
 		this.alignment = alignment;
 		return self();

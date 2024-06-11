@@ -14,6 +14,12 @@ public class CheckBoxFieldDefinitionBuilder extends AbstractConfiguredFieldDefin
 	@Nullable
 	private String buttonLabel;
 
+	public CheckBoxFieldDefinitionBuilder() {}
+	public CheckBoxFieldDefinitionBuilder(final CheckBoxFieldDefinition definition) {
+		super(definition);
+		buttonLabel(definition.getButtonLabel());
+	}
+
 	public CheckBoxFieldDefinitionBuilder buttonLabel(final String buttonLabel) {
 		this.buttonLabel = buttonLabel;
 		return self();

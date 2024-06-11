@@ -18,6 +18,14 @@ public class TextFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitio
 	@Nullable
 	private String placeholder;
 
+	public TextFieldDefinitionBuilder() {}
+	public TextFieldDefinitionBuilder(final TextFieldDefinition definition) {
+		super(definition);
+		rows(definition.getRows());
+		maxLength(definition.getMaxLength());
+		placeholder(definition.getPlaceholder());
+	}
+
 	public TextFieldDefinitionBuilder rows(final int rows) {
 		this.rows = rows;
 		return self();

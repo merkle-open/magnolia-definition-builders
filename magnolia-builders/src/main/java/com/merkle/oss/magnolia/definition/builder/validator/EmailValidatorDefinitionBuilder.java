@@ -4,6 +4,11 @@ import info.magnolia.ui.field.EmailValidatorDefinition;
 
 public class EmailValidatorDefinitionBuilder extends AbstractConfiguredFieldValidatorDefinitionBuilder<EmailValidatorDefinition, EmailValidatorDefinitionBuilder>{
 
+	public EmailValidatorDefinitionBuilder() {}
+	public EmailValidatorDefinitionBuilder(final EmailValidatorDefinition definition) {
+		super(definition);
+	}
+
 	public EmailValidatorDefinition build() {
 		return build("emailValidator");
 	}

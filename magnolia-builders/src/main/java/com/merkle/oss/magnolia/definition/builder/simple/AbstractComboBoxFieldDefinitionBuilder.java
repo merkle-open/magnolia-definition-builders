@@ -25,6 +25,19 @@ public abstract class AbstractComboBoxFieldDefinitionBuilder<T, D extends ComboB
 	@Nullable
 	private Class<? extends ComboBox.NewItemProvider<T>> newItemProviderClass;
 
+	protected AbstractComboBoxFieldDefinitionBuilder() {}
+	protected AbstractComboBoxFieldDefinitionBuilder(final D definition) {
+		super(definition);
+		textInputAllowed(definition.isTextInputAllowed());
+		pageLength(definition.getPageLength());
+		emptySelectionCaption(definition.getEmptySelectionCaption());
+		emptySelectionAllowed(definition.isEmptySelectionAllowed());
+		scrollToSelectedItem(definition.isScrollToSelectedItem());
+		popWidth(definition.getPopWidth());
+		placeholder(definition.getPlaceholder());
+		newItemProviderClass(definition.getNewItemProviderClass());
+	}
+
 	public B textInputAllowed() {
 		return textInputAllowed(true);
 	}
