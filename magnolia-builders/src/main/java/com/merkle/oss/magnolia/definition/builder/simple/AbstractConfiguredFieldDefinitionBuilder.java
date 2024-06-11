@@ -2,6 +2,7 @@ package com.merkle.oss.magnolia.definition.builder.simple;
 
 import com.vaadin.data.Converter;
 import info.magnolia.ui.field.ConfiguredFieldDefinition;
+import info.magnolia.ui.field.FieldBinder;
 import info.magnolia.ui.field.FieldValidatorDefinition;
 
 import javax.annotation.Nullable;
@@ -33,6 +34,8 @@ public abstract class AbstractConfiguredFieldDefinitionBuilder<T, D extends Conf
 	private String styleName;
 	@Nullable
 	private Class<? extends Converter<T, ?>> converterClass;
+	@Nullable
+	private Class<? extends FieldBinder<T>> fieldBinderClass;
 	@Nullable
 	private List<FieldValidatorDefinition> validators;
 
@@ -98,6 +101,11 @@ public abstract class AbstractConfiguredFieldDefinitionBuilder<T, D extends Conf
 		return self();
 	}
 
+	public B fieldBinderClass(final Class<? extends FieldBinder<T>> fieldBinderClass) {
+		this.fieldBinderClass = fieldBinderClass;
+		return self();
+	}
+
 	public B validator(final FieldValidatorDefinition validator) {
 		return validators(Stream.concat(
 				Stream.ofNullable(validators).flatMap(Collection::stream),
@@ -127,6 +135,7 @@ public abstract class AbstractConfiguredFieldDefinitionBuilder<T, D extends Conf
 		Optional.ofNullable(defaultValue).ifPresent(definition::setDefaultValue);
 		Optional.ofNullable(styleName).ifPresent(definition::setStyleName);
 		Optional.ofNullable(converterClass).ifPresent(definition::setConverterClass);
+		Optional.ofNullable(fieldBinderClass).ifPresent(definition::setFieldBinderClass);
 		Stream.ofNullable(validators).flatMap(Collection::stream).forEach(definition.getValidators()::add);
 	}
 }
