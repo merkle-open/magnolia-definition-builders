@@ -9,7 +9,7 @@ public abstract class AbstractMultiselectFieldDefinitionBuilder<T, S extends Dat
 
 	@Override
 	protected void populate(final D definition, final String name, final S datasourceDefinition) {
-		super.populate(definition, name);
+		super.populate(definition, name, datasourceDefinition);
 		definition.setDatasource(datasourceDefinition);
 	}
 }
