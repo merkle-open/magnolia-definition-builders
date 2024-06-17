@@ -5,6 +5,8 @@ import info.magnolia.dam.app.data.AssetDatasourceDefinition;
 import info.magnolia.dam.app.field.DamLinkFieldDefinition;
 import info.magnolia.ui.field.LinkFieldDefinition;
 
+import java.util.Optional;
+
 import javax.annotation.Nullable;
 
 /**
@@ -25,7 +27,7 @@ public class AssetLinkDefinitionBuilder extends AbstractLinkFieldDefinitionBuild
 	public DamLinkFieldDefinition build(final String name) {
 		final DamLinkFieldDefinition definition = new DamLinkFieldDefinition();
 		final AssetDatasourceDefinition datasource = (AssetDatasourceDefinition)definition.getDatasource();
-		datasource.setRootPath(rootPath);
+		Optional.ofNullable(rootPath).ifPresent(datasource::setRootPath);
 		super.populate(definition, name, datasource);
 		return definition;
 	}

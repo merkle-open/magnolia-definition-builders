@@ -4,6 +4,8 @@ import info.magnolia.pages.app.field.PageLinkFieldDefinition;
 import info.magnolia.ui.datasource.jcr.JcrDatasourceDefinition;
 import info.magnolia.ui.field.LinkFieldDefinition;
 
+import java.util.Optional;
+
 import javax.annotation.Nullable;
 import javax.jcr.Node;
 
@@ -20,7 +22,7 @@ public class InternalLinkDefinitionBuilder extends AbstractLinkFieldDefinitionBu
 	public LinkFieldDefinition<Node> build(final String name) {
 		final PageLinkFieldDefinition definition = new PageLinkFieldDefinition();
 		final JcrDatasourceDefinition datasource = (JcrDatasourceDefinition)definition.getDatasource();
-		datasource.setRootPath(rootPath);
+		Optional.ofNullable(rootPath).ifPresent(datasource::setRootPath);
 		super.populate(definition, name, datasource);
 		return definition;
 	}
