@@ -22,7 +22,7 @@ class EditorPropertyDefinitionKeyGeneratorTest extends AbstractKeyGeneratorTest 
     @BeforeEach
     void setUp() {
         keyGenerator = new EditorPropertyDefinitionKeyGenerator(
-                new KeyGeneratorUtil("FallbackDialog", "idPrefix", Set.of(ConfiguredFormDefinition.class)),
+                new KeyGeneratorUtil("FallbackDialog", "^idPrefix", Set.of(ConfiguredFormDefinition.class)),
                 new FieldDefinitionKeyGenerator(),
                 new KeyPrefixer()
         );

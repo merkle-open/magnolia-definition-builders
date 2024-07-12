@@ -77,24 +77,25 @@ public class SomeModule implements ModuleLifecycle {
 
 ```java
 import info.magnolia.objectfactory.guice.AbstractGuiceComponentConfigurer;
-import com.merkle.oss.magnolia.definition.key.generator.configuration.IdPrefix;
+
+import com.merkle.oss.magnolia.definition.key.generator.configuration.IdRegexp;
 import com.merkle.oss.magnolia.definition.key.generator.configuration.FallbackDialogName;
 
 public class GuiceComponentConfigurer extends AbstractGuiceComponentConfigurer {
-	@Override
-	protected void configure() {
-		binder().bind(String.class)
-				.annotatedWith(IdPrefix.class)
-				.toInstance("SomeModule");
+    @Override
+    protected void configure() {
+        binder().bind(String.class)
+                .annotatedWith(IdRegexp.class)
+                .toInstance("^SomeModule|blossom-area-dialog:com.some.package");
 
-		binder().bind(String.class)
-				.annotatedWith(FallbackDialogName.class)
-				.toInstance("CommonDialog");
+        binder().bind(String.class)
+                .annotatedWith(FallbackDialogName.class)
+                .toInstance("CommonDialog");
 
-		//Optional
-		final Multibinder<Class<?>> excludedAncestorsMultibinder = Multibinder.newSetBinder(binder(), new TypeLiteral<Class<?>>(){}, ExcludedAncestors.class);
-		excludedAncestorsMultibinder.addBinding().toInstance(SomeDefinitionOfAncestorThatShouldBeExcluded.class);
-	}
+        //Optional
+        final Multibinder<Class<?>> excludedAncestorsMultibinder = Multibinder.newSetBinder(binder(), new TypeLiteral<Class<?>>() {}, ExcludedAncestors.class);
+        excludedAncestorsMultibinder.addBinding().toInstance(SomeDefinitionOfAncestorThatShouldBeExcluded.class);
+    }
 }
 ```
 
