@@ -6,7 +6,6 @@ import info.magnolia.ui.editor.FormView;
 import info.magnolia.ui.editor.ItemProviderDefinition;
 import info.magnolia.ui.editor.JcrChildNodeProviderDefinition;
 import info.magnolia.ui.field.ConfiguredComplexPropertyDefinition;
-import info.magnolia.ui.field.ConfiguredFieldDefinition;
 import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.framework.layout.FieldLayoutDefinition;
 import info.magnolia.ui.framework.layout.SingleFieldLayoutProducer;
@@ -64,14 +63,14 @@ public class ChildNodeWrapper<T extends EditorPropertyDefinition> extends Config
         return new SingleFieldLayoutProducer.Definition();
     }
 
-    public static List<EditorPropertyDefinition> wrap(final String nodeName, final ConfiguredFieldDefinition<?>... fields) {
+    public static List<EditorPropertyDefinition> wrap(final String nodeName, final EditorPropertyDefinition... fields) {
         return wrap(nodeName, Arrays.stream(fields)).collect(Collectors.toList());
     }
-    public static List<EditorPropertyDefinition> wrap(final String nodeName, final List<ConfiguredFieldDefinition<?>> fields) {
+    public static List<EditorPropertyDefinition> wrap(final String nodeName, final List<EditorPropertyDefinition> fields) {
         return wrap(nodeName, fields.stream()).collect(Collectors.toList());
     }
 
-    public static Stream<EditorPropertyDefinition> wrap(final String nodeName, final Stream<ConfiguredFieldDefinition<?>> fields) {
+    public static Stream<EditorPropertyDefinition> wrap(final String nodeName, final Stream<EditorPropertyDefinition> fields) {
         return fields.map(field -> new ChildNodeWrapper<>(nodeName, field));
     }
 }
