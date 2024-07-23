@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import javax.jcr.Node;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +19,7 @@ class TemplateValidatorTest {
 
 	@BeforeEach
 	public void setUp() {
-		validator = new TemplateValidator("someTemplate", "error");
+		validator = new TemplateValidator(Set.of("someTemplate"), "error");
 	}
 
 	@Test

@@ -6,13 +6,15 @@ import info.magnolia.ui.field.ConfiguredFieldValidatorDefinition;
 import info.magnolia.ui.field.FieldValidatorFactory;
 import info.magnolia.ui.field.ValidatorType;
 
+import java.util.Set;
+
 @I18nable(keyGenerator = FieldValidatorDefinitionKeyGenerator.class)
 @ValidatorType("templateValidator")
 public class TemplateValidatorDefinition extends ConfiguredFieldValidatorDefinition {
-	private final String templateId;
+	private final Set<String> templateIds;
 
-	public TemplateValidatorDefinition(final String templateId) {
-		this.templateId = templateId;
+	public TemplateValidatorDefinition(final Set<String> templateIds) {
+		this.templateIds = templateIds;
 	}
 
 	@Override
@@ -20,7 +22,7 @@ public class TemplateValidatorDefinition extends ConfiguredFieldValidatorDefinit
 		return TemplateValidatorFactory.class;
 	}
 
-	public String getTemplateId() {
-		return templateId;
+	public Set<String> getTemplateIds() {
+		return templateIds;
 	}
 }

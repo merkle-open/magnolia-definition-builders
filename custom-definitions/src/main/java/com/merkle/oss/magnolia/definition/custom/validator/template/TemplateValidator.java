@@ -1,22 +1,24 @@
 package com.merkle.oss.magnolia.definition.custom.validator.template;
 
-import com.vaadin.data.ValidationResult;
-import com.vaadin.data.ValueContext;
-import com.vaadin.data.validator.AbstractValidator;
 import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.jcr.util.PropertyUtil;
 
+import java.util.Set;
+
 import javax.jcr.Node;
-import java.util.Objects;
+
+import com.vaadin.data.ValidationResult;
+import com.vaadin.data.ValueContext;
+import com.vaadin.data.validator.AbstractValidator;
 
 public class TemplateValidator extends AbstractValidator<Node> {
-	private final String templateId;
+	private final Set<String> templateIds;
 
 	public TemplateValidator(
-			final String templateId,
+			final Set<String> templateIds,
 			final String errorMessage) {
 			super(errorMessage);
-		this.templateId = templateId;
+		this.templateIds = templateIds;
 	}
 
 	@Override
@@ -25,6 +27,6 @@ public class TemplateValidator extends AbstractValidator<Node> {
 	}
 
 	private boolean isValid(final Node value) {
-		return value == null || Objects.equals(templateId, PropertyUtil.getString(value, NodeTypes.Renderable.TEMPLATE));
+		return value == null || templateIds.contains(PropertyUtil.getString(value, NodeTypes.Renderable.TEMPLATE));
 	}
 }

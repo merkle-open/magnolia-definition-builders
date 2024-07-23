@@ -6,6 +6,7 @@ import info.magnolia.ui.field.AbstractFieldValidatorFactory;
 import javax.inject.Inject;
 import javax.jcr.Node;
 import java.text.MessageFormat;
+import java.util.stream.Collectors;
 
 public class TemplateValidatorFactory extends AbstractFieldValidatorFactory<TemplateValidatorDefinition, Node> {
 
@@ -16,14 +17,14 @@ public class TemplateValidatorFactory extends AbstractFieldValidatorFactory<Temp
 
 	@Override
 	public Validator<Node> createValidator() {
-		return new TemplateValidator(definition.getTemplateId(), getI18nErrorMessage());
+		return new TemplateValidator(definition.getTemplateIds(), getI18nErrorMessage());
 	}
 
 	@Override
 	public String getI18nErrorMessage() {
 		final MessageFormat fmt = new MessageFormat(super.getI18nErrorMessage());
 		final String[] args = new String[]{
-				definition.getTemplateId()
+                String.join("|", definition.getTemplateIds())
 		};
 		return fmt.format(args);
 	}
