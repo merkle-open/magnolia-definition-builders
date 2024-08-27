@@ -20,6 +20,8 @@ public class DateFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitio
 	private String dateFormat;
 	@Nullable
 	private String timeFormat;
+	@Nullable
+	private String resolution;
 
 	public DateFieldDefinitionBuilder() {}
 	public DateFieldDefinitionBuilder(final DateFieldDefinition definition) {
@@ -28,6 +30,7 @@ public class DateFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitio
 		inISO8061Format(definition.isInISO8061Format());
 		dateFormat(definition.getDateFormat());
 		timeFormat(definition.getTimeFormat());
+		resolution(definition.getResolution());
 	}
 
 	public DateFieldDefinitionBuilder time(final boolean time) {
@@ -50,6 +53,11 @@ public class DateFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitio
 		return self();
 	}
 
+	public DateFieldDefinitionBuilder resolution(final String resolution) {
+		this.resolution = resolution;
+		return self();
+	}
+
 	public DateFieldDefinition build(final String name) {
 		final DateFieldDefinition definition = new DateFieldDefinition();
 		super.populate(definition, name);
@@ -57,6 +65,7 @@ public class DateFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitio
 		Optional.ofNullable(inISO8061Format).ifPresent(definition::setInISO8061Format);
 		Optional.ofNullable(dateFormat).ifPresent(definition::setDateFormat);
 		Optional.ofNullable(timeFormat).ifPresent(definition::setTimeFormat);
+		Optional.ofNullable(resolution).ifPresent(definition::setResolution);
 		return definition;
 	}
 }
