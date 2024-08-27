@@ -16,9 +16,11 @@ class DateFieldDefinitionBuilderTest extends AbstractFieldDefinitionBuilderTestC
 				.timeFormat("timeFormat")
 				.time(true)
 				.inISO8061Format(true)
+				.resolution("minute")
 				.build("date");
 		assertEquals("dateFormat", definition.getDateFormat());
 		assertEquals("timeFormat", definition.getTimeFormat());
+		assertEquals("minute", definition.getResolution());
 		assertTrue(definition.isTime());
 		assertTrue(definition.isInISO8061Format());
 
@@ -26,6 +28,7 @@ class DateFieldDefinitionBuilderTest extends AbstractFieldDefinitionBuilderTestC
 		assertEquals(Date.class, emptyDefinition.getType());
 		assertEquals("yyyy-MM-dd", emptyDefinition.getDateFormat());
 		assertEquals("HH:mm", emptyDefinition.getTimeFormat());
+		assertNull(emptyDefinition.getResolution());
 		assertFalse(emptyDefinition.isTime());
 		assertFalse(emptyDefinition.isInISO8061Format());
 	}
