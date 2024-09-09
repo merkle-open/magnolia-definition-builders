@@ -6,6 +6,7 @@ import info.magnolia.i18nsystem.I18nizer;
 import info.magnolia.i18nsystem.SimpleTranslator;
 import info.magnolia.ui.dialog.DialogDefinitionRegistry;
 import info.magnolia.ui.framework.ioc.UiComponentProvider;
+import info.magnolia.ui.vaadin.ckeditor.CKEditor5Config;
 import info.magnolia.ui.vaadin.ckeditor.MagnoliaCKEditorConfig;
 
 import java.util.Collections;
@@ -31,9 +32,10 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 			final SimpleTranslator i18n,
 			final DialogDefinitionRegistry dialogDefinitionRegistry,
 			final I18nizer i18nizer,
-			final AssetProviderRegistry assetProviderRegistry
+			final AssetProviderRegistry assetProviderRegistry,
+			final CKEditor5Config CKEditor5Config
 	) {
-		super(definition, componentProvider, i18n, dialogDefinitionRegistry, i18nizer, assetProviderRegistry);
+		super(definition, componentProvider, i18n, dialogDefinitionRegistry, i18nizer, assetProviderRegistry, CKEditor5Config);
 	}
 
 	@Override

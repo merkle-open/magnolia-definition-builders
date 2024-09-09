@@ -33,8 +33,6 @@ public class AbstractColumnDefinitionBuilder<T, D extends ConfiguredColumnDefini
     @Nullable
     private FieldDefinition<?> filterComponent;
     @Nullable
-    private Class<? extends DescriptionGenerator<T>> descriptionGenerator;
-    @Nullable
     private Boolean sortable;
     @Nullable
     private String label;
@@ -52,7 +50,6 @@ public class AbstractColumnDefinitionBuilder<T, D extends ConfiguredColumnDefini
         minimumWidthFromContent(definition.isMinimumWidthFromContent());
         editable(definition.isEditable());
         Optional.ofNullable(definition.getFilterComponent()).ifPresent(this::filterComponent);
-        Optional.ofNullable(definition.getDescriptionGenerator()).ifPresent(this::descriptionGenerator);
         sortable(definition.isSortable());
         Optional.ofNullable(definition.getLabel()).ifPresent(this::label);
     }
@@ -102,11 +99,6 @@ public class AbstractColumnDefinitionBuilder<T, D extends ConfiguredColumnDefini
         return self();
     }
 
-    public B descriptionGenerator(final Class<? extends DescriptionGenerator<T>> descriptionGenerator) {
-        this.descriptionGenerator = descriptionGenerator;
-        return self();
-    }
-
     public B sortable(final boolean sortable) {
         this.sortable = sortable;
         return self();
@@ -139,7 +131,6 @@ public class AbstractColumnDefinitionBuilder<T, D extends ConfiguredColumnDefini
         Optional.ofNullable(minimumWidthFromContent).ifPresent(definition::setMinimumWidthFromContent);
         Optional.ofNullable(editable).ifPresent(definition::setEditable);
         Optional.ofNullable(filterComponent).ifPresent(definition::setFilterComponent);
-        Optional.ofNullable(descriptionGenerator).ifPresent(definition::setDescriptionGenerator);
         Optional.ofNullable(sortable).ifPresent(definition::setSortable);
         Optional.ofNullable(label).ifPresent(definition::setLabel);
     }

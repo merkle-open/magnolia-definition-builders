@@ -24,7 +24,7 @@ class LinkFieldDefinitionBuilderTest extends AbstractFieldDefinitionBuilderTestC
 		super.assertLinkField(new LinkFieldDefinitionBuilder<T>(), (name, builder) -> builder.build(name, dataSourceDefinition));
 
 		final LinkFieldDefinition<T> emptyDefinition = new LinkFieldDefinitionBuilder<T>().build("comboBox", dataSourceDefinition);
-		assertEquals("ui-framework-jcr:chooser", emptyDefinition.getChooserId());
+		assertEquals("ui-framework-core:chooser", emptyDefinition.getChooserId());
 		assertTrue(emptyDefinition.isEditable());
 		assertEquals(LinkFieldFactory.class, emptyDefinition.getFactoryClass());
 		assertEquals(LinkFieldBinder.class, emptyDefinition.getFieldBinderClass());

@@ -42,7 +42,7 @@ class RichTextFieldDefinitionBuilderTest extends AbstractFieldDefinitionBuilderT
 		assertEquals(String.class, emptyDefinition.getType());
 		assertEquals(DamRichTextFieldFactory.class, emptyDefinition.getFactoryClass());
 		assertEquals(0, emptyDefinition.getValidators().size());
-		assertEquals(2, emptyDefinition.getLinkFieldDefinitions().size());
-		assertNotNull(emptyDefinition.getLinkFieldDefinitions().get(RepositoryConstants.WEBSITE));
+		assertEquals(1, emptyDefinition.getLinkFieldDefinitions().size());
+		assertNotNull(emptyDefinition.getLinkFieldDefinitions().get("dam"));
 	}
 }

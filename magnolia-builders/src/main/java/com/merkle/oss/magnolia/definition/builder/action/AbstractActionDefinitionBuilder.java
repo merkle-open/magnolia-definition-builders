@@ -16,8 +16,6 @@ public class AbstractActionDefinitionBuilder<D extends ConfiguredActionDefinitio
     @Nullable
     private String icon;
     @Nullable
-    private String i18nBasename;
-    @Nullable
     private Class<? extends Action> implementationClass;
     @Nullable
     private String successMessage;
@@ -33,7 +31,6 @@ public class AbstractActionDefinitionBuilder<D extends ConfiguredActionDefinitio
         Optional.ofNullable(definition.getLabel()).ifPresent(this::label);
         Optional.ofNullable(definition.getDescription()).ifPresent(this::description);
         Optional.ofNullable(definition.getIcon()).ifPresent(this::icon);
-        Optional.ofNullable(definition.getI18nBasename()).ifPresent(this::i18nBasename);
         Optional.ofNullable(definition.getImplementationClass()).ifPresent(this::implementationClass);
         Optional.ofNullable(definition.getSuccessMessage()).ifPresent(this::successMessage);
         Optional.ofNullable(definition.getFailureMessage()).ifPresent(this::failureMessage);
@@ -51,10 +48,6 @@ public class AbstractActionDefinitionBuilder<D extends ConfiguredActionDefinitio
     }
     public B icon(final String icon) {
         this.icon = icon;
-        return self();
-    }
-    public B i18nBasename(final String i18nBasename) {
-        this.i18nBasename = i18nBasename;
         return self();
     }
     public B implementationClass(final Class<? extends Action> implementationClass) {
@@ -88,7 +81,6 @@ public class AbstractActionDefinitionBuilder<D extends ConfiguredActionDefinitio
         Optional.ofNullable(label).ifPresent(definition::setLabel);
         Optional.ofNullable(description).ifPresent(definition::setDescription);
         Optional.ofNullable(icon).ifPresent(definition::setIcon);
-        Optional.ofNullable(i18nBasename).ifPresent(definition::setI18nBasename);
         Optional.ofNullable(implementationClass).ifPresent(definition::setImplementationClass);
         Optional.ofNullable(successMessage).ifPresent(definition::setSuccessMessage);
         Optional.ofNullable(failureMessage).ifPresent(definition::setFailureMessage);
