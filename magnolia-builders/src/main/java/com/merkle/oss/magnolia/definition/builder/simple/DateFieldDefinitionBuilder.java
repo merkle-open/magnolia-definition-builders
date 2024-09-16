@@ -1,10 +1,13 @@
 package com.merkle.oss.magnolia.definition.builder.simple;
 
 import info.magnolia.ui.field.DateFieldDefinition;
-import info.magnolia.ui.field.TextFieldDefinition;
+
+import java.util.Optional;
 
 import javax.annotation.Nullable;
-import java.util.Optional;
+
+import com.vaadin.shared.ui.datefield.DateResolution;
+import com.vaadin.shared.ui.datefield.DateTimeResolution;
 
 /**
  * builds a {@link DateFieldDefinition}
@@ -53,9 +56,17 @@ public class DateFieldDefinitionBuilder extends AbstractConfiguredFieldDefinitio
 		return self();
 	}
 
-	public DateFieldDefinitionBuilder resolution(final String resolution) {
+	private DateFieldDefinitionBuilder resolution(final String resolution) {
 		this.resolution = resolution;
 		return self();
+	}
+
+	public DateFieldDefinitionBuilder resolution(final DateTimeResolution resolution) {
+		return resolution(resolution.name());
+	}
+
+	public DateFieldDefinitionBuilder resolution(final DateResolution resolution) {
+		return resolution(resolution.name());
 	}
 
 	public DateFieldDefinition build(final String name) {

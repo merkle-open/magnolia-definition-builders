@@ -1,6 +1,8 @@
 package com.merkle.oss.magnolia.definition.builder.simple;
 
 import com.merkle.oss.magnolia.definition.builder.AbstractFieldDefinitionBuilderTestCase;
+import com.vaadin.shared.ui.datefield.DateTimeResolution;
+
 import info.magnolia.ui.field.DateFieldDefinition;
 import org.junit.jupiter.api.Test;
 
@@ -16,11 +18,11 @@ class DateFieldDefinitionBuilderTest extends AbstractFieldDefinitionBuilderTestC
 				.timeFormat("timeFormat")
 				.time(true)
 				.inISO8061Format(true)
-				.resolution("minute")
+				.resolution(DateTimeResolution.MINUTE)
 				.build("date");
 		assertEquals("dateFormat", definition.getDateFormat());
 		assertEquals("timeFormat", definition.getTimeFormat());
-		assertEquals("minute", definition.getResolution());
+		assertEquals("MINUTE", definition.getResolution());
 		assertTrue(definition.isTime());
 		assertTrue(definition.isInISO8061Format());
 
