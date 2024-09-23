@@ -3,7 +3,6 @@ package com.merkle.oss.magnolia.definition.custom.linkset.model.util;
 import com.google.common.base.Joiner;
 import com.merkle.oss.magnolia.definition.custom.linkset.model.Link;
 import com.merkle.oss.magnolia.definition.custom.linkset.model.LinkModel;
-import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

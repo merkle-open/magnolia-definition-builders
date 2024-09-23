@@ -1,10 +1,13 @@
 package com.merkle.oss.magnolia.definition.custom.linkset.model.util;
 
+import java.util.Collections;
+import java.util.Map;
+
+import org.apache.http.client.utils.URIBuilder;
+
+import com.machinezoo.noexception.Exceptions;
 import com.merkle.oss.magnolia.definition.custom.linkset.model.Link;
 import com.merkle.oss.magnolia.definition.custom.linkset.model.LinkModel;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.Map;
 
 public class ExtendedLinkQueryParamModifier {
 
@@ -28,11 +31,11 @@ public class ExtendedLinkQueryParamModifier {
 	}
 
 	private String setQueryParams(final String href, final Map<String, String> queryParams, final boolean replace) {
-		final UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(href);
+		final URIBuilder uriBuilder = Exceptions.wrap().get(() -> new URIBuilder(href));
 		if (replace) {
-			uriComponentsBuilder.replaceQuery(null);
+			uriBuilder.setParameters(Collections.emptyList());
 		}
-		queryParams.forEach(uriComponentsBuilder::queryParam);
-		return uriComponentsBuilder.toUriString();
+		queryParams.forEach(uriBuilder::addParameter);
+		return Exceptions.wrap().get(uriBuilder::build).toString();
 	}
 }
