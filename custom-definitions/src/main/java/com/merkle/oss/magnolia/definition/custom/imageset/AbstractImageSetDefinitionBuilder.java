@@ -19,8 +19,9 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 	public static final String SELECTION_SUFFIX = "_selection";
 	public static final String ALT_TEXT_SUFFIX = "_alt";
 	private final String labelPrefix;
+    private final boolean imageFieldI18n;
 
-	@Nullable
+    @Nullable
 	private List<ImageType> imageOptions;
 	@Nullable
 	private Boolean readOnly;
@@ -29,9 +30,10 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 	@Nullable
 	private List<FieldValidatorDefinition> validators;
 
-	protected AbstractImageSetDefinitionBuilder(final String labelPrefix) {
+	protected AbstractImageSetDefinitionBuilder(final String labelPrefix, final boolean imageFieldI18n) {
 		this.labelPrefix = labelPrefix;
-		imageOptions(Arrays.stream(ImageTypes.values()).collect(Collectors.toList()));
+        this.imageFieldI18n = imageFieldI18n;
+        imageOptions(Arrays.stream(ImageTypes.values()).collect(Collectors.toList()));
 	}
 
 	protected abstract FieldOption<ImageType> createFieldOption(ImageType imageType);
@@ -91,7 +93,8 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 						.build(name),
 				new TextFieldDefinitionBuilder()
 						.label(labelPrefix + "altText.label")
-						.build(name + ALT_TEXT_SUFFIX)
+						.build(name + ALT_TEXT_SUFFIX),
+				imageFieldI18n
 		);
 		super.populate(definition, name);
 		Optional.ofNullable(readOnly).ifPresent(definition::setReadOnly);

@@ -9,7 +9,10 @@ public class ImageSetDefinitionBuilder extends AbstractImageSetDefinitionBuilder
 	protected static final String FIELD_LABEL_PREFIX = LABEL_PREFIX + "field.";
 
 	public ImageSetDefinitionBuilder() {
-		super(LABEL_PREFIX);
+		this(true);
+	}
+	public ImageSetDefinitionBuilder(final boolean imageFieldI18n) {
+		super(LABEL_PREFIX, imageFieldI18n);
 	}
 
 	@Override

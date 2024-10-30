@@ -43,6 +43,65 @@ Internal magnolia DAM asset.
 <br>
 <img alt="jcr-structure" src='assets/dam-jcr_structure.png' width='1000'>
 
+## imageFieldI18n
+1. Extend ImageSetDefinitionBuilder
+   ```java
+   import com.merkle.oss.magnolia.definition.custom.imageset.ImageSetDefinitionBuilder;
+   
+   public class CustomImageSetDefinitionBuilder extends ImageSetDefinitionBuilder {
+      public CustomImageSetDefinitionBuilder() {
+         super(false);
+      }
+   }
+   ```
+2. Extend ImageReferenceModel.Factory
+   ```java
+   import java.util.Set;
+   import javax.inject.Inject;
+   import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
+   import com.merkle.oss.magnolia.definition.custom.imageset.ImageType;
+   import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageReferenceModel;
+   
+   public class CustomImageReferenceModelFactory extends ImageReferenceModel.Factory {
+      @Inject
+      public CustomImageReferenceModelFactory(
+              final Set<ImageType.Resolver> imageTypeResolvers,
+              final LocaleProvider localeProvider
+      ) {
+         super(imageTypeResolvers, localeProvider, false);
+      }
+   }
+   ```
+3. Extend ImageModel.Factory
+   ```java
+   import java.util.Set;
+   import javax.inject.Inject;
+   import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
+   import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageModel;
+   
+   public class CustomImageModelFactory extends ImageModel.Factory  {
+       @Inject
+       public CustomImageModelFactory(
+               final LocaleProvider localeProvider,
+               final CustomImageReferenceModelFactory imageReferenceFactory,
+               final Set<ImageModel.ImageSourceTransformer> imageSourceTransformers
+       ) {
+           super(localeProvider, imageReferenceFactory, imageSourceTransformers);
+       }
+   }
+   ```
+4. Bind both factories
+   ```xml
+   <component>
+      <type>com.merkle.oss.magnolia.definition.custom.imageset.model.ImageModel$Factory</type>
+      <implementation>...CustomImageModelFactory</implementation>
+   </component>
+   <component>
+      <type>com.merkle.oss.magnolia.definition.custom.imageset.model.ImageReferenceModel$Factory</type>
+      <implementation>...CustomImageReferenceModelFactory</implementation>
+   </component>
+   ```
+
 ## Custom image-types
 1. Define custom image types
     ```java

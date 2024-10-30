@@ -17,17 +17,20 @@ import java.util.List;
 public class ImageSetDefinition extends ConfiguredComplexPropertyDefinition<Node> implements FormDefinition<Node> {
 	private final SwitchableDefinition image;
 	private final TextFieldDefinition altText;
-	private boolean readOnly;
+    private final boolean imageFieldI18n;
+    private boolean readOnly;
 	private boolean required;
 	private List<FieldValidatorDefinition> validators;
 
 	public ImageSetDefinition(
 			final SwitchableDefinition image,
-			final TextFieldDefinition altText
+			final TextFieldDefinition altText,
+			final boolean imageFieldI18n
 	) {
 		this.image = image;
 		this.altText = altText;
-		setImplementationClass((Class) FormView.class);
+        this.imageFieldI18n = imageFieldI18n;
+        setImplementationClass((Class) FormView.class);
 		setItemProvider(new CurrentItemProviderDefinition<>());
 	}
 
@@ -52,7 +55,7 @@ public class ImageSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 	@Override
 	public void setI18n(final boolean i18n) {
 		super.setI18n(i18n);
-		image.setI18n(i18n);
+		image.setI18n(imageFieldI18n && i18n);
 		altText.setI18n(i18n);
 	}
 
