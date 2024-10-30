@@ -53,47 +53,60 @@ Link to an internal DAM asset.
 <br>
 <img alt="jcr-structure" src='assets/type_asset-jcr_structure.png' width='1000'>
 
-## SingleTree
+## SingleTree / SwitchableFieldI18n
 1. Extend LinkSetDefinitionBuilder
-```java
-   import com.merkle.oss.magnolia.definition.custom.linkset.LinkSetDefinitionBuilder;
-   
-   public class CustomLinkSetDefinitionBuilder extends LinkSetDefinitionBuilder {
-      public CustomLinkSetDefinitionBuilder() {
-         super(true, false);
+   ```java
+      import com.merkle.oss.magnolia.definition.custom.linkset.LinkSetDefinitionBuilder;
+      
+      public class CustomLinkSetDefinitionBuilder extends LinkSetDefinitionBuilder {
+         public CustomLinkSetDefinitionBuilder() {
+            super(true, false);
+         }
       }
-   }
-```
-2. Extend LinkModelFactory
-```java
+   ```
+2. Extend InternalLinkFactory
+   ```java
+   import com.merkle.oss.magnolia.definition.custom.configuration.LinkUtil;
+   import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
    import com.merkle.oss.magnolia.definition.custom.linkset.LinkTypes;
-   import com.merkle.oss.magnolia.definition.custom.linkset.model.LinkModelFactory;
-
-   public class CustomLinkModelFactory extends LinkModelFactory {
-      @Override
-      protected boolean isSingleTree(final LinkType linkType) {
-         return LinkTypes.INTERNAL.equals(linkType);
+   import com.merkle.oss.magnolia.definition.custom.linkset.model.InternalLinkFactory;
+   import com.merkle.oss.magnolia.powernode.PowerNodeService;
+   
+   public class CustomInternalLinkFactory extends InternalLinkFactory {
+      @Inject
+      public LinkModelFactory(
+              final PowerNodeService powerNodeService,
+              final LinkUtil linkUtil,
+              final LocaleProvider localeProvider
+      ) {
+         this(powerNodeService, linkUtil, localeProvider, true);
       }
    }
-```
+   ```
+3. Bind factory
+   ```xml
+   <component>
+      <type>com.merkle.oss.magnolia.definition.custom.linkset.model.InternalLinkFactory</type>
+      <implementation>...CustomInternalLinkFactory</implementation>
+   </component>
+   ```
 
 ## SwitchableFieldI18n
 1. Extend LinkSetDefinitionBuilder
-```java
-   import com.merkle.oss.magnolia.definition.custom.linkset.LinkSetDefinitionBuilder;
-   
-   public class CustomLinkSetDefinitionBuilder extends LinkSetDefinitionBuilder {
-      public CustomLinkSetDefinitionBuilder() {
-         super(false, false);
+   ```java
+      import com.merkle.oss.magnolia.definition.custom.linkset.LinkSetDefinitionBuilder;
+      
+      public class CustomLinkSetDefinitionBuilder extends LinkSetDefinitionBuilder {
+         public CustomLinkSetDefinitionBuilder() {
+            super(false, false);
+         }
       }
-   }
-```
+   ```
 2. Extend LinkModelFactory
-
-```java
+   ```java
    import com.merkle.oss.magnolia.definition.custom.linkset.LinkTypes;
    import com.merkle.oss.magnolia.definition.custom.linkset.model.LinkModelFactory;
-
+   
    public class CustomLinkModelFactory extends LinkModelFactory {
       @Inject
       public LinkModelFactory(
@@ -105,7 +118,14 @@ Link to an internal DAM asset.
          this(localeProvider, extendedLinkAnchorModifier, linkTypeResolvers, linkFactories, false);
       }
    }
-```
+   ```
+3. Bind factory
+   ```xml
+   <component>
+      <type>com.merkle.oss.magnolia.definition.custom.linkset.model.LinkModelFactory</type>
+      <implementation>...CustomLinkModelFactory</implementation>
+   </component>
+   ```
 
 ## Custom link-types
 1. Define custom link types

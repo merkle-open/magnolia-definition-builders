@@ -1,6 +1,7 @@
 package com.merkle.oss.magnolia.definition.custom.linkset.model;
 
 import com.merkle.oss.magnolia.definition.custom.configuration.LinkUtil;
+import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
 import com.merkle.oss.magnolia.definition.custom.linkset.LinkSetDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.linkset.LinkType;
 import com.merkle.oss.magnolia.definition.custom.linkset.LinkTypes;
@@ -21,15 +22,29 @@ import static info.magnolia.repository.RepositoryConstants.WEBSITE;
 public class InternalLinkFactory implements LinkModelFactory.LinkFactory {
 	private final PowerNodeService powerNodeService;
 	private final LinkUtil linkUtil;
+    private final LocaleProvider localeProvider;
+    private final boolean singleTree;
 
-	@Inject
+    @Inject
 	public InternalLinkFactory(
 			final PowerNodeService powerNodeService,
-			final LinkUtil linkUtil
+			final LinkUtil linkUtil,
+			final LocaleProvider localeProvider
+	) {
+		this(powerNodeService, linkUtil, localeProvider, false);
+    }
+
+	protected InternalLinkFactory(
+			final PowerNodeService powerNodeService,
+			final LinkUtil linkUtil,
+			final LocaleProvider localeProvider,
+			final boolean singleTree
 	) {
 		this.powerNodeService = powerNodeService;
 		this.linkUtil = linkUtil;
-	}
+		this.localeProvider = localeProvider;
+        this.singleTree = singleTree;
+    }
 
 	@Override
 	public boolean test(final LinkType linkType) {
@@ -38,7 +53,7 @@ public class InternalLinkFactory implements LinkModelFactory.LinkFactory {
 
 	@Override
 	public Optional<Link> create(final Locale locale, final Locale dialogLocale, final PowerNode node, final String name) {
-		return node.getProperty(name, dialogLocale, ValueConverter::getString)
+		return node.getProperty(name, singleTree ? localeProvider.getDefaultLocale(node) : dialogLocale, ValueConverter::getString)
 				.flatMap(identifier ->
 						powerNodeService.getByIdentifier(WEBSITE, identifier)
 				)
