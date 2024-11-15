@@ -52,6 +52,10 @@
             <type>com.merkle.oss.magnolia.definition.custom.imageset.model.ImageReferenceModel$Factory</type>
             <implementation>com.merkle.oss.magnolia.definition.custom.imageset.model.ImageReferenceModel$Factory</implementation>
         </component>
+        <component>
+            <type>com.merkle.oss.magnolia.definition.custom.colorpicker.model.ColorFactory</type>
+            <implementation>com.merkle.oss.magnolia.definition.custom.colorpicker.model.ColorFactory</implementation>
+        </component>
 
         <component>
             <type>com.merkle.oss.magnolia.definition.custom.videoset.model.VideoModel$Factory</type>
