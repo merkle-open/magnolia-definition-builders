@@ -7,6 +7,7 @@
  - [ImageSet](src/main/java/com/merkle/oss/magnolia/definition/custom/imageset/README.md)
  - [VideoSet](src/main/java/com/merkle/oss/magnolia/definition/custom/videoset/README.md)
  - [ChildNodeWrapper](src/main/java/com/merkle/oss/magnolia/definition/custom/childnodewrapper/README.md)
+ - [ColorPicker](src/main/java/com/merkle/oss/magnolia/definition/custom/colorpicker/README.md)
 
 ## validators
  - MimeType
