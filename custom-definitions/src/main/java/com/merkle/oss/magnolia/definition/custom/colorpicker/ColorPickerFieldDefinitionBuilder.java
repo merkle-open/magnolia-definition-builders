@@ -21,6 +21,8 @@ public class ColorPickerFieldDefinitionBuilder extends AbstractConfiguredFieldDe
 	private Boolean history;
 	@Nullable
 	private Boolean textField;
+	@Nullable
+	private String noColorCheckboxLabelKey;
 
 	public ColorPickerFieldDefinitionBuilder() {}
 	public ColorPickerFieldDefinitionBuilder(final ColorPickerFieldDefinition definition) {
@@ -30,6 +32,7 @@ public class ColorPickerFieldDefinitionBuilder extends AbstractConfiguredFieldDe
 		swatches(definition.isSwatches());
 		history(definition.isHistory());
 		textField(definition.isTextField());
+		noColorCheckboxLabelKey(definition.getNoColorCheckboxLabelKey());
 	}
 
 	public ColorPickerFieldDefinitionBuilder rgb(final boolean rgb) {
@@ -77,6 +80,11 @@ public class ColorPickerFieldDefinitionBuilder extends AbstractConfiguredFieldDe
 		return textField(true);
 	}
 
+	public ColorPickerFieldDefinitionBuilder noColorCheckboxLabelKey(@Nullable final String noColorCheckboxLabelKey) {
+		this.noColorCheckboxLabelKey = noColorCheckboxLabelKey;
+		return self();
+	}
+
 	public ColorPickerFieldDefinition build(final String name) {
 		final ColorPickerFieldDefinition definition = new ColorPickerFieldDefinition();
 		super.populate(definition, name);
@@ -85,6 +93,7 @@ public class ColorPickerFieldDefinitionBuilder extends AbstractConfiguredFieldDe
 		Optional.ofNullable(swatches).ifPresent(definition::setSwatches);
 		Optional.ofNullable(history).ifPresent(definition::setHistory);
 		Optional.ofNullable(textField).ifPresent(definition::setTextField);
+		Optional.ofNullable(noColorCheckboxLabelKey).ifPresent(definition::setNoColorCheckboxLabelKey);
 		return definition;
 	}
 }

@@ -3,6 +3,8 @@ package com.merkle.oss.magnolia.definition.custom.colorpicker;
 import info.magnolia.ui.field.ConfiguredFieldDefinition;
 import info.magnolia.ui.field.FieldType;
 
+import javax.annotation.Nullable;
+
 @FieldType("colorPickerField")
 public class ColorPickerFieldDefinition extends ConfiguredFieldDefinition<Integer> {
 	private boolean rgb = false;
@@ -10,6 +12,7 @@ public class ColorPickerFieldDefinition extends ConfiguredFieldDefinition<Intege
 	private boolean swatches = true;
 	private boolean history = false;
 	private boolean textField = true;
+	private String noColorCheckboxLabelKey;
 
 	public ColorPickerFieldDefinition() {
 		setType(Integer.class);
@@ -54,5 +57,14 @@ public class ColorPickerFieldDefinition extends ConfiguredFieldDefinition<Intege
 
 	public void setTextField(final boolean textField) {
 		this.textField = textField;
+	}
+
+	@Nullable
+	public String getNoColorCheckboxLabelKey() {
+		return noColorCheckboxLabelKey;
+	}
+
+	public void setNoColorCheckboxLabelKey(@Nullable final String disableCheckboxLabelKey) {
+		this.noColorCheckboxLabelKey = disableCheckboxLabelKey;
 	}
 }
