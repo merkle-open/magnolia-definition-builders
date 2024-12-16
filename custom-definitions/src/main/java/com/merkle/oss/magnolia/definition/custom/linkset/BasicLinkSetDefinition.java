@@ -78,10 +78,10 @@ public class BasicLinkSetDefinition<L extends ConfiguredFieldDefinition<?>> exte
 		super.setI18n(i18n);
 		if(!singleTree) {
 			link.setI18n(i18n);
-			getAnchorId().ifPresent(definition ->
-					definition.setI18n(i18n)
-			);
 		}
+		getAnchorId().ifPresent(definition ->
+				definition.setI18n(i18n)
+		);
 		getLinkText().ifPresent(definition ->
 				definition.setI18n(i18n)
 		);
