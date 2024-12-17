@@ -7,6 +7,6 @@ public class TableGroupBuilder extends AbstractToolbarGroupBuilder<TableGroupBui
 	}
 
 	public TableGroupBuilder table() {
-		return option("Table");
+		return option("insertTable");
 	}
 }

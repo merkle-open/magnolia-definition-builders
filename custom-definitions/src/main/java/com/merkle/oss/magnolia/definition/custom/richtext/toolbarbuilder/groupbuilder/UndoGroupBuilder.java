@@ -7,10 +7,10 @@ public class UndoGroupBuilder extends AbstractToolbarGroupBuilder<UndoGroupBuild
 	}
 
 	public UndoGroupBuilder undo() {
-		return option("Undo");
+		return option("undo");
 	}
 
 	public UndoGroupBuilder redo() {
-		return option("Redo");
+		return option("redo");
 	}
 }

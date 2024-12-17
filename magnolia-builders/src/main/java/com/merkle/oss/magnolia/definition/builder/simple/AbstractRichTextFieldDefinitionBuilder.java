@@ -37,7 +37,11 @@ public abstract class AbstractRichTextFieldDefinitionBuilder<D extends RichTextF
 	@Nullable
 	private String configJsFile;
 	@Nullable
+	private String editorType;
+	@Nullable
 	private Map<String, LinkFieldDefinition<?>> linkFieldDefinitions;
+	@Nullable
+	private RichTextFieldDefinition.CKEditorVersion ckEditorVersion;
 
 	protected AbstractRichTextFieldDefinitionBuilder() {}
 	protected AbstractRichTextFieldDefinitionBuilder(final D definition) {
@@ -52,6 +56,7 @@ public abstract class AbstractRichTextFieldDefinitionBuilder<D extends RichTextF
 		fonts(definition.getFonts());
 		fontSizes(definition.getFontSizes());
 		configJsFile(definition.getConfigJsFile());
+		editorType(definition.getEditorType());
 		linkFieldDefinitions(definition.getLinkFieldDefinitions());
 	}
 
@@ -100,8 +105,19 @@ public abstract class AbstractRichTextFieldDefinitionBuilder<D extends RichTextF
 		return self();
 	}
 
+	@Deprecated
 	public B configJsFile(final String configJsFile) {
 		this.configJsFile = configJsFile;
+		return self();
+	}
+
+	public B editorType(final String editorType) {
+		this.editorType = editorType;
+		return self();
+	}
+
+	public B ckEditorVersion(final RichTextFieldDefinition.CKEditorVersion ckEditorVersion) {
+		this.ckEditorVersion = ckEditorVersion;
 		return self();
 	}
 
@@ -130,6 +146,8 @@ public abstract class AbstractRichTextFieldDefinitionBuilder<D extends RichTextF
 		Optional.ofNullable(fonts).ifPresent(definition::setFonts);
 		Optional.ofNullable(fontSizes).ifPresent(definition::setFontSizes);
 		Optional.ofNullable(configJsFile).ifPresent(definition::setConfigJsFile);
+		Optional.ofNullable(editorType).ifPresent(definition::setEditorType);
+		Optional.ofNullable(ckEditorVersion).ifPresent(definition::setCkEditorVersion);
 		Stream.ofNullable(linkFieldDefinitions).map(Map::entrySet).flatMap(Collection::stream).forEach(entry ->
 				definition.getLinkFieldDefinitions().put(entry.getKey(), entry.getValue())
 		);

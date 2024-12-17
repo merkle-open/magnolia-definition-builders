@@ -7,6 +7,10 @@ public class ToolsGroupBuilder extends AbstractToolbarGroupBuilder<ToolsGroupBui
 	}
 
 	public ToolsGroupBuilder source() {
-		return option("Source");
+		return option("sourceEditing");
+	}
+
+	public ToolsGroupBuilder codeBlock() {
+		return option("codeBlock");
 	}
 }

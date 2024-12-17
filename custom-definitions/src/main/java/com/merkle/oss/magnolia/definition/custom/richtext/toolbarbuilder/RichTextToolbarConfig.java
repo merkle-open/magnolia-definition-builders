@@ -1,7 +1,5 @@
 package com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder;
 
-import info.magnolia.ui.vaadin.ckeditor.MagnoliaCKEditorConfig.ToolbarGroup;
-
 import java.util.List;
 import java.util.function.UnaryOperator;
 

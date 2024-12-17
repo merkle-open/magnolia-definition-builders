@@ -2,7 +2,6 @@ package com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder;
 
 
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.AbstractToolbarGroupBuilder;
-import info.magnolia.ui.vaadin.ckeditor.MagnoliaCKEditorConfig.ToolbarGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,12 +54,7 @@ public class RichTextToolbar implements RichTextToolbarConfig {
 		public RichTextToolbar build() {
 			return new RichTextToolbar(
 					toolsBuilders.stream()
-							.map(toolbarGroupBuilder ->
-									new ToolbarGroup(
-											toolbarGroupBuilder.getName(),
-											toolbarGroupBuilder.getOptions().toArray(String[]::new)
-									)
-							)
+							.map(AbstractToolbarGroupBuilder::build)
 							.collect(Collectors.toList())
 			);
 		}

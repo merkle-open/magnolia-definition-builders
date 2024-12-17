@@ -7,18 +7,14 @@ public class LinksGroupBuilder extends AbstractToolbarGroupBuilder<LinksGroupBui
 	}
 
 	public LinksGroupBuilder link() {
-		return option("Link");
+		return option("link");
 	}
 
 	public LinksGroupBuilder internalLink() {
-		return option("InternalLink");
+		return option("mgnlPagesLink");
 	}
 
 	public LinksGroupBuilder damLink() {
-		return option("DamLink");
-	}
-
-	public LinksGroupBuilder unlink() {
-		return option("Unlink");
+		return option("mgnlAssetsLink");
 	}
 }

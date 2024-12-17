@@ -57,4 +57,22 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <!-- default resources configuration which will filter the module descriptor -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.js</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 </project>

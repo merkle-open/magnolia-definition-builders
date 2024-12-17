@@ -1,49 +1,50 @@
 package com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.annotation.Nullable;
+
+import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.ToolbarGroup;
 
 public abstract class AbstractToolbarGroupBuilder<T extends AbstractToolbarGroupBuilder<T>> {
-	private final String name;
-	private final List<String> options = new ArrayList<>();
+	private final String label;
+	@Nullable
+    private List<String> options;
 
-	public AbstractToolbarGroupBuilder(final String name) {
-		this.name = name;
+	public AbstractToolbarGroupBuilder(final String label) {
+		this.label = label;
 	}
 
-	public String getName() {
-		return name;
+	public String getLabel() {
+		return label;
+	}
+
+	public T option(final String option) {
+		return options(Stream.concat(
+				Stream.ofNullable(options).flatMap(Collection::stream),
+				Stream.of(option)
+		).collect(Collectors.toList()));
+	}
+
+	public T options(final List<String> options) {
+		this.options = options;
+		return self();
 	}
 
 	@SuppressWarnings("unchecked")
-	public T option(final String option) {
-		options.add(option);
-		return (T)this;
+	protected T self() {
+		return (T) this;
 	}
 
-	public List<String> getOptions() {
-		return options;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		AbstractToolbarGroupBuilder<?> that = (AbstractToolbarGroupBuilder<?>) o;
-		return Objects.equals(name, that.name) && Objects.equals(options, that.options);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(name, options);
-	}
-
-	@Override
-	public String toString() {
-		return "ToolbarGroupBuilder{" +
-				"name='" + name + '\'' +
-				", options=" + options +
-				'}';
+	public ToolbarGroup build() {
+		return new ToolbarGroup(
+				label,
+				Optional.ofNullable(options).orElseGet(Collections::emptyList)
+		);
 	}
 }
