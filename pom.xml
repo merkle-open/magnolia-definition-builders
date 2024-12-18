@@ -37,7 +37,7 @@
 	<properties>
 		<!-- (check for new versions:  mvn versions:display-property-updates )-->
 
-		<magnolia.version>6.3.0</magnolia.version>
+		<magnolia.version>6.3.2</magnolia.version>
 		<magnolia.workflow.version>6.0.8</magnolia.workflow.version>
 		<spring.version>5.3.39</spring.version>
 		<merkle.powernode.version>2.1.1</merkle.powernode.version>
@@ -45,13 +45,13 @@
 		<jsr305.nullable.version>3.0.2</jsr305.nullable.version>
 
 		<!--Test dependency versions-->
-		<junit.version>5.11.0</junit.version>
-		<mockito.version>5.13.0</mockito.version>
+		<junit.version>5.11.4</junit.version>
+		<mockito.version>5.14.2</mockito.version>
 
 		<!-- Maven Plugins -->
 		<mvn.compiler.plugin.version>3.13.0</mvn.compiler.plugin.version>
 		<mvn.source.plugin.version>3.3.1</mvn.source.plugin.version>
-		<mvn.surefire.plugin.version>3.5.0</mvn.surefire.plugin.version>
+		<mvn.surefire.plugin.version>3.5.2</mvn.surefire.plugin.version>
 		<mvn.javadoc.version>3.5.0</mvn.javadoc.version>
 		<mvn.gpg.plugin.version>3.0.1</mvn.gpg.plugin.version>
 		<mvn.nexus-staging.plugin.version>1.6.13</mvn.nexus-staging.plugin.version>
