@@ -4,6 +4,7 @@ import info.magnolia.ui.vaadin.ckeditor.CKEditor5TextFieldConfig;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,10 +23,15 @@ public class ExtendedCKEditor5TextFieldConfig extends CKEditor5TextFieldConfig {
         this.toolbar = new ExtendedToolbar(toolbarGroups, true);
         this.heading = new Heading(options);
         getToolbarGroup(toolbarGroups, FontGroupBuilder.FontToolbarGroup.class).ifPresent(fontToolbarGroup -> {
-            this.fontFamily.options = fontToolbarGroup.getFonts();
-            this.fontSize.options = fontToolbarGroup.getFontSizes();
-            this.fontColor.colors = fontToolbarGroup.getFontColors();
+            this.fontFamily = apply(new FontFamily(), fontFamily -> fontFamily.options = fontToolbarGroup.getFonts());
+            this.fontSize = apply(new FontSize(), fontSize -> fontSize.options = fontToolbarGroup.getFontSizes());
+            this.fontColor = apply(new FontColor(), fontColor -> fontColor.colors = fontToolbarGroup.getFontColors());
         });
+    }
+
+    private <T> T apply(final T t, final Consumer<T> consumer) {
+        consumer.accept(t);
+        return t;
     }
 
     private <T extends ToolbarGroup> Optional<T> getToolbarGroup(final List<ToolbarGroup> toolbarGroups, final Class<T> clazz) {

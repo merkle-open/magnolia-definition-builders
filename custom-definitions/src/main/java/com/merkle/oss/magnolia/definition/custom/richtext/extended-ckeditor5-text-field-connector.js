@@ -10,14 +10,17 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
     config.heading.options.forEach((option) => option.class = option.clazz);
     //different from magnolia
 
-    // name of the object produced by @magnolia/ckeditor5-integration
-    let buildObject = window["ClassicEditor"];
-    if (this.getState().editorType) {
-      buildObject = CKEDITOR[this.getState().editorType];
-      config = {'licenseKey': config.licenseKey};
+    let CKEDITOR5 = window["CKEDITOR5"];
+    // in case custom-builds are object-wrapped, otherwise, just use the original
+    if (typeof window["CKEDITOR5"] !== 'function') {
+      if (this.getState().editorType) {
+        CKEDITOR5 = CKEDITOR5[this.getState().editorType];
+      } else {
+        CKEDITOR5 = CKEDITOR5["ClassicEditor"];
+      }
     }
 
-    buildObject.create(this.getElement(), config)
+    CKEDITOR5.create(this.getElement(), config)
       .then(newEditor => {
         let data = this.getState().value;
         if (data != null) {
