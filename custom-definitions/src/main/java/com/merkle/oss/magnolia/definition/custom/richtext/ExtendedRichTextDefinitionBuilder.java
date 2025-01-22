@@ -24,6 +24,8 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 	private List<HeadingOption> headings;
 	@Nullable
 	private Map<String, LinkFieldDefinition<?>> linkFieldDefinitions;
+	@Nullable
+	private Long height;
 
 	public ExtendedRichTextDefinitionBuilder() {}
 	public ExtendedRichTextDefinitionBuilder(final ExtendedRichTextDefinition definition) {
@@ -31,6 +33,7 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		definition.getToolbarConfig().ifPresent(this::toolbarConfig);
 		headings(definition.getHeadings());
 		linkFieldDefinitions(definition.getLinkFieldDefinitions());
+		height(definition.getHeight());
 	}
 
 	public ExtendedRichTextDefinitionBuilder toolbarConfig(final RichTextToolbarConfig toolbarConfig) {
@@ -62,6 +65,11 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		return self();
 	}
 
+	public ExtendedRichTextDefinitionBuilder height(final long height) {
+		this.height = height;
+		return self();
+	}
+
 	public ExtendedRichTextDefinition build(final String name) {
 		final ExtendedRichTextDefinition definition = new ExtendedRichTextDefinition();
 		super.populate(definition, name);
@@ -72,6 +80,7 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		Stream.ofNullable(linkFieldDefinitions).map(Map::entrySet).flatMap(Collection::stream).forEach(entry ->
 				definition.getLinkFieldDefinitions().put(entry.getKey(), entry.getValue())
 		);
+		Optional.ofNullable(height).ifPresent(definition::setHeight);
 		return definition;
 	}
 
@@ -83,6 +92,4 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 						Objects.equals(toolbarGroup.getName(), toolbarGroupBuilder.getLabel())
 				);
 	}
-
-
 }
