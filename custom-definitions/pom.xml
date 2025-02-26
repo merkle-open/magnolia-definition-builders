@@ -71,6 +71,7 @@
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.js</include>
+                    <include>**/*.css</include>
                 </includes>
             </resource>
         </resources>

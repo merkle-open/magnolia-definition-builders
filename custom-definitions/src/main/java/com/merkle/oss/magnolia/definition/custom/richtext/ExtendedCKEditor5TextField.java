@@ -4,6 +4,7 @@ import info.magnolia.ui.vaadin.ckeditor.CKEditor5TextField;
 import info.magnolia.ui.vaadin.ckeditor.CKEditor5TextFieldState;
 
 import com.vaadin.annotations.JavaScript;
+import com.vaadin.annotations.StyleSheet;
 
 /**
  * Server side component for the ExtendedCKEditor 5 JavaScript rich-text editor.
@@ -14,6 +15,7 @@ import com.vaadin.annotations.JavaScript;
         "vaadin://ckeditor5.js",
         "extended-ckeditor5-text-field-connector.js"
 })
+@StyleSheet("extended-ckeditor5-text-field-style.css")
 public class ExtendedCKEditor5TextField extends CKEditor5TextField {
 
     @Override

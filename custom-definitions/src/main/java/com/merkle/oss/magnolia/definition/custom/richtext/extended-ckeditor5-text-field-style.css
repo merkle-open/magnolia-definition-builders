@@ -1,0 +1,3 @@
+.ck.ck-editor__editable > :first-child {
+  margin-top: 0.5em !important;
+}
