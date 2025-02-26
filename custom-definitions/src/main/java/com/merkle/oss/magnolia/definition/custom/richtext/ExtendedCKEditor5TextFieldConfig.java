@@ -8,18 +8,24 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.annotation.Nullable;
+
+import com.merkle.oss.magnolia.definition.custom.richtext.link.LinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.ToolbarGroup;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.FontGroupBuilder;
 
 public class ExtendedCKEditor5TextFieldConfig extends CKEditor5TextFieldConfig {
     public final Heading heading;
+    public final LinkConfig link;
 
     public ExtendedCKEditor5TextFieldConfig(
             final String licenseKey,
             final List<ToolbarGroup> toolbarGroups,
-            final List<HeadingOption> options
+            final List<HeadingOption> options,
+            @Nullable final LinkConfig link
     ) {
         super(licenseKey);
+        this.link = link;
         this.toolbar = new ExtendedToolbar(toolbarGroups, true);
         this.heading = new Heading(options);
         getToolbarGroup(toolbarGroups, FontGroupBuilder.FontToolbarGroup.class).ifPresent(fontToolbarGroup -> {

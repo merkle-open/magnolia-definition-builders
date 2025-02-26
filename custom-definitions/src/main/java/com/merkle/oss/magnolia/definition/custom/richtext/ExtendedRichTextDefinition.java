@@ -11,11 +11,15 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
+import com.merkle.oss.magnolia.definition.custom.richtext.link.LinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
 
 public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
 	@Nullable
 	private RichTextToolbarConfig toolbarConfig;
+
+	@Nullable
+	private LinkConfig linkConfig;
 
 	private List<HeadingOption> headings = List.of(HeadingOption.values());
 
@@ -31,8 +35,16 @@ public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
 		return Optional.ofNullable(toolbarConfig);
 	}
 
-	public void setToolbarConfig(RichTextToolbarConfig toolbarConfig) {
+	public void setToolbarConfig(final RichTextToolbarConfig toolbarConfig) {
 		this.toolbarConfig = toolbarConfig;
+	}
+
+	public Optional<LinkConfig> getLinkConfig() {
+		return Optional.ofNullable(linkConfig);
+	}
+
+	public void setLinkConfig(final LinkConfig linkConfig) {
+		this.linkConfig = linkConfig;
 	}
 
 	public List<HeadingOption> getHeadings() {

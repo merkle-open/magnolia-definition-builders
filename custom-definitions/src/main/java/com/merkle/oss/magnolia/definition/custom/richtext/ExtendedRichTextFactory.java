@@ -13,7 +13,6 @@ import info.magnolia.ui.field.RichTextFieldDefinition;
 import info.magnolia.ui.framework.ioc.UiComponentProvider;
 import info.magnolia.ui.vaadin.ckeditor.CKEditor5Config;
 import info.magnolia.ui.vaadin.ckeditor.MagnoliaCKEditorConfig;
-import info.magnolia.ui.vaadin.ckeditor.MagnoliaCKEditorTextFieldEvents;
 
 import java.lang.invoke.MethodHandles;
 import java.util.Collections;
@@ -98,12 +97,13 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 
 	private ExtendedCKEditor5TextFieldConfig getConfig() {
 		if (getDefinition().getEditorType() != null) {
-			return new ExtendedCKEditor5TextFieldConfig(ckEditor5Config.getCkeditor5License(), Collections.emptyList(), Collections.emptyList());
+			return new ExtendedCKEditor5TextFieldConfig(ckEditor5Config.getCkeditor5License(), Collections.emptyList(), Collections.emptyList(), null);
 		}
 		return new ExtendedCKEditor5TextFieldConfig(
 				ckEditor5Config.getCkeditor5License(),
 				getDefinition().getToolbarConfig().map(RichTextToolbarConfig::getConfig).orElseGet(Collections::emptyList),
-				getDefinition().getHeadings()
+				getDefinition().getHeadings(),
+				getDefinition().getLinkConfig().orElse(null)
 		);
 	}
 

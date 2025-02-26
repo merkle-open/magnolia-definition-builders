@@ -8,6 +8,9 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
     //different from magnolia
     let config = state.extendedConfig;
     config.heading.options.forEach((option) => option.class = option.clazz);
+    Object.values(config.link.decorators).filter((decorator) => decorator.mode === 'automatic').forEach((decorator) =>
+      decorator.callback = (url) => new RegExp(decorator.urlPredicateRegex).test(url)
+    );
     //different from magnolia
 
     let CKEDITOR5 = window["CKEDITOR5"];

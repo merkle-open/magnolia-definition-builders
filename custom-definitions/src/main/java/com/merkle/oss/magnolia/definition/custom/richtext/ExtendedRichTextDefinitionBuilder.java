@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.merkle.oss.magnolia.definition.builder.simple.AbstractConfiguredFieldDefinitionBuilder;
+import com.merkle.oss.magnolia.definition.custom.richtext.link.LinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.AbstractToolbarGroupBuilder;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.ImageGroupBuilder;
@@ -20,6 +21,8 @@ import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbu
 public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDefinitionBuilder<String, ExtendedRichTextDefinition, ExtendedRichTextDefinitionBuilder> {
 	@Nullable
 	private RichTextToolbarConfig toolbarConfig;
+	@Nullable
+	private LinkConfig linkConfig;
 	@Nullable
 	private List<HeadingOption> headings;
 	@Nullable
@@ -38,6 +41,11 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 
 	public ExtendedRichTextDefinitionBuilder toolbarConfig(final RichTextToolbarConfig toolbarConfig) {
 		this.toolbarConfig = toolbarConfig;
+		return self();
+	}
+
+	public ExtendedRichTextDefinitionBuilder linkConfig(final LinkConfig linkConfig) {
+		this.linkConfig = linkConfig;
 		return self();
 	}
 
@@ -74,6 +82,7 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		final ExtendedRichTextDefinition definition = new ExtendedRichTextDefinition();
 		super.populate(definition, name);
 		Optional.ofNullable(toolbarConfig).ifPresent(definition::setToolbarConfig);
+		Optional.ofNullable(linkConfig).ifPresent(definition::setLinkConfig);
 		Optional.ofNullable(headings).ifPresent(definition::setHeadings);
 		definition.setImages(contains(new ImageGroupBuilder()));
 		definition.setLists(contains(new ImageGroupBuilder()));
