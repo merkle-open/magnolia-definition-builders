@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.machinezoo.noexception.Exceptions;
+import com.merkle.oss.magnolia.definition.custom.richtext.link.LinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
 import com.vaadin.ui.Component;
 
@@ -97,13 +98,13 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 
 	private ExtendedCKEditor5TextFieldConfig getConfig() {
 		if (getDefinition().getEditorType() != null) {
-			return new ExtendedCKEditor5TextFieldConfig(ckEditor5Config.getCkeditor5License(), Collections.emptyList(), Collections.emptyList(), null);
+			return new ExtendedCKEditor5TextFieldConfig(ckEditor5Config.getCkeditor5License(), Collections.emptyList(), Collections.emptyList(), new LinkConfig.Builder().build());
 		}
 		return new ExtendedCKEditor5TextFieldConfig(
 				ckEditor5Config.getCkeditor5License(),
 				getDefinition().getToolbarConfig().map(RichTextToolbarConfig::getConfig).orElseGet(Collections::emptyList),
 				getDefinition().getHeadings(),
-				getDefinition().getLinkConfig().orElse(null)
+				getDefinition().getLinkConfig().orElseGet(() -> new LinkConfig.Builder().build())
 		);
 	}
 

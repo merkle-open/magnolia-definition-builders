@@ -22,7 +22,7 @@ public class ExtendedCKEditor5TextFieldConfig extends CKEditor5TextFieldConfig {
             final String licenseKey,
             final List<ToolbarGroup> toolbarGroups,
             final List<HeadingOption> options,
-            @Nullable final LinkConfig link
+            final LinkConfig link
     ) {
         super(licenseKey);
         this.link = link;
