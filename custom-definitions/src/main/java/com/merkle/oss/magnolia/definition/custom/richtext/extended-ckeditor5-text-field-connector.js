@@ -69,7 +69,7 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
         editor.destroy().catch(error => console.error(error));
       }
     } catch(err) {
-      console.error("Failed to init richtext editor", e);
+      console.error("Failed to init richtext editor", err);
       throw err;
     }
   };
