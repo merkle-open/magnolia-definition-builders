@@ -20,6 +20,8 @@ public class AbstractContentViewDefinitionBuilder<T, D extends ContentViewDefini
     protected Boolean readOnly;
     @Nullable
     protected Boolean scrollToSelectedItem;
+    @Nullable
+    protected Boolean filterableColumns;
 
     public AbstractContentViewDefinitionBuilder() {}
     public AbstractContentViewDefinitionBuilder(final D definition) {
@@ -57,6 +59,11 @@ public class AbstractContentViewDefinitionBuilder<T, D extends ContentViewDefini
 
     public B scrollToSelectedItem(final boolean scrollToSelectedItem) {
         this.scrollToSelectedItem = scrollToSelectedItem;
+        return self();
+    }
+
+    public B filterableColumns(final boolean filterableColumns) {
+        this.filterableColumns = filterableColumns;
         return self();
     }
 
