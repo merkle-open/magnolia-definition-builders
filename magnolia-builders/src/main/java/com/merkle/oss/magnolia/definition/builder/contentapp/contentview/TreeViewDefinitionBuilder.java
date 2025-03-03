@@ -19,6 +19,7 @@ public class TreeViewDefinitionBuilder<T> extends AbstractGridViewDefinitionBuil
         Optional.ofNullable(multiSelect).ifPresent(definition::setMultiSelect);
         Optional.ofNullable(readOnly).ifPresent(definition::setReadOnly);
         Optional.ofNullable(scrollToSelectedItem).ifPresent(definition::setScrollToSelectedItem);
+        Optional.ofNullable(filterableColumns).ifPresent(definition::setFilterableColumns);
 
         Optional.ofNullable(columns).ifPresent(definition::setColumns);
         Optional.ofNullable(dropConstraint).ifPresent(definition::setDropConstraint);
