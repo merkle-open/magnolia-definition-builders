@@ -13,7 +13,9 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.merkle.oss.magnolia.definition.builder.simple.AbstractConfiguredFieldDefinitionBuilder;
-import com.merkle.oss.magnolia.definition.custom.richtext.link.LinkConfig;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.heading.HeadingOption;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSupport;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.AbstractToolbarGroupBuilder;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.ImageGroupBuilder;
@@ -23,6 +25,8 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 	private RichTextToolbarConfig toolbarConfig;
 	@Nullable
 	private LinkConfig linkConfig;
+	@Nullable
+	private HtmlSupport htmlSupport;
 	@Nullable
 	private List<HeadingOption> headings;
 	@Nullable
@@ -46,6 +50,11 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 
 	public ExtendedRichTextDefinitionBuilder linkConfig(final LinkConfig linkConfig) {
 		this.linkConfig = linkConfig;
+		return self();
+	}
+
+	public ExtendedRichTextDefinitionBuilder htmlSupport(final HtmlSupport htmlSupport) {
+		this.htmlSupport = htmlSupport;
 		return self();
 	}
 
@@ -83,6 +92,7 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		super.populate(definition, name);
 		Optional.ofNullable(toolbarConfig).ifPresent(definition::setToolbarConfig);
 		Optional.ofNullable(linkConfig).ifPresent(definition::setLinkConfig);
+		Optional.ofNullable(htmlSupport).ifPresent(definition::setHtmlSupport);
 		Optional.ofNullable(headings).ifPresent(definition::setHeadings);
 		definition.setImages(contains(new ImageGroupBuilder()));
 		definition.setLists(contains(new ImageGroupBuilder()));

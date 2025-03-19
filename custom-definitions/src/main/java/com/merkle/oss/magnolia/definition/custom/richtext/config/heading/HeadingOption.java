@@ -1,4 +1,4 @@
-package com.merkle.oss.magnolia.definition.custom.richtext;
+package com.merkle.oss.magnolia.definition.custom.richtext.config.heading;
 
 import java.util.Optional;
 

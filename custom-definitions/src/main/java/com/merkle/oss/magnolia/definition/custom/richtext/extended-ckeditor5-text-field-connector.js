@@ -1,4 +1,5 @@
 // copied from info.magnolia.ui.vaadin.ckeditor ckeditor5-text-field-connector
+
 com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
   function () {
     try {
@@ -8,10 +9,28 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
 
       //different from magnolia
       let config = state.extendedConfig;
+      console.log("config: "+JSON.stringify(config));
       config.heading.options.forEach((option) => option.class = option.clazz);
       Object.values(config.link.decorators).filter((decorator) => decorator.mode === 'automatic').forEach((decorator) =>
         decorator.callback = (url) => new RegExp(decorator.urlPredicateRegex).test(url)
       );
+
+      const mapPattern = (pattern) => {
+        pattern.name = new RegExp(pattern.name);
+        pattern.classes = mapPropertyPattern(pattern.classes);
+        pattern.styles = mapPropertyPattern(pattern.styles);
+        pattern.attributes = mapPropertyPattern(pattern.attributes);
+      }
+      const mapPropertyPattern = (propertyPattern) => {
+        if(Object.keys(propertyPattern).length === 0) {
+          return true;
+        }
+        return propertyPattern;
+      };
+      config.htmlSupport.allow.forEach(mapPattern);
+      config.htmlSupport.disallow.forEach(mapPattern);
+
+      console.log("config: "+JSON.stringify(config));
       //different from magnolia
 
       let CKEDITOR5 = window["CKEDITOR5"];

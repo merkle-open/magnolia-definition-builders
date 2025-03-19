@@ -1,4 +1,4 @@
-package com.merkle.oss.magnolia.definition.custom.richtext.link;
+package com.merkle.oss.magnolia.definition.custom.richtext.config.link;
 
 import java.util.Collection;
 import java.util.Collections;

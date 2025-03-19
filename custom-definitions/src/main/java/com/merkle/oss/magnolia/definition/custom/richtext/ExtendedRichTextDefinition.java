@@ -11,7 +11,9 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
-import com.merkle.oss.magnolia.definition.custom.richtext.link.LinkConfig;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.heading.HeadingOption;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSupport;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
 
 public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
@@ -20,6 +22,9 @@ public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
 
 	@Nullable
 	private LinkConfig linkConfig;
+
+	@Nullable
+	private HtmlSupport htmlSupport;
 
 	private List<HeadingOption> headings = List.of(HeadingOption.values());
 
@@ -54,4 +59,12 @@ public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
 	public void setHeadings(final List<HeadingOption> headings) {
 		this.headings = headings;
 	}
+
+    public Optional<HtmlSupport> getHtmlSupport() {
+        return Optional.ofNullable(htmlSupport);
+    }
+
+    public void setHtmlSupport(final HtmlSupport htmlSupport) {
+        this.htmlSupport = htmlSupport;
+    }
 }
