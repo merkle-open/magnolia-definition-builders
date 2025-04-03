@@ -21,6 +21,14 @@
 validators.<VALIDATOR_NAME>.errorMessage
 ```
 
+## TabDefinitionKeyGenerator
+```properties
+<DIALOG_NAME>.tab.<TAB_NAME>.label
+<APP_NAME>.tab.<SUBAPP_NAME>.<TAB_NAME>.label
+<APP_NAME>.tab.<TAB_NAME>.label
+tabs.<TAB_NAME>.label
+```
+
 ## ColumnDefinitionKeyGenerator
 ```properties
 <APP_NAME>.<SUBAPP_NAME>.views.<COLUMN_NAME>.label
