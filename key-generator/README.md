@@ -4,12 +4,20 @@
 ```properties
 <DIALOG_NAME>.field.<FIELDNAME>.label
 <FALLBACK_DIALOG_NAME>.field.<FIELDNAME>.label
+<APP_NAME>.field.<SUBAPP_NAME>.<FIELDNAME>.label
+<APP_NAME>.field.<FIELDNAME>.label
+<FALLBACK_APP_NAME>.field.<SUBAPP_NAME>.<FIELDNAME>.label
+<FALLBACK_APP_NAME>.field.<FIELDNAME>.label
 ```
 
 ## FieldValidatorDefinitionKeyGenerator
 ```properties
 <DIALOG_NAME>.field.<VALIDATOR_NAME>.errorMessage
 <FALLBACK_DIALOG_NAME>.field.<VALIDATOR_NAME>.errorMessage
+<APP_NAME>.field.<SUBAPP_NAME>.<VALIDATOR_NAME>.errorMessage
+<APP_NAME>.field.<VALIDATOR_NAME>.errorMessage
+<FALLBACK_APP_NAME>.field.<SUBAPP_NAME>.<VALIDATOR_NAME>.errorMessage
+<FALLBACK_APP_NAME>.field.<VALIDATOR_NAME>.errorMessage
 validators.<VALIDATOR_NAME>.errorMessage
 ```
 
@@ -78,6 +86,7 @@ public class SomeModule implements ModuleLifecycle {
 ```java
 import info.magnolia.objectfactory.guice.AbstractGuiceComponentConfigurer;
 
+import com.merkle.oss.magnolia.definition.key.generator.configuration.FallbackAppName;
 import com.merkle.oss.magnolia.definition.key.generator.configuration.IdRegexp;
 import com.merkle.oss.magnolia.definition.key.generator.configuration.FallbackDialogName;
 
@@ -91,6 +100,10 @@ public class GuiceComponentConfigurer extends AbstractGuiceComponentConfigurer {
         binder().bind(String.class)
                 .annotatedWith(FallbackDialogName.class)
                 .toInstance("CommonDialog");
+
+        binder().bind(String.class)
+                .annotatedWith(FallbackAppName.class)
+                .toInstance("CommonApp");
 
         //Optional
         final Multibinder<Class<?>> excludedAncestorsMultibinder = Multibinder.newSetBinder(binder(), new TypeLiteral<Class<?>>() {}, ExcludedAncestors.class);

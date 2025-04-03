@@ -2,6 +2,7 @@ package com.merkle.oss.magnolia.definition.key.generator;
 
 import info.magnolia.config.NamedDefinition;
 import info.magnolia.objectfactory.Components;
+import info.magnolia.ui.contentapp.detail.DetailDescriptor;
 import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.form.field.definition.FieldDefinition;
 import info.magnolia.ui.form.field.definition.FieldDefinitionKeyGenerator;
@@ -10,13 +11,13 @@ import java.lang.reflect.AnnotatedElement;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 public class EditorPropertyDefinitionKeyGenerator extends info.magnolia.ui.editor.i18n.EditorPropertyDefinitionKeyGenerator {
-
     private final KeyGeneratorUtil keyGeneratorUtil;
     private final FieldDefinitionKeyGenerator fieldDefinitionKeyGenerator;
     private final KeyPrefixer keyPrefixer;
@@ -51,22 +52,24 @@ public class EditorPropertyDefinitionKeyGenerator extends info.magnolia.ui.edito
             final EditorPropertyDefinition definition,
             final AnnotatedElement el
     ) {
-        final String dialogName = keyGeneratorUtil.getDialogName(definition);
-
         if (keyGeneratorUtil.isMagnoliaModule(definition)) {
             super.keysFor(list, definition, el);
         } else {
-            addKey(list, getKeys(dialogName, definition, el));
-            addKey(list, getKeys(keyGeneratorUtil.getFallbackDialogName(), definition, el));
+            final String rootDefinitionName = keyGeneratorUtil.getRootDefinitionName(definition);
+            addKey(list, getKeys(rootDefinitionName, ignored -> true, definition, el));
+            addKey(list, getKeys(rootDefinitionName, d -> !(d instanceof DetailDescriptor), definition, el));
+            addKey(list, getKeys(keyGeneratorUtil.getFallbackName(definition), ignored -> true, definition, el));
+            addKey(list, getKeys(keyGeneratorUtil.getFallbackName(definition), d -> !(d instanceof DetailDescriptor), definition, el));
         }
     }
 
-    protected String[] getKeys(final String dialogName, final EditorPropertyDefinition definition, final AnnotatedElement el) {
+    protected String[] getKeys(final String name, final Predicate<Object> filter, final EditorPropertyDefinition definition, final AnnotatedElement el) {
+        final String rootDefinitionName = keyGeneratorUtil.getRootDefinitionName(definition);
         return Stream.of(
-                Stream.of(dialogName),
+                Stream.of(name),
                 keyPrefixer.getKeyPrefix(definition),
                 Stream.of("field"),
-                streamNames(definition),
+                streamNames(filter, definition).filter(Predicate.not(rootDefinitionName::equals)),
                 Stream.of(
                         replaceColons(definition.getName()),
                         fieldOrGetterName(el)
@@ -74,12 +77,12 @@ public class EditorPropertyDefinitionKeyGenerator extends info.magnolia.ui.edito
         ).flatMap(Function.identity()).sequential().toArray(String[]::new);
     }
 
-    private Stream<String> streamNames(final Object definition) {
+    private Stream<String> streamNames(final Predicate<Object> filter, final Object definition) {
         final List<Object> ancestors = getAncestors(definition);
         Collections.reverse(ancestors);
         return ancestors.stream()
                 .filter(ancestor ->
-                        keyGeneratorUtil.getExcludedAncestors().stream().noneMatch(excluded -> excluded.isInstance(ancestor))
+                        filter.test(ancestor) && keyGeneratorUtil.getExcludedAncestors().stream().noneMatch(excluded -> excluded.isInstance(ancestor))
                 )
                 .filter(NamedDefinition.class::isInstance)
                 .map(NamedDefinition.class::cast)

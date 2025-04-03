@@ -1,6 +1,7 @@
 package com.merkle.oss.magnolia.definition.key.generator;
 
 import info.magnolia.i18nsystem.AbstractI18nKeyGenerator;
+import info.magnolia.ui.api.app.AppDescriptor;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
@@ -17,21 +18,25 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.machinezoo.noexception.Exceptions;
 import com.merkle.oss.magnolia.definition.key.generator.configuration.ExcludedAncestors;
+import com.merkle.oss.magnolia.definition.key.generator.configuration.FallbackAppName;
 import com.merkle.oss.magnolia.definition.key.generator.configuration.FallbackDialogName;
 import com.merkle.oss.magnolia.definition.key.generator.configuration.IdRegexp;
 
 public class KeyGeneratorUtil extends AbstractI18nKeyGenerator<Object> {
     private final String fallbackDialogName;
+    private final String fallbackAppName;
     private final Pattern idPattern;
     private final Set<Class<?>> excludedAncestors;
 
     @Inject
     public KeyGeneratorUtil(
             @FallbackDialogName final String fallbackDialogName,
+            @FallbackAppName final String fallbackAppName,
             @IdRegexp final String idRegexp,
             @ExcludedAncestors final Set<Class<?>> excludedAncestors
     ) {
         this.fallbackDialogName = fallbackDialogName;
+        this.fallbackAppName = fallbackAppName;
         this.excludedAncestors = excludedAncestors;
         this.idPattern = Pattern.compile(idRegexp);
     }
@@ -40,12 +45,15 @@ public class KeyGeneratorUtil extends AbstractI18nKeyGenerator<Object> {
         return !idPattern.matcher(getIdOrNameForUnknownRoot(definition, false)).find();
     }
 
-    public String getDialogName(final Object definition) {
+    public String getRootDefinitionName(final Object definition) {
         final String id = getIdOrNameForUnknownRoot(definition);
-        return StringUtils.defaultIfEmpty(StringUtils.substringAfterLast(id, "."), getFallbackDialogName());
+        return StringUtils.defaultIfEmpty(StringUtils.substringAfterLast(id, "."), "undefined");
     }
 
-    public String getFallbackDialogName() {
+    public String getFallbackName(final Object definition) {
+        if(getAncestors(definition).stream().anyMatch(o -> o instanceof AppDescriptor)) {
+            return fallbackAppName;
+        }
         return fallbackDialogName;
     }
 
