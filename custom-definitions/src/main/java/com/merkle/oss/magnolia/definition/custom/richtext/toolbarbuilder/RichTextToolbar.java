@@ -25,15 +25,15 @@ public class RichTextToolbar implements RichTextToolbarConfig {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		RichTextToolbar that = (RichTextToolbar) o;
-		return Objects.equals(toolbarGroups, that.toolbarGroups);
+		if (!(o instanceof RichTextToolbar that)) {
+			return false;
+		}
+        return Objects.equals(toolbarGroups, that.toolbarGroups);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(toolbarGroups);
+		return Objects.hashCode(toolbarGroups);
 	}
 
 	@Override

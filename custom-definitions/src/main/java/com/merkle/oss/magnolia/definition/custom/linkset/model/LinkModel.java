@@ -71,10 +71,10 @@ public class LinkModel implements Link {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		LinkModel linkModel = (LinkModel) o;
-		return openInNewWindow == linkModel.openInNewWindow && isExternal == linkModel.isExternal && Objects.equals(text, linkModel.text) && Objects.equals(href, linkModel.href) && Objects.equals(externalHref, linkModel.externalHref) && Objects.equals(linkType, linkModel.linkType);
+		if (!(o instanceof LinkModel linkModel)) {
+			return false;
+		}
+        return openInNewWindow == linkModel.openInNewWindow && isExternal == linkModel.isExternal && Objects.equals(text, linkModel.text) && Objects.equals(href, linkModel.href) && Objects.equals(externalHref, linkModel.externalHref) && Objects.equals(linkType, linkModel.linkType);
 	}
 
 	@Override

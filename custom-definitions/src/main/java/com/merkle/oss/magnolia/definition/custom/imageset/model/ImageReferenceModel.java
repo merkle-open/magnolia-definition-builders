@@ -44,10 +44,10 @@ public class ImageReferenceModel {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		ImageReferenceModel that = (ImageReferenceModel) o;
-		return Objects.equals(assetId, that.assetId) && Objects.equals(imageType, that.imageType) && Objects.equals(altText, that.altText);
+		if (!(o instanceof ImageReferenceModel that)) {
+			return false;
+		}
+        return Objects.equals(assetId, that.assetId) && Objects.equals(imageType, that.imageType) && Objects.equals(altText, that.altText);
 	}
 
 	@Override

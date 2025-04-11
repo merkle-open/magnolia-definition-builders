@@ -87,14 +87,13 @@ public class FontGroupBuilder extends AbstractToolbarGroupBuilder<FontGroupBuild
 
 		@Override
 		public boolean equals(Object o) {
-			if (o == null || getClass() != o.getClass()) {
+			if (!(o instanceof FontToolbarGroup that)) {
 				return false;
 			}
 			if (!super.equals(o)) {
 				return false;
 			}
-			FontToolbarGroup that = (FontToolbarGroup) o;
-			return Objects.equals(fonts, that.fonts) && Objects.equals(fontSizes, that.fontSizes) && Objects.equals(fontColors, that.fontColors);
+            return Objects.equals(fonts, that.fonts) && Objects.equals(fontSizes, that.fontSizes) && Objects.equals(fontColors, that.fontColors);
 		}
 
 		@Override

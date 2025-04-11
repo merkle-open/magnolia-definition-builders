@@ -44,10 +44,10 @@ public class VideoReferenceModel {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		VideoReferenceModel that = (VideoReferenceModel) o;
-		return Objects.equals(assetId, that.assetId) && Objects.equals(videoType, that.videoType) && Objects.equals(previewImage, that.previewImage);
+		if (!(o instanceof VideoReferenceModel that)) {
+			return false;
+		}
+        return Objects.equals(assetId, that.assetId) && Objects.equals(videoType, that.videoType) && Objects.equals(previewImage, that.previewImage);
 	}
 
 	@Override

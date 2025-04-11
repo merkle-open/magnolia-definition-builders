@@ -39,10 +39,10 @@ public class ImageModel {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		ImageModel image = (ImageModel) o;
-		return Objects.equals(src, image.src) && Objects.equals(imageType, image.imageType) && Objects.equals(altText, image.altText);
+		if (!(o instanceof ImageModel that)) {
+			return false;
+		}
+        return Objects.equals(src, that.src) && Objects.equals(imageType, that.imageType) && Objects.equals(altText, that.altText);
 	}
 
 	@Override

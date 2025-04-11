@@ -22,10 +22,9 @@ public class ToolbarGroup {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof ToolbarGroup that)) {
             return false;
         }
-        ToolbarGroup that = (ToolbarGroup) o;
         return Objects.equals(name, that.name) && Objects.equals(items, that.items);
     }
 

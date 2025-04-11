@@ -27,10 +27,10 @@ public class FieldOption<T extends OptionEnum> {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		FieldOption<?> that = (FieldOption<?>) o;
-		return Objects.equals(type, that.type) && Objects.equals(field, that.field);
+		if (!(o instanceof FieldOption<?> that)) {
+			return false;
+		}
+        return Objects.equals(type, that.type) && Objects.equals(field, that.field);
 	}
 
 	@Override
