@@ -18,10 +18,10 @@ public class ExternalLinkFactory implements LinkModelFactory.LinkFactory {
 
 	@Override
 	public Optional<Link> create(final Locale locale, final Locale dialogLocale, final PowerNode node, final String propertyName) {
-		return node.getProperty(propertyName, locale, ValueConverter::getString)
+		return node.getProperty(propertyName, dialogLocale, ValueConverter::getString)
 				.map(href ->
 						new LinkModel(
-								node.getProperty(LinkSetDefinitionBuilder.LINK_TEXT_PROPERTY_NAME_PROVIDER.apply(propertyName), locale, ValueConverter::getString).orElse(href),
+								node.getProperty(LinkSetDefinitionBuilder.LINK_TEXT_PROPERTY_NAME_PROVIDER.apply(propertyName), dialogLocale, ValueConverter::getString).orElse(href),
 								href,
 								href,
 								node.getProperty(LinkSetDefinitionBuilder.OPEN_IN_NEW_TAB_PROPERTY_NAME_PROVIDER.apply(propertyName), ValueConverter::getBoolean).orElse(true),
