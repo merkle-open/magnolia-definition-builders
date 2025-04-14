@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.namics.oss.magnolia</groupId>
     <artifactId>magnolia-definition-builders-parent</artifactId>
-    <version>1.2.18-SNAPSHOT</version>
+    <version>1.2.18</version>
   </parent>
 
   <artifactId>custom-definition-builders-spring</artifactId>
