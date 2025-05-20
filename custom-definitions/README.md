@@ -14,6 +14,7 @@
  - NodeType
  - Template
  - [DateDependency](src/main/java/com/merkle/oss/magnolia/definition/custom/validator/datedependency/README.md)
+ - HasProperty
 
 ## Configuration
 
