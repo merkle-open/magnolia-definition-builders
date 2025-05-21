@@ -12,7 +12,7 @@ field definitions in Java,  which is less error-prone than using YAML, especiall
 * Add Maven dependency:
 ```xml
 <dependency>
-    <groupId>com.namics.oss.magnolia</groupId>
+    <groupId>com.merkle.oss.magnolia</groupId>
     <artifactId>magnolia-definition-builders</artifactId>
     <version>1.0.9</version>
 </dependency>

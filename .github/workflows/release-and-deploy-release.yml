@@ -11,21 +11,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout source code
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: '0'
-      # Setup Java environment
       - name: Set up JDK 17
         uses: actions/setup-java@v1
         with:
           java-version: 17
       - name: Maven setup
-        uses: ./.github/actions/mvn-setup
+        uses: s4u/maven-settings-action@v3.0.0
         with:
-          mgnl_nexus_user: ${{secrets.MGNL_NEXUS_USER}}
-          mgnl_nexus_pass: ${{secrets.MGNL_NEXUS_PASS}}
+          servers: |
+            [{
+              "id": "magnolia.enterprise.group",
+              "username": "${{secrets.MGNL_NEXUS_USER}}",
+              "password": "${{secrets.MGNL_NEXUS_PASS}}"
+            }]
+      - name: Maven verify
+        run: mvn verify --batch-mode
       # Install xmllint
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install libxml2-utils
@@ -46,29 +50,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout source code
       - name: Checkout
         uses: actions/checkout@v2
         with:
           ref: 'main'
-      # Setup Java environment
-      - name: Set up JDK 17
-        uses: actions/setup-java@v1
-        with:
-          java-version: 17
       - name: Maven setup
-        uses: ./.github/actions/mvn-setup
+        uses: s4u/maven-settings-action@v3.0.0
         with:
-          mgnl_nexus_user: ${{secrets.MGNL_NEXUS_USER}}
-          mgnl_nexus_pass: ${{secrets.MGNL_NEXUS_PASS}}
-      # Run maven verify
-      - name: Maven verify
-        run: mvn verify --batch-mode
-      # Publish
+          servers: |
+            [{
+              "id": "magnolia.enterprise.group",
+              "username": "${{secrets.MGNL_NEXUS_USER}}",
+              "password": "${{secrets.MGNL_NEXUS_PASS}}"
+            }]
+      - name: Download dependencies #somehow required by the magnolia-license dependency for the deploy !?
+        run: mvn dependency:copy-dependencies
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          server-id: central
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
       - name: Release Maven package
-        uses: samuelmeuli/action-maven-publish@v1
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
-          nexus_username: ${{ secrets.OSSRH_USER }}
-          nexus_password: ${{ secrets.OSSRH_PASSWORD }}
+        run: mvn deploy -Pdeploy
+        env:
+          MAVEN_USERNAME: ${{ secrets.SONATYPE_USER }}
+          MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

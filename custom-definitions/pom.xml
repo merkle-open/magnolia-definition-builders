@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.namics.oss.magnolia</groupId>
+        <groupId>com.merkle.oss.magnolia</groupId>
         <artifactId>magnolia-definition-builders-parent</artifactId>
         <version>1.2.18</version>
     </parent>
@@ -13,17 +13,17 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.namics.oss.magnolia</groupId>
+            <groupId>com.merkle.oss.magnolia</groupId>
             <artifactId>magnolia-definition-builders</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.namics.oss.magnolia</groupId>
+            <groupId>com.merkle.oss.magnolia</groupId>
             <artifactId>magnolia-definition-keyGenerators</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.namics.oss.magnolia</groupId>
+            <groupId>com.merkle.oss.magnolia</groupId>
             <artifactId>magnolia-powernode</artifactId>
         </dependency>
         <dependency>
