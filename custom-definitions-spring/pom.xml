@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.namics.oss.magnolia</groupId>
+    <groupId>com.merkle.oss.magnolia</groupId>
     <artifactId>magnolia-definition-builders-parent</artifactId>
     <version>1.2.19-SNAPSHOT</version>
   </parent>
@@ -14,7 +14,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.namics.oss.magnolia</groupId>
+      <groupId>com.merkle.oss.magnolia</groupId>
       <artifactId>custom-definition-builders</artifactId>
       <version>${project.version}</version>
     </dependency>
