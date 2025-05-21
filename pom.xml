@@ -40,7 +40,7 @@
 		<magnolia.version>6.3.3</magnolia.version>
 		<magnolia.workflow.version>6.0.8</magnolia.workflow.version>
 		<spring.version>5.3.39</spring.version>
-		<magnolia.powernode.version>2.1.5</magnolia.powernode.version>
+		<merkle.powernode.version>2.1.5</merkle.powernode.version>
 		<java.poet.version>1.12.1</java.poet.version>
 		<jsr305.nullable.version>3.0.2</jsr305.nullable.version>
 
@@ -74,7 +74,7 @@
 			<dependency>
 				<groupId>com.merkle.oss.magnolia</groupId>
 				<artifactId>magnolia-powernode</artifactId>
-				<version>${magnolia.powernode.version}</version>
+				<version>${merkle.powernode.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.code.findbugs</groupId>
