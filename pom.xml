@@ -37,7 +37,7 @@
 	<properties>
 		<!-- (check for new versions:  mvn versions:display-property-updates )-->
 
-		<magnolia.version>6.3.3</magnolia.version>
+		<magnolia.version>6.3.8</magnolia.version>
 		<magnolia.workflow.version>6.0.8</magnolia.workflow.version>
 		<spring.version>5.3.39</spring.version>
 		<merkle.powernode.version>2.1.5</merkle.powernode.version>
@@ -45,20 +45,21 @@
 		<jsr305.nullable.version>3.0.2</jsr305.nullable.version>
 
 		<!--Test dependency versions-->
-		<junit.version>5.11.4</junit.version>
-		<mockito.version>5.15.2</mockito.version>
+		<junit.version>5.12.2</junit.version>
+		<mockito.version>5.18.0</mockito.version>
 
 		<!-- Maven Plugins -->
-		<mvn.compiler.plugin.version>3.13.0</mvn.compiler.plugin.version>
+		<mvn.compiler.plugin.version>3.14.0</mvn.compiler.plugin.version>
 		<mvn.source.plugin.version>3.3.1</mvn.source.plugin.version>
-		<mvn.surefire.plugin.version>3.5.2</mvn.surefire.plugin.version>
-		<mvn.javadoc.version>3.5.0</mvn.javadoc.version>
+		<mvn.surefire.plugin.version>3.5.3</mvn.surefire.plugin.version>
+		<mvn.javadoc.version>3.11.2</mvn.javadoc.version>
 		<mvn.gpg.plugin.version>3.2.5</mvn.gpg.plugin.version>
 		<mvn.sonatype.publishing.plugin.version>0.5.0</mvn.sonatype.publishing.plugin.version>
 		<mvn.plugin.version>3.9.0</mvn.plugin.version>
 
 		<javaVersion>17</javaVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.version.ignore>.*-M.*,.*-alpha.*,.*-beta.*,.*-rc.*,.*-RC.*</maven.version.ignore>
 	</properties>
 
 	<dependencyManagement>
