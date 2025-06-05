@@ -12,6 +12,9 @@ public enum HeadingOption {
     HEADING_4("heading4", "h4", "Heading 4", "ck-heading_heading4"),
     HEADING_5("heading5", "h5", "Heading 5", "ck-heading_heading5"),
     HEADING_6("heading6", "h6", "Heading 6", "ck-heading_heading6"),
+    FORMATTED("formatted", "pre", "Formatted", "ck-heading_formatted"),
+    ADDRESS("address", "address", "Address", "ck-heading_address"),
+    NORMAL_DIV("normalDiv", "div", "Normal (DIV)", "ck-heading_div"),
     ;
 
     private final String model;
