@@ -26,7 +26,15 @@ public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
 	@Nullable
 	private HtmlSupport htmlSupport;
 
-	private List<HeadingOption> headings = List.of(HeadingOption.values());
+	private List<HeadingOption> headings = List.of(
+			HeadingOption.PARAGRAPH,
+			HeadingOption.HEADING_1,
+			HeadingOption.HEADING_2,
+			HeadingOption.HEADING_3,
+			HeadingOption.HEADING_4,
+			HeadingOption.HEADING_5,
+			HeadingOption.HEADING_6
+	);
 
 	public ExtendedRichTextDefinition() {
 		setFactoryClass(ExtendedRichTextFactory.class);
