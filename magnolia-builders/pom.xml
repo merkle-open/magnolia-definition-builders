@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>magnolia-definition-builders</artifactId>
+    <name>${project.artifactId}</name>
 
     <dependencies>
         <!-- Magnolia -->
