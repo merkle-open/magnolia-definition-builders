@@ -1,7 +1,6 @@
 package com.merkle.oss.magnolia.definition.custom.linkset;
 
 import info.magnolia.ui.editor.JcrChildNodeProviderDefinition;
-import info.magnolia.ui.field.NoopNameDecorator;
 
 import java.util.Collection;
 import java.util.List;
@@ -12,6 +11,7 @@ import javax.annotation.Nullable;
 
 import com.merkle.oss.magnolia.definition.custom.switchable.AbstractSwitchableDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
+import com.merkle.oss.magnolia.definition.custom.switchable.PrefixFormNameExceptFieldPropertyNameDecorator;
 import com.merkle.oss.magnolia.definition.custom.switchable.SwitchableDefinition;
 
 public abstract class AbstractSwitchableLinkSetDefinitionBuilder<B extends AbstractSwitchableLinkSetDefinitionBuilder<B>> extends AbstractSwitchableDefinitionBuilder<LinkType, B> {
@@ -25,7 +25,7 @@ public abstract class AbstractSwitchableLinkSetDefinitionBuilder<B extends Abstr
 		final JcrChildNodeProviderDefinition childNodeProvider = new JcrChildNodeProviderDefinition();
 		childNodeProvider.setSupportI18N(false);
 		itemProvider(childNodeProvider);
-		propertyNameDecorator(NoopNameDecorator.class);
+		propertyNameDecorator(PrefixFormNameExceptFieldPropertyNameDecorator.class);
 		optionPropertyNameDecorator(ignored -> LINK_TYPE_PROPERTY);
 		linkOptions(List.of(LinkTypes.values()));
 	}

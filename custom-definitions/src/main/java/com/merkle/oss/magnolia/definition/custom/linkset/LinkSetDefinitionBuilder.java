@@ -13,9 +13,12 @@ import javax.annotation.Nullable;
 import java.util.function.UnaryOperator;
 
 public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitionBuilder<LinkSetDefinitionBuilder> {
-	public static final UnaryOperator<String> ANCHOR_ID_PROPERTY_NAME_PROVIDER = name -> name + "_anchorId";
-	public static final UnaryOperator<String> LINK_TEXT_PROPERTY_NAME_PROVIDER = name -> name + "_text";
-	public static final UnaryOperator<String> OPEN_IN_NEW_TAB_PROPERTY_NAME_PROVIDER = name -> name + "_in_new_window";
+	private static final String ANCHOR_ID_PROPERTY = "anchorId";
+	private static final String LINK_TEXT_PROPERTY = "text";
+	private static final String OPEN_IN_NEW_TAB_PROPERTY = "in_new_window";
+	public static final UnaryOperator<String> ANCHOR_ID_PROPERTY_NAME_PROVIDER = name -> name + "_" + ANCHOR_ID_PROPERTY;
+	public static final UnaryOperator<String> LINK_TEXT_PROPERTY_NAME_PROVIDER = name -> name + "_" + LINK_TEXT_PROPERTY;
+	public static final UnaryOperator<String> OPEN_IN_NEW_TAB_PROPERTY_NAME_PROVIDER = name -> name + "_" + OPEN_IN_NEW_TAB_PROPERTY;
 	protected static final String LABEL_PREFIX = "merkle.customDefinitions.linkSet.";
 	protected static final String FIELD_LABEL_PREFIX = LABEL_PREFIX + "field.";
 	private final boolean singleTree;
@@ -85,12 +88,12 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 		return new CheckBoxFieldDefinitionBuilder()
 				.label(LABEL_PREFIX + "openInNewWindow.label")
 				.buttonLabel(LABEL_PREFIX + "openInNewWindow.buttonLabel")
-				.build(OPEN_IN_NEW_TAB_PROPERTY_NAME_PROVIDER.apply(name));
+				.build(OPEN_IN_NEW_TAB_PROPERTY);
 	}
 
 	@Nullable
 	protected TextFieldDefinition linkText(final String name) {
-		return new TextFieldDefinitionBuilder().label(LABEL_PREFIX + "text.label").build(LINK_TEXT_PROPERTY_NAME_PROVIDER.apply(name));
+		return new TextFieldDefinitionBuilder().label(LABEL_PREFIX + "text.label").build(LINK_TEXT_PROPERTY);
 	}
 
 	@Nullable
@@ -101,6 +104,6 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 						.build("anchorPattern")
 				)
 				.label(LABEL_PREFIX + "anchorId.label")
-				.build(ANCHOR_ID_PROPERTY_NAME_PROVIDER.apply(name));
+				.build(ANCHOR_ID_PROPERTY);
 	}
 }

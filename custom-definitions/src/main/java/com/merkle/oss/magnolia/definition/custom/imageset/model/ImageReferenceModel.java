@@ -93,12 +93,12 @@ public class ImageReferenceModel {
 
 		public Optional<ImageReferenceModel> create(final String propertyName, final Locale dialogLocale, final PowerNode image) {
 			final Locale assetIdDialogLocale = imageFieldI18n ? dialogLocale : localeProvider.getDefaultLocale(image);
-			return image.getProperty(propertyName + ImageSetDefinitionBuilder.SELECTION_SUFFIX, assetIdDialogLocale, ValueConverter::getString).flatMap(this::resolve).flatMap(imageType ->
+			return image.getProperty(ImageSetDefinitionBuilder.SELECTION_PROPERTY_NAME_PROVIDER.apply(propertyName), assetIdDialogLocale, ValueConverter::getString).flatMap(this::resolve).flatMap(imageType ->
 					image.getProperty(propertyName + imageType.getValue(), assetIdDialogLocale, ValueConverter::getString).map(assetId ->
 							new ImageReferenceModel(
 									assetId,
 									imageType,
-									image.getProperty(propertyName + ImageSetDefinitionBuilder.ALT_TEXT_SUFFIX, dialogLocale, ValueConverter::getString).orElse(null)
+									image.getProperty(ImageSetDefinitionBuilder.ALT_TEXT_PROPERTY_NAME_PROVIDER.apply(propertyName), dialogLocale, ValueConverter::getString).orElse(null)
 							)
 					)
 			);

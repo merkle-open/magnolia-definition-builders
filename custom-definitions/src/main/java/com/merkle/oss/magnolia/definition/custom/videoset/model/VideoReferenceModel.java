@@ -85,13 +85,13 @@ public class VideoReferenceModel {
 		}
 
 		public Optional<VideoReferenceModel> create(final String propertyName, final Locale dialogLocale, final PowerNode video) {
-			return video.getProperty(propertyName + VideoSetDefinitionBuilder.SELECTION_SUFFIX, dialogLocale, ValueConverter::getString).flatMap(this::resolve).flatMap(videoType ->
+			return video.getProperty(VideoSetDefinitionBuilder.SELECTION_PROPERTY_NAME_PROVIDER.apply(propertyName), dialogLocale, ValueConverter::getString).flatMap(this::resolve).flatMap(videoType ->
 					video.getProperty(propertyName + videoType.getValue(), dialogLocale, ValueConverter::getString).map(assetId ->
 							new VideoReferenceModel(
 									assetId,
 									videoType,
 									imageReferenceFactory
-											.create(propertyName + VideoSetDefinitionBuilder.PREVIEW_IMAGE_SUFFIX, dialogLocale, video)
+											.create(VideoSetDefinitionBuilder.PREVIEW_IMAGE_PROPERTY_NAME_PROVIDER.apply(propertyName), dialogLocale, video)
 											.orElse(null)
 							)
 					)

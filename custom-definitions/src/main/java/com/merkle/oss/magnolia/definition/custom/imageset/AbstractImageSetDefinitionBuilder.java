@@ -1,26 +1,30 @@
 package com.merkle.oss.magnolia.definition.custom.imageset;
 
-import com.merkle.oss.magnolia.definition.builder.complex.AbstractConfiguredComplexPropertyDefinitionBuilder;
-import com.merkle.oss.magnolia.definition.builder.simple.TextFieldDefinitionBuilder;
-import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
-import com.merkle.oss.magnolia.definition.custom.switchable.SwitchableDefinitionBuilder;
-
 import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.FieldValidatorDefinition;
 
-import javax.annotation.Nullable;
-import javax.jcr.Node;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.annotation.Nullable;
+import javax.jcr.Node;
+
+import com.merkle.oss.magnolia.definition.builder.complex.AbstractConfiguredComplexPropertyDefinitionBuilder;
+import com.merkle.oss.magnolia.definition.builder.simple.TextFieldDefinitionBuilder;
+import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
+import com.merkle.oss.magnolia.definition.custom.switchable.SwitchableDefinitionBuilder;
+
 public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageSetDefinitionBuilder<B>> extends AbstractConfiguredComplexPropertyDefinitionBuilder<Node, ImageSetDefinition, B> {
-	public static final String SELECTION_SUFFIX = "_selection";
-	public static final String ALT_TEXT_SUFFIX = "_alt";
+	private static final String SELECTION = "selection";
+	private static final String ALT_TEXT = "alt";
+	public static final UnaryOperator<String> SELECTION_PROPERTY_NAME_PROVIDER = name -> name + "_" + SELECTION;
+	public static final UnaryOperator<String> ALT_TEXT_PROPERTY_NAME_PROVIDER = name -> name + "_" + ALT_TEXT;
 	private final String labelPrefix;
     private final boolean imageFieldI18n;
 
@@ -104,13 +108,14 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 		final ImageSetDefinition definition = new ImageSetDefinition(
 				new SwitchableDefinitionBuilder<ImageType>(labelPrefix)
 						.additionalPropertiesMapping(additionalPropertiesMapping)
-						.optionPropertyNameDecorator(source -> source + SELECTION_SUFFIX)
+						.propertyNameDecorator(PrefixExceptImageFieldPropertyNameDecorator.class)
+						.optionPropertyNameDecorator(SELECTION_PROPERTY_NAME_PROVIDER::apply)
 						.fieldOptions(Stream.ofNullable(imageOptions).flatMap(Collection::stream).map(this::createFieldOption).collect(Collectors.toList()))
 						.label(labelPrefix + "image.label")
 						.build(name),
 				new TextFieldDefinitionBuilder()
 						.label(labelPrefix + "altText.label")
-						.build(name + ALT_TEXT_SUFFIX),
+						.build(ALT_TEXT_PROPERTY_NAME_PROVIDER.apply(name)),
 				imageFieldI18n
 		);
 		super.populate(definition, name);
