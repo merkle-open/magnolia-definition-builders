@@ -1,6 +1,7 @@
 package com.merkle.oss.magnolia.definition.custom.switchable;
 
 import info.magnolia.ui.editor.FormDefinition;
+import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.FieldValidatorDefinition;
 
 import javax.jcr.Node;
@@ -18,4 +19,6 @@ public interface SwitchableForm extends FormDefinition<Node> {
 
 	void setValidators(List<FieldValidatorDefinition> validator);
 	List<FieldValidatorDefinition> getValidators();
+
+	void setAdditionalProperties(List<EditorPropertyDefinition> additionalProperties);
 }

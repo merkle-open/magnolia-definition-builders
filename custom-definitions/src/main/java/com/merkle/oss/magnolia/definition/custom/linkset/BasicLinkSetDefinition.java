@@ -10,6 +10,8 @@ import info.magnolia.ui.framework.layout.StackedLayoutProducer;
 
 import javax.annotation.Nullable;
 import javax.jcr.Node;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +24,7 @@ public class BasicLinkSetDefinition<L extends ConfiguredFieldDefinition<?>> exte
 	private TextFieldDefinition linkText;
 	@Nullable
 	private CheckBoxFieldDefinition openInNewWindow;
+	private List<EditorPropertyDefinition> additionalProperties = Collections.emptyList();
 
 	public BasicLinkSetDefinition(final L link, final boolean singleTree) {
 		this.link = link;
@@ -65,6 +68,7 @@ public class BasicLinkSetDefinition<L extends ConfiguredFieldDefinition<?>> exte
 		getAnchorId().ifPresent(propertiesBuilder::add);
 		getLinkText().ifPresent(propertiesBuilder::add);
 		getOpenInNewWindow().ifPresent(propertiesBuilder::add);
+		propertiesBuilder.addAll(additionalProperties);
 		return propertiesBuilder.build();
 	}
 
@@ -121,5 +125,10 @@ public class BasicLinkSetDefinition<L extends ConfiguredFieldDefinition<?>> exte
 	@Override
 	public List<FieldValidatorDefinition> getValidators() {
 		return link.getValidators();
+	}
+
+	@Override
+	public void setAdditionalProperties(final List<EditorPropertyDefinition> additionalProperties) {
+		this.additionalProperties = additionalProperties;
 	}
 }

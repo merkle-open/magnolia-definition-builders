@@ -5,7 +5,9 @@ import com.merkle.oss.magnolia.definition.builder.datasource.OptionBuilder;
 import com.merkle.oss.magnolia.definition.builder.datasource.OptionListDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.builder.datasource.OptionListDefinitionBuilder.OptionEnum;
 import com.merkle.oss.magnolia.definition.builder.simple.RadioButtonGroupFieldDefinitionBuilder;
+
 import info.magnolia.ui.datasource.optionlist.Option;
+import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.FieldValidatorDefinition;
 import info.magnolia.ui.field.Layout;
 import info.magnolia.ui.field.NoopNameDecorator;
@@ -16,10 +18,13 @@ import javax.annotation.Nullable;
 import javax.jcr.Node;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.apache.commons.collections4.map.HashedMap;
 
 public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, B extends AbstractSwitchableDefinitionBuilder<T, B>> extends AbstractConfiguredComplexPropertyDefinitionBuilder<Node, SwitchableDefinition, B> {
 	private final String labelPrefix;
@@ -39,6 +44,8 @@ public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, 
 	private Boolean required;
 	@Nullable
 	private List<FieldValidatorDefinition> validators;
+	@Nullable
+	private Map<T, List<EditorPropertyDefinition>> additionalPropertiesMapping;
 
 	protected AbstractSwitchableDefinitionBuilder(final String labelPrefix, final boolean fieldI18n) {
 		this.labelPrefix = labelPrefix;
@@ -102,6 +109,17 @@ public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, 
 		return self();
 	}
 
+	public B additionalProperties(final T type, final List<EditorPropertyDefinition> additionalProperties){
+		return additionalPropertiesMapping(Stream.concat(
+				Stream.ofNullable(additionalPropertiesMapping).map(Map::entrySet).flatMap(Collection::stream),
+				Stream.of(Map.entry(type, additionalProperties))
+		).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+	}
+	public B additionalPropertiesMapping(final Map<T, List<EditorPropertyDefinition>> additionalPropertiesMapping){
+		this.additionalPropertiesMapping = additionalPropertiesMapping;
+		return self();
+	}
+
 	public SwitchableDefinition build(final String name) {
 		final SwitchableDefinition definition =new SwitchableDefinition(
 				propertyNameDecorator != null ? propertyNameDecorator : PrefixNameDecorator.class,
@@ -122,6 +140,7 @@ public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, 
 						),
 				Optional.ofNullable(fieldOptions).stream()
 						.flatMap(Collection::stream)
+						.peek(this::applyAdditionalProperties)
 						.map(FieldOption::getField)
 						.collect(Collectors.toList()),
 				fieldI18n
@@ -131,6 +150,12 @@ public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, 
 		Optional.ofNullable(required).ifPresent(definition::setRequired);
 		Optional.ofNullable(validators).ifPresent(definition::setValidators);
 		return definition;
+	}
+
+	private void applyAdditionalProperties(final FieldOption<T> option) {
+		Optional.ofNullable(additionalPropertiesMapping).map(mapping -> mapping.get(option.getType())).ifPresent(additionalProperties ->
+				option.getField().setAdditionalProperties(additionalProperties)
+		);
 	}
 
 	private Optional<T> getDefault(final List<FieldOption<T>> fieldOptions, @Nullable final T selected) {

@@ -6,6 +6,8 @@ import com.merkle.oss.magnolia.definition.custom.imageset.AbstractImageSetDefini
 import com.merkle.oss.magnolia.definition.custom.imageset.ImageType;
 import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
 import com.merkle.oss.magnolia.definition.custom.switchable.SwitchableDefinitionBuilder;
+
+import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.FieldValidatorDefinition;
 
 import javax.annotation.Nullable;
@@ -13,6 +15,7 @@ import javax.jcr.Node;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -30,6 +33,8 @@ public abstract class AbstractVideoSetDefinitionBuilder<B extends AbstractVideoS
 	private Boolean required;
 	@Nullable
 	private List<FieldValidatorDefinition> validators;
+	@Nullable
+	private Map<VideoType, List<EditorPropertyDefinition>> additionalPropertiesMapping;
 
 	protected AbstractVideoSetDefinitionBuilder(
 			final AbstractImageSetDefinitionBuilder<?> imageSetDefinitionBuilder,
@@ -102,9 +107,21 @@ public abstract class AbstractVideoSetDefinitionBuilder<B extends AbstractVideoS
 		return self();
 	}
 
+	public B additionalProperties(final VideoType type, final List<EditorPropertyDefinition> additionalProperties){
+		return additionalPropertiesMapping(Stream.concat(
+				Stream.ofNullable(additionalPropertiesMapping).map(Map::entrySet).flatMap(Collection::stream),
+				Stream.of(Map.entry(type, additionalProperties))
+		).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+	}
+	public B additionalPropertiesMapping(final Map<VideoType, List<EditorPropertyDefinition>> additionalPropertiesMapping){
+		this.additionalPropertiesMapping = additionalPropertiesMapping;
+		return self();
+	}
+
 	public VideoSetDefinition build(final String name) {
 		final VideoSetDefinition definition = new VideoSetDefinition(
 				new SwitchableDefinitionBuilder<VideoType>(labelPrefix)
+						.additionalPropertiesMapping(additionalPropertiesMapping)
 						.optionPropertyNameDecorator(source -> source + SELECTION_SUFFIX)
 						.fieldOptions(Stream.ofNullable(videoOptions).flatMap(Collection::stream).map(this::createFieldOption).collect(Collectors.toList()))
 						.label(labelPrefix + "video.label")

@@ -4,6 +4,8 @@ import com.merkle.oss.magnolia.definition.builder.complex.AbstractConfiguredComp
 import com.merkle.oss.magnolia.definition.builder.simple.TextFieldDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
 import com.merkle.oss.magnolia.definition.custom.switchable.SwitchableDefinitionBuilder;
+
+import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.FieldValidatorDefinition;
 
 import javax.annotation.Nullable;
@@ -11,6 +13,7 @@ import javax.jcr.Node;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,6 +32,8 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 	private Boolean required;
 	@Nullable
 	private List<FieldValidatorDefinition> validators;
+	@Nullable
+	private Map<ImageType, List<EditorPropertyDefinition>> additionalPropertiesMapping;
 
 	protected AbstractImageSetDefinitionBuilder(final String labelPrefix, final boolean imageFieldI18n) {
 		this.labelPrefix = labelPrefix;
@@ -84,9 +89,21 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 		return self();
 	}
 
+	public B additionalProperties(final ImageType type, final List<EditorPropertyDefinition> additionalProperties){
+		return additionalPropertiesMapping(Stream.concat(
+				Stream.ofNullable(additionalPropertiesMapping).map(Map::entrySet).flatMap(Collection::stream),
+				Stream.of(Map.entry(type, additionalProperties))
+		).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+	}
+	public B additionalPropertiesMapping(final Map<ImageType, List<EditorPropertyDefinition>> additionalPropertiesMapping){
+		this.additionalPropertiesMapping = additionalPropertiesMapping;
+		return self();
+	}
+
 	public ImageSetDefinition build(final String name) {
 		final ImageSetDefinition definition = new ImageSetDefinition(
 				new SwitchableDefinitionBuilder<ImageType>(labelPrefix)
+						.additionalPropertiesMapping(additionalPropertiesMapping)
 						.optionPropertyNameDecorator(source -> source + SELECTION_SUFFIX)
 						.fieldOptions(Stream.ofNullable(imageOptions).flatMap(Collection::stream).map(this::createFieldOption).collect(Collectors.toList()))
 						.label(labelPrefix + "image.label")
