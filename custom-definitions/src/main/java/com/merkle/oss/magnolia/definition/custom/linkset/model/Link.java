@@ -8,6 +8,10 @@ public interface Link {
 	String getExternalHref();
 	boolean isOpenInNewWindow();
 
+	Link withText(String text);
+	Link withHref(String href, String externalHref);
+	Link withOpenInNewWindow(boolean openInNewWindow);
+
 	LinkType getLinkType();
 	default boolean isExternal() {
 		return false;

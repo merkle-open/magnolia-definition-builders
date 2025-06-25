@@ -19,14 +19,10 @@ public class ExtendedLinkQueryParamModifier {
 		return modify(extendedLink, queryParams, true);
 	}
 
-	private Link modify(final Link extendedLink, final Map<String, String> queryParams, final boolean replace) {
-		return new LinkModel(
-				extendedLink.getText(),
-				setQueryParams(extendedLink.getHref(), queryParams, replace),
-				setQueryParams(extendedLink.getExternalHref(), queryParams, replace),
-				extendedLink.isOpenInNewWindow(),
-				extendedLink.isExternal(),
-				extendedLink.getLinkType()
+	private Link modify(final Link link, final Map<String, String> queryParams, final boolean replace) {
+		return link.withHref(
+				setQueryParams(link.getHref(), queryParams, replace),
+				setQueryParams(link.getExternalHref(), queryParams, replace)
 		);
 	}
 

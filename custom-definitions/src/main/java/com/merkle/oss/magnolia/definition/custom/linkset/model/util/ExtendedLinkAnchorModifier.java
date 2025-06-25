@@ -10,14 +10,10 @@ import java.util.regex.Pattern;
 public class ExtendedLinkAnchorModifier {
 	private final Pattern pattern = Pattern.compile("^([^#]*)(#.+|)$");
 
-	public Link with(final Link extendedLink, final String anchorId) {
-		return new LinkModel(
-				extendedLink.getText(),
-				getUrlWithAnchor(extendedLink.getHref(), anchorId),
-				getUrlWithAnchor(extendedLink.getExternalHref(), anchorId),
-				extendedLink.isOpenInNewWindow(),
-				extendedLink.isExternal(),
-				extendedLink.getLinkType()
+	public Link with(final Link link, final String anchorId) {
+		return link.withHref(
+				getUrlWithAnchor(link.getHref(), anchorId),
+				getUrlWithAnchor(link.getExternalHref(), anchorId)
 		);
 	}
 
