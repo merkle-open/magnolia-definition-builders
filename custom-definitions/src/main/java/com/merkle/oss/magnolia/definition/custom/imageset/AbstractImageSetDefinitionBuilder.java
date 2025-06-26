@@ -35,7 +35,9 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 	@Nullable
 	private Boolean required;
 	@Nullable
-	private List<FieldValidatorDefinition> validators;
+	private List<FieldValidatorDefinition> allTypeValidators;
+	@Nullable
+	private Map<ImageType, List<FieldValidatorDefinition>> typeValidatorsMapping;
 	@Nullable
 	private Map<ImageType, List<EditorPropertyDefinition>> additionalPropertiesMapping;
 
@@ -83,16 +85,37 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 
 	public B validator(final FieldValidatorDefinition validator) {
 		return validators(Stream.concat(
-				Stream.ofNullable(validators).flatMap(Collection::stream),
+				Stream.ofNullable(allTypeValidators).flatMap(Collection::stream),
 				Stream.of(validator)
 		).collect(Collectors.toList()));
 	}
-
 	public B validators(final List<FieldValidatorDefinition> validators) {
-		this.validators = validators;
+		this.allTypeValidators = validators;
+		return self();
+	}
+	public B validator(final ImageType type, final FieldValidatorDefinition validator) {
+		return validators(type, Stream.concat(
+				Optional.ofNullable(typeValidatorsMapping).map(mapping -> mapping.get(type)).stream().flatMap(Collection::stream),
+				Stream.of(validator)
+		).collect(Collectors.toList()));
+	}
+	public B validators(final ImageType type, final List<FieldValidatorDefinition> validators) {
+		return validatorsMapping(Stream.concat(
+				Stream.ofNullable(this.typeValidatorsMapping).map(Map::entrySet).flatMap(Collection::stream),
+				Stream.of(Map.entry(type, validators))
+		).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+	}
+	public B validatorsMapping(final Map<ImageType, List<FieldValidatorDefinition>> validators) {
+		this.typeValidatorsMapping = validators;
 		return self();
 	}
 
+	public B additionalProperty(final ImageType type, final EditorPropertyDefinition additionalProperty){
+		return additionalProperties(type, Stream.concat(
+				Optional.ofNullable(additionalPropertiesMapping).map(mapping -> mapping.get(type)).stream().flatMap(Collection::stream),
+				Stream.of(additionalProperty)
+		).collect(Collectors.toList()));
+	}
 	public B additionalProperties(final ImageType type, final List<EditorPropertyDefinition> additionalProperties){
 		return additionalPropertiesMapping(Stream.concat(
 				Stream.ofNullable(additionalPropertiesMapping).map(Map::entrySet).flatMap(Collection::stream),
@@ -121,7 +144,16 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 		super.populate(definition, name);
 		Optional.ofNullable(readOnly).ifPresent(definition::setReadOnly);
 		Optional.ofNullable(required).ifPresent(definition::setRequired);
-		Optional.ofNullable(validators).ifPresent(definition::setValidators);
+		Optional.ofNullable(allTypeValidators).ifPresent(definition::setValidators);
+		Optional.ofNullable(typeValidatorsMapping).map(Map::entrySet).stream().flatMap(Collection::stream).forEach(entry ->
+				definition.setValidators(
+						entry.getKey().getValue(),
+						Stream.concat(
+								Stream.ofNullable(allTypeValidators).flatMap(Collection::stream),
+								entry.getValue().stream()
+						).collect(Collectors.toList())
+				)
+		);
 		return definition;
 	}
 }

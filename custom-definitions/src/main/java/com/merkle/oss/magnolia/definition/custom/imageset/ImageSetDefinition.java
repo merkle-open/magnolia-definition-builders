@@ -20,7 +20,6 @@ public class ImageSetDefinition extends ConfiguredComplexPropertyDefinition<Node
     private final boolean imageFieldI18n;
     private boolean readOnly;
 	private boolean required;
-	private List<FieldValidatorDefinition> validators;
 
 	public ImageSetDefinition(
 			final SwitchableDefinition image,
@@ -79,11 +78,15 @@ public class ImageSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 	}
 
 	public void setValidators(final List<FieldValidatorDefinition> validators){
-		this.validators = validators;
 		image.setValidators(validators);
 	}
-
 	public List<FieldValidatorDefinition> getValidators() {
-		return validators;
+		return image.getValidators();
+	}
+	public void setValidators(final String field, final List<FieldValidatorDefinition> validators) {
+		image.setValidators(field, validators);
+	}
+	public List<FieldValidatorDefinition> getValidators(final String field) {
+		return image.getValidators(field);
 	}
 }

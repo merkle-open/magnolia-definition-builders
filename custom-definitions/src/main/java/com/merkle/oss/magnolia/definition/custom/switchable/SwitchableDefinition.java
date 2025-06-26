@@ -11,11 +11,14 @@ import info.magnolia.ui.field.ConfiguredComplexPropertyDefinition;
 import info.magnolia.ui.field.FieldValidatorDefinition;
 import info.magnolia.ui.field.WithPropertyNameDecorator.PropertyNameDecorator;
 
-import javax.jcr.Node;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
+import javax.jcr.Node;
 
 public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<Node> implements SwitchableFormDefinition<Node> {
 	private final Class<? extends PropertyNameDecorator> propertyNameDecoratorClass;
@@ -24,7 +27,6 @@ public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<No
 	private final boolean fieldI18n;
 	private boolean readOnly;
 	private boolean required;
-	private List<FieldValidatorDefinition> validators;
 
 	public SwitchableDefinition(
 			final Class<? extends PropertyNameDecorator> propertyNameDecoratorClass,
@@ -85,12 +87,16 @@ public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<No
 	}
 
 	public void setValidators(final List<FieldValidatorDefinition> validators) {
-		this.validators = validators;
 		applyForms(switchableForm -> switchableForm.setValidators(validators));
 	}
-
 	public List<FieldValidatorDefinition> getValidators() {
-		return validators;
+		return forms.stream().map(SwitchableForm::getValidators).flatMap(Collection::stream).collect(Collectors.toList());
+	}
+	public void setValidators(final String field, final List<FieldValidatorDefinition> validators) {
+		getForm(field).setValidators(validators);
+	}
+	public List<FieldValidatorDefinition> getValidators(final String field) {
+		return getForm(field).getValidators();
 	}
 
 	private void applyField(final Consumer<AbstractSelectFieldDefinition> fieldConsumer) {
@@ -99,5 +105,11 @@ public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<No
 
 	private void applyForms(final Consumer<SwitchableForm> fieldConsumer) {
 		forms.forEach(fieldConsumer);
+	}
+
+	private SwitchableForm getForm(final String field) {
+		return forms.stream().filter(form -> Objects.equals(field, form.getName())).findAny().orElseThrow(() ->
+			new IllegalArgumentException("There's no field " + field + " in this switchable!")
+		);
 	}
 }

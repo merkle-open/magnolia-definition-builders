@@ -21,8 +21,6 @@ public class VideoSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 	private final ImageSetDefinition previewImage;
 	private boolean readOnly;
 	private boolean required;
-	@Nullable
-	private List<FieldValidatorDefinition> validators;
 
 	public VideoSetDefinition(
 			final SwitchableDefinition video,
@@ -79,11 +77,15 @@ public class VideoSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 	}
 
 	public void setValidators(final List<FieldValidatorDefinition> validators){
-		this.validators = validators;
 		video.setValidators(validators);
 	}
-
 	public List<FieldValidatorDefinition> getValidators() {
-		return validators;
+		return video.getValidators();
+	}
+	public void setValidators(final String field, final List<FieldValidatorDefinition> validators) {
+		video.setValidators(field, validators);
+	}
+	public List<FieldValidatorDefinition> getValidators(final String field) {
+		return video.getValidators(field);
 	}
 }
