@@ -58,6 +58,66 @@ Vimeo video, specified by ID.
 <br>
 <img alt="jcr-structure" src='assets/vimeo-jcr_structure.png' width='1000'>
 
+## videoFieldI18n
+1. Extend VideoSetDefinitionBuilder
+   ```java
+   import com.merkle.oss.magnolia.definition.custom.videoset.VideoSetDefinitionBuilder;
+   
+   public class CustomVideoSetDefinitionBuilder extends VideoSetDefinitionBuilder {
+      public CustomVideoSetDefinitionBuilder() {
+         super(false);
+      }
+   }
+   ```
+2. Extend VideoReferenceModel.Factory
+   ```java
+   import java.util.Set;
+   import javax.inject.Inject;
+   import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
+   import com.merkle.oss.magnolia.definition.custom.videoset.VideoType;
+   import com.merkle.oss.magnolia.definition.custom.videoset.model.VideoReferenceModel;
+   
+   public class CustomVideoReferenceModelFactory extends VideoReferenceModel.Factory {
+      @Inject
+      public CustomVideoReferenceModelFactory(
+             final LocaleProvider localeProvider,
+             final Set<VideoType.Resolver> videoTypeResolvers,
+             final ImageReferenceModel.Factory imageReferenceFactory
+      ) {
+         super(localeProvider, videoTypeResolvers, imageReferenceFactory, false);
+      }
+   }
+   ```
+3. Extend VideoModel.Factory
+   ```java
+   import java.util.Set;
+   import javax.inject.Inject;
+   import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
+   import com.merkle.oss.magnolia.definition.custom.videoset.model.VideoModel;
+   
+   public class CustomVideoModelFactory extends VideoModel.Factory  {
+       @Inject
+       public CustomImageModelFactory(
+               final LocaleProvider localeProvider,
+			   final CustomImageReferenceModelFactory videoReferenceFactory,
+			   final Set<VideoSourceTransformer> videoSourceTransformers
+       ) {
+           super(localeProvider, videoReferenceFactory, videoSourceTransformers);
+       }
+   }
+   ```
+4. Bind both factories
+   ```xml
+   <component>
+      <type>com.merkle.oss.magnolia.definition.custom.videoset.model.VideoModel$Factory</type>
+      <implementation>...CustomVideoModelFactory</implementation>
+   </component>
+   <component>
+      <type>com.merkle.oss.magnolia.definition.custom.videoset.model.VideoReferenceModel$Factory</type>
+      <implementation>...CustomVideoReferenceModelFactory</implementation>
+   </component>
+   ```
+
 ## Custom video-types
 1. Define custom video types
     ```java
@@ -171,12 +231,12 @@ Vimeo video, specified by ID.
    import com.merkle.oss.magnolia.definition.custom.videoset.model.VideoModel;   
    import info.magnolia.objectfactory.guice.AbstractGuiceComponentConfigurer;
    
-   public class CustomLinkTypesGuiceComponentConfigurer extends AbstractGuiceComponentConfigurer {
+   public class CustomVideoTypesGuiceComponentConfigurer extends AbstractGuiceComponentConfigurer {
       @Override
       protected void configure() {
          super.configure();
          final Multibinder<VideoType.Resolver> videoTypeResolversMultibinder = Multibinder.newSetBinder(binder, VideoType.Resolver.class);
-         videoTypeResolversMultibinder.addBinding().toProvider(() -> CustomImageTypes::fromValue);
+         videoTypeResolversMultibinder.addBinding().toProvider(() -> CustomVideoTypes::fromValue);
    
          final Multibinder<VideoModel.VideoSourceTransformer> videoSourceTransformersMultibinder = Multibinder.newSetBinder(binder, VideoModel.VideoSourceTransformer.class);
          videoSourceTransformersMultibinder.addBinding().to(AprimoVideoSourceTransformer.class);

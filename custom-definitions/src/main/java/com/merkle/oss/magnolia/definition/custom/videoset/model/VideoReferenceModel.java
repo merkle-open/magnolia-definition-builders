@@ -67,7 +67,8 @@ public class VideoReferenceModel {
 	public static class Factory {
 		private final Set<VideoType.Resolver> videoTypeResolvers;
 		private final ImageReferenceModel.Factory imageReferenceFactory;
-		private final LocaleProvider localeProvider;
+        private final boolean videoFieldI18n;
+        private final LocaleProvider localeProvider;
 
 		@Inject
 		public Factory(
@@ -75,18 +76,29 @@ public class VideoReferenceModel {
 				final Set<VideoType.Resolver> videoTypeResolvers,
 				final ImageReferenceModel.Factory imageReferenceFactory
 		) {
-			this.localeProvider = localeProvider;
-			this.videoTypeResolvers = videoTypeResolvers;
-			this.imageReferenceFactory = imageReferenceFactory;
+			this(localeProvider, videoTypeResolvers, imageReferenceFactory, true);
 		}
+
+		protected Factory(
+				final LocaleProvider localeProvider,
+				final Set<VideoType.Resolver> videoTypeResolvers,
+				final ImageReferenceModel.Factory imageReferenceFactory,
+				final boolean videoFieldI18n
+		) {
+            this.localeProvider = localeProvider;
+            this.videoTypeResolvers = videoTypeResolvers;
+            this.imageReferenceFactory = imageReferenceFactory;
+            this.videoFieldI18n = videoFieldI18n;
+        }
 
 		public Optional<VideoReferenceModel> create(final String propertyName, final PowerNode video) {
 			return create(propertyName, localeProvider.getDefaultLocale(video), video);
 		}
 
 		public Optional<VideoReferenceModel> create(final String propertyName, final Locale dialogLocale, final PowerNode video) {
-			return video.getProperty(VideoSetDefinitionBuilder.SELECTION_PROPERTY_NAME_PROVIDER.apply(propertyName), dialogLocale, ValueConverter::getString).flatMap(this::resolve).flatMap(videoType ->
-					video.getProperty(propertyName + videoType.getValue(), dialogLocale, ValueConverter::getString).map(assetId ->
+			final Locale assetIdDialogLocale = videoFieldI18n ? dialogLocale : localeProvider.getDefaultLocale(video);
+			return video.getProperty(VideoSetDefinitionBuilder.SELECTION_PROPERTY_NAME_PROVIDER.apply(propertyName), assetIdDialogLocale, ValueConverter::getString).flatMap(this::resolve).flatMap(videoType ->
+					video.getProperty(propertyName + videoType.getValue(), assetIdDialogLocale, ValueConverter::getString).map(assetId ->
 							new VideoReferenceModel(
 									assetId,
 									videoType,

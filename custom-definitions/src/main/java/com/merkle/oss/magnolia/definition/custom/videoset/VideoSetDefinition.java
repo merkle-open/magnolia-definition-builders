@@ -19,16 +19,19 @@ import java.util.List;
 public class VideoSetDefinition extends ConfiguredComplexPropertyDefinition<Node> implements FormDefinition<Node> {
 	private final SwitchableDefinition video;
 	private final ImageSetDefinition previewImage;
-	private boolean readOnly;
+    private final boolean videoFieldI18n;
+    private boolean readOnly;
 	private boolean required;
 
 	public VideoSetDefinition(
 			final SwitchableDefinition video,
-			final ImageSetDefinition previewImage
+			final ImageSetDefinition previewImage,
+			final boolean videoFieldI18n
 	) {
 		this.video = video;
 		this.previewImage = previewImage;
-		setImplementationClass((Class) FormView.class);
+        this.videoFieldI18n = videoFieldI18n;
+        setImplementationClass((Class) FormView.class);
 		setItemProvider(new CurrentItemProviderDefinition<>());
 	}
 
@@ -53,7 +56,7 @@ public class VideoSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 	@Override
 	public void setI18n(final boolean i18n) {
 		super.setI18n(i18n);
-		video.setI18n(i18n);
+		video.setI18n(videoFieldI18n && i18n);
 		previewImage.setI18n(i18n);
 	}
 
