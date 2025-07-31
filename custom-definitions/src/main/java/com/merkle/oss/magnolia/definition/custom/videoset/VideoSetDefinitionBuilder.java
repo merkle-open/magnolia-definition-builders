@@ -43,6 +43,7 @@ public class VideoSetDefinitionBuilder extends AbstractVideoSetDefinitionBuilder
 				name -> new SingleSwitchableForm<>(
 						new TextFieldDefinitionBuilder()
 								.label(FIELD_LABEL_PREFIX + VideoTypes.VIMEO.getLabel())
+								.description(FIELD_LABEL_PREFIX + VideoTypes.VIMEO.getLabel().replaceAll(".label$", ".description"))
 								.converterClass(VimeoTextValueConverter.class)
 								.build(name)
 				)
@@ -55,6 +56,7 @@ public class VideoSetDefinitionBuilder extends AbstractVideoSetDefinitionBuilder
 				name -> new SingleSwitchableForm<>(
 						new TextFieldDefinitionBuilder()
 								.label(FIELD_LABEL_PREFIX + VideoTypes.YOUTUBE.getLabel())
+								.description(FIELD_LABEL_PREFIX + VideoTypes.YOUTUBE.getLabel().replaceAll(".label$", ".description"))
 								.converterClass(YoutubeTextValueConverter.class)
 								.build(name)
 				)
