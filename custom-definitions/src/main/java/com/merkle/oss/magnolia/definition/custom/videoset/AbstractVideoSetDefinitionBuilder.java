@@ -29,6 +29,7 @@ public abstract class AbstractVideoSetDefinitionBuilder<B extends AbstractVideoS
 
 	private final AbstractImageSetDefinitionBuilder<?> imageSetDefinitionBuilder;
     private final boolean videoFieldI18n;
+    private final boolean previewImageRequired;
     private final String labelPrefix;
 	@Nullable
 	private List<VideoType> videoOptions;
@@ -46,11 +47,13 @@ public abstract class AbstractVideoSetDefinitionBuilder<B extends AbstractVideoS
 	protected AbstractVideoSetDefinitionBuilder(
 			final AbstractImageSetDefinitionBuilder<?> imageSetDefinitionBuilder,
 			final String labelPrefix,
-			final boolean videoFieldI18n
+			final boolean videoFieldI18n,
+			final boolean previewImageRequired
 	) {
 		this.labelPrefix = labelPrefix;
 		this.imageSetDefinitionBuilder = imageSetDefinitionBuilder;
         this.videoFieldI18n = videoFieldI18n;
+        this.previewImageRequired = previewImageRequired;
         videoOptions(Arrays.stream(VideoTypes.values()).collect(Collectors.toList()));
 	}
 
@@ -160,7 +163,8 @@ public abstract class AbstractVideoSetDefinitionBuilder<B extends AbstractVideoS
 				imageSetDefinitionBuilder
 						.label(labelPrefix + "previewImage.label")
 						.build(PREVIEW_IMAGE_PROPERTY_NAME_PROVIDER.apply(name)),
-				videoFieldI18n
+				videoFieldI18n,
+				previewImageRequired
 		);
 		super.populate(definition, name);
 		Optional.ofNullable(readOnly).ifPresent(definition::setReadOnly);

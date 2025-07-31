@@ -20,17 +20,20 @@ public class VideoSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 	private final SwitchableDefinition video;
 	private final ImageSetDefinition previewImage;
     private final boolean videoFieldI18n;
+    private final boolean previewImageRequired;
     private boolean readOnly;
 	private boolean required;
 
 	public VideoSetDefinition(
 			final SwitchableDefinition video,
 			final ImageSetDefinition previewImage,
-			final boolean videoFieldI18n
+			final boolean videoFieldI18n,
+			final boolean previewImageRequired
 	) {
 		this.video = video;
 		this.previewImage = previewImage;
         this.videoFieldI18n = videoFieldI18n;
+        this.previewImageRequired = previewImageRequired;
         setImplementationClass((Class) FormView.class);
 		setItemProvider(new CurrentItemProviderDefinition<>());
 	}
@@ -73,6 +76,7 @@ public class VideoSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 	public void setRequired(final boolean required) {
 		this.required = required;
 		video.setRequired(required);
+		previewImage.setRequired(previewImageRequired && required);
 	}
 
 	public boolean isRequired() {
