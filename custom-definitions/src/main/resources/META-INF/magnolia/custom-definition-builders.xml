@@ -36,12 +36,12 @@
             <implementation>com.merkle.oss.magnolia.definition.custom.linkset.model.AssetLinkFactory</implementation>
         </component>
         <component>
-            <type>com.merkle.oss.magnolia.definition.custom.linkset.model.util.ExtendedLinkQueryParamModifier</type>
-            <implementation>com.merkle.oss.magnolia.definition.custom.linkset.model.util.ExtendedLinkQueryParamModifier</implementation>
+            <type>com.merkle.oss.magnolia.definition.custom.linkset.model.util.LinkQueryParamModifier</type>
+            <implementation>com.merkle.oss.magnolia.definition.custom.linkset.model.util.LinkQueryParamModifier</implementation>
         </component>
         <component>
-            <type>com.merkle.oss.magnolia.definition.custom.linkset.model.util.ExtendedLinkAnchorModifier</type>
-            <implementation>com.merkle.oss.magnolia.definition.custom.linkset.model.util.ExtendedLinkAnchorModifier</implementation>
+            <type>com.merkle.oss.magnolia.definition.custom.linkset.model.util.LinkAnchorModifier</type>
+            <implementation>com.merkle.oss.magnolia.definition.custom.linkset.model.util.LinkAnchorModifier</implementation>
         </component>
 
         <component>

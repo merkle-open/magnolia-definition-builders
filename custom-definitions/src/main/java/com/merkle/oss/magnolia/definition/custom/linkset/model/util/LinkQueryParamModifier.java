@@ -7,9 +7,8 @@ import org.apache.http.client.utils.URIBuilder;
 
 import com.machinezoo.noexception.Exceptions;
 import com.merkle.oss.magnolia.definition.custom.linkset.model.Link;
-import com.merkle.oss.magnolia.definition.custom.linkset.model.LinkModel;
 
-public class ExtendedLinkQueryParamModifier {
+public class LinkQueryParamModifier {
 
 	public Link withAppend(final Link extendedLink, final Map<String, String> queryParams) {
 		return modify(extendedLink, queryParams, false);

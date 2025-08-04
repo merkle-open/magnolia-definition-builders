@@ -12,13 +12,13 @@ import org.apache.commons.lang.NotImplementedException;
 import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
 import com.merkle.oss.magnolia.definition.custom.linkset.LinkSetDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.linkset.LinkType;
-import com.merkle.oss.magnolia.definition.custom.linkset.model.util.ExtendedLinkAnchorModifier;
+import com.merkle.oss.magnolia.definition.custom.linkset.model.util.LinkAnchorModifier;
 import com.merkle.oss.magnolia.powernode.PowerNode;
 import com.merkle.oss.magnolia.powernode.ValueConverter;
 
 public class LinkModelFactory {
 	private final LocaleProvider localeProvider;
-	private final ExtendedLinkAnchorModifier extendedLinkAnchorModifier;
+	private final LinkAnchorModifier extendedLinkAnchorModifier;
 	private final Set<LinkType.Resolver> linkTypeResolvers;
 	private final Set<LinkFactory> linkFactories;
     private final boolean switchableFieldI18n;
@@ -26,7 +26,7 @@ public class LinkModelFactory {
 	@Inject
 	public LinkModelFactory(
 			final LocaleProvider localeProvider,
-			final ExtendedLinkAnchorModifier extendedLinkAnchorModifier,
+			final LinkAnchorModifier extendedLinkAnchorModifier,
 			final Set<LinkType.Resolver> linkTypeResolvers,
 			final Set<LinkFactory> linkFactories
 	) {
@@ -35,7 +35,7 @@ public class LinkModelFactory {
 
 	protected LinkModelFactory(
 			final LocaleProvider localeProvider,
-			final ExtendedLinkAnchorModifier extendedLinkAnchorModifier,
+			final LinkAnchorModifier extendedLinkAnchorModifier,
 			final Set<LinkType.Resolver> linkTypeResolvers,
 			final Set<LinkFactory> linkFactories,
 			final boolean switchableFieldI18n

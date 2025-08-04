@@ -4,8 +4,8 @@ import com.merkle.oss.magnolia.definition.custom.linkset.model.AssetLinkFactory;
 import com.merkle.oss.magnolia.definition.custom.linkset.model.ExternalLinkFactory;
 import com.merkle.oss.magnolia.definition.custom.linkset.model.InternalLinkFactory;
 import com.merkle.oss.magnolia.definition.custom.linkset.model.LinkModelFactory;
-import com.merkle.oss.magnolia.definition.custom.linkset.model.util.ExtendedLinkAnchorModifier;
-import com.merkle.oss.magnolia.definition.custom.linkset.model.util.ExtendedLinkQueryParamModifier;
+import com.merkle.oss.magnolia.definition.custom.linkset.model.util.LinkAnchorModifier;
+import com.merkle.oss.magnolia.definition.custom.linkset.model.util.LinkQueryParamModifier;
 import info.magnolia.objectfactory.Components;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
@@ -39,15 +39,15 @@ public class LinkSetConfiguration {
 		return Components.getComponent(ExternalLinkFactory.class);
 	}
 
-	@Bean("merkle-customDefinition-extendedLinkAnchorModifier")
+	@Bean("merkle-customDefinition-linkAnchorModifier")
 	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public ExtendedLinkAnchorModifier extendedLinkAnchorModifier() {
-		return Components.getComponent(ExtendedLinkAnchorModifier.class);
+	public LinkAnchorModifier linkAnchorModifier() {
+		return Components.getComponent(LinkAnchorModifier.class);
 	}
 
-	@Bean("merkle-customDefinition-extendedLinkQueryParamModifier")
+	@Bean("merkle-customDefinition-linkQueryParamModifier")
 	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public ExtendedLinkQueryParamModifier extendedLinkQueryParamModifier() {
-		return Components.getComponent(ExtendedLinkQueryParamModifier.class);
+	public LinkQueryParamModifier linkQueryParamModifier() {
+		return Components.getComponent(LinkQueryParamModifier.class);
 	}
 }

@@ -31,7 +31,7 @@ class ExtendedLinkQueryParamModifierTest {
                         false,
                         LinkTypes.INTERNAL
                 ),
-                new ExtendedLinkQueryParamModifier().withAppend(LINK, Map.of("param2", "43"))
+                new LinkQueryParamModifier().withAppend(LINK, Map.of("param2", "43"))
         );
     }
 
@@ -46,7 +46,7 @@ class ExtendedLinkQueryParamModifierTest {
                         false,
                         LinkTypes.INTERNAL
                 ),
-                new ExtendedLinkQueryParamModifier().withReplace(LINK, Map.of("param2", "43"))
+                new LinkQueryParamModifier().withReplace(LINK, Map.of("param2", "43"))
         );
     }
 }

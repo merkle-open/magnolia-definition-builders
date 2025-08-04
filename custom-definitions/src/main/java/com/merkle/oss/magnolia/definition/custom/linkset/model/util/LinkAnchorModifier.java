@@ -2,12 +2,11 @@ package com.merkle.oss.magnolia.definition.custom.linkset.model.util;
 
 import com.google.common.base.Joiner;
 import com.merkle.oss.magnolia.definition.custom.linkset.model.Link;
-import com.merkle.oss.magnolia.definition.custom.linkset.model.LinkModel;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ExtendedLinkAnchorModifier {
+public class LinkAnchorModifier {
 	private final Pattern pattern = Pattern.compile("^([^#]*)(#.+|)$");
 
 	public Link with(final Link link, final String anchorId) {
