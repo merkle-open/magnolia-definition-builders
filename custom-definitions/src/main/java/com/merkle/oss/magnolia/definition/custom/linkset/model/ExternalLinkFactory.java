@@ -8,6 +8,7 @@ import com.merkle.oss.magnolia.powernode.ValueConverter;
 
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class ExternalLinkFactory implements LinkModelFactory.LinkFactory {
 
@@ -21,7 +22,7 @@ public class ExternalLinkFactory implements LinkModelFactory.LinkFactory {
 		return node.getProperty(propertyName, dialogLocale, ValueConverter::getString)
 				.map(href ->
 						new LinkModel(
-								node.getProperty(LinkSetDefinitionBuilder.LINK_TEXT_PROPERTY_NAME_PROVIDER.apply(propertyName), dialogLocale, ValueConverter::getString).orElse(href),
+								getText(() -> node.getProperty(LinkSetDefinitionBuilder.LINK_TEXT_PROPERTY_NAME_PROVIDER.apply(propertyName), dialogLocale, ValueConverter::getString), locale, href),
 								href,
 								href,
 								node.getProperty(LinkSetDefinitionBuilder.OPEN_IN_NEW_TAB_PROPERTY_NAME_PROVIDER.apply(propertyName), ValueConverter::getBoolean).orElse(true),
@@ -29,5 +30,10 @@ public class ExternalLinkFactory implements LinkModelFactory.LinkFactory {
 								LinkTypes.EXTERNAL
 						)
 				);
+	}
+
+	// dialogTitle -> href
+	protected String getText(final Supplier<Optional<String>> dialogTextSupplier, final Locale locale, final String href) {
+		return dialogTextSupplier.get().orElse(href);
 	}
 }

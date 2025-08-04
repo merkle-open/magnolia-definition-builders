@@ -79,7 +79,7 @@ public class InternalLinkFactory implements LinkModelFactory.LinkFactory {
 	}
 
 	// dialogTitle -> page node name
-	protected String getText(final Supplier<Optional<String>> dialogTextSupplier, final Locale locale, final Node targetPage) {
-		return dialogTextSupplier.get().orElseGet(() -> NodeUtil.getName(targetPage));
+	protected String getText(final Supplier<Optional<String>> dialogTextSupplier, final Locale locale, final PowerNode targetPage) {
+		return dialogTextSupplier.get().orElseGet(targetPage::getName);
 	}
 }
