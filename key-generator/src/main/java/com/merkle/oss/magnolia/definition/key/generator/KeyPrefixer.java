@@ -31,6 +31,15 @@ public class KeyPrefixer {
                 });
     }
 
+    public static EditorPropertyDefinition keyPrefix(final EditorPropertyDefinition definition, final String prefix) {
+        if(definition instanceof final ConfiguredFieldDefinition<?> configuredFieldDefinition) {
+            keyPrefix(configuredFieldDefinition, prefix);
+        } else if(definition instanceof final ConfiguredComplexPropertyDefinition<?> complexPropertyDefinition) {
+            keyPrefix(complexPropertyDefinition, prefix);
+        }
+        return definition;
+    }
+
     public static <D extends ConfiguredFieldDefinition<?>> D keyPrefix(final D definition, final String prefix) {
         definition.setStyleName(getStyleName(definition, prefix));
         return definition;
