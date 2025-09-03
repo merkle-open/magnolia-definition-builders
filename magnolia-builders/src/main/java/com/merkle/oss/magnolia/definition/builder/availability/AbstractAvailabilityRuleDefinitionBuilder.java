@@ -5,7 +5,7 @@ import info.magnolia.ui.api.availability.ConfiguredAvailabilityRuleDefinition;
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class AbstractAvailabilityRuleDefinitionBuilder<D extends ConfiguredAvailabilityRuleDefinition, B extends AbstractAvailabilityRuleDefinitionBuilder<D, B>> {
     @Nullable

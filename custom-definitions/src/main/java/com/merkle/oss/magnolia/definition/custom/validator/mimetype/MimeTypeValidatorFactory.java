@@ -5,7 +5,7 @@ import com.vaadin.data.Validator;
 import info.magnolia.dam.api.Asset;
 import info.magnolia.ui.field.AbstractFieldValidatorFactory;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.text.MessageFormat;
 
 public class MimeTypeValidatorFactory extends AbstractFieldValidatorFactory<MimeTypeValidatorDefinition, Asset> {

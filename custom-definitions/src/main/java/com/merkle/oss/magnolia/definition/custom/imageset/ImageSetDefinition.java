@@ -11,7 +11,7 @@ import info.magnolia.ui.field.TextFieldDefinition;
 import info.magnolia.ui.framework.layout.FieldLayoutDefinition;
 import info.magnolia.ui.framework.layout.StackedLayoutProducer;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.jcr.Node;
 import java.util.List;
 import java.util.Optional;

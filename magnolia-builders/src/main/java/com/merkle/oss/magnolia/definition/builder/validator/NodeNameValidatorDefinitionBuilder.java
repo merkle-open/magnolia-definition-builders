@@ -2,10 +2,10 @@ package com.merkle.oss.magnolia.definition.builder.validator;
 
 import info.magnolia.ui.editor.validator.NodeNameValidatorDefinition;
 import info.magnolia.ui.editor.validator.NodeNameValidatorDefinition.Mode;
-import info.magnolia.ui.field.RegexpValidatorDefinition;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
+
+import jakarta.annotation.Nullable;
 
 public class NodeNameValidatorDefinitionBuilder extends AbstractConfiguredFieldValidatorDefinitionBuilder<NodeNameValidatorDefinition, NodeNameValidatorDefinitionBuilder>{
 	@Nullable

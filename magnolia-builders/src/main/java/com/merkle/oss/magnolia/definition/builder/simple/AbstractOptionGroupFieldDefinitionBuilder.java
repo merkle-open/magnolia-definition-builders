@@ -4,7 +4,7 @@ import info.magnolia.ui.datasource.DatasourceDefinition;
 import info.magnolia.ui.field.AbstractOptionGroupFieldDefinition;
 import info.magnolia.ui.field.Layout;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Optional;
 
 public abstract class AbstractOptionGroupFieldDefinitionBuilder<T, D extends AbstractOptionGroupFieldDefinition<T>, B extends AbstractOptionGroupFieldDefinitionBuilder<T, D, B>> extends AbstractSelectFieldDefinitionBuilder<T, DatasourceDefinition, D, B> {

@@ -21,10 +21,6 @@
             <groupId>info.magnolia.ui</groupId>
             <artifactId>magnolia-ui-framework-compatibility</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>jsr305</artifactId>
-        </dependency>
 
         <!-- TESTING DEPENDENCIES -->
         <dependency>

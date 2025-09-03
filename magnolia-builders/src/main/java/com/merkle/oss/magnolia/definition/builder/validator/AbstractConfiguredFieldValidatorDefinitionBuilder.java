@@ -2,7 +2,7 @@ package com.merkle.oss.magnolia.definition.builder.validator;
 
 import info.magnolia.ui.field.ConfiguredFieldValidatorDefinition;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Optional;
 
 public abstract class AbstractConfiguredFieldValidatorDefinitionBuilder<D extends ConfiguredFieldValidatorDefinition, B extends AbstractConfiguredFieldValidatorDefinitionBuilder<D, B>> {

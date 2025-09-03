@@ -12,7 +12,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 public class TabDefinitionKeyGenerator extends info.magnolia.ui.editor.i18n.TabDefinitionKeyGenerator {
 

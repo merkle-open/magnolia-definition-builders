@@ -6,7 +6,7 @@ import info.magnolia.ui.api.availability.AvailabilityDefinition;
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class AbstractActionDefinitionBuilder<D extends ConfiguredActionDefinition, B extends AbstractActionDefinitionBuilder<D, B>> {
     @Nullable

@@ -7,7 +7,7 @@ import info.magnolia.ui.field.TextFieldDefinition;
 
 import java.util.function.UnaryOperator;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.jcr.Node;
 
 import com.merkle.oss.magnolia.definition.builder.simple.AssetLinkDefinitionBuilder;

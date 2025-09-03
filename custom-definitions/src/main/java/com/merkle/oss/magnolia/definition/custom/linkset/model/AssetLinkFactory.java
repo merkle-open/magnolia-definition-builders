@@ -9,7 +9,7 @@ import com.merkle.oss.magnolia.powernode.ValueConverter;
 import info.magnolia.dam.api.Asset;
 import info.magnolia.dam.templating.functions.DamTemplatingFunctions;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Supplier;

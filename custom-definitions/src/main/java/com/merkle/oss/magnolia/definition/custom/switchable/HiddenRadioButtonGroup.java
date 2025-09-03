@@ -6,7 +6,7 @@ import info.magnolia.ui.field.RadioButtonGroupFieldDefinition;
 import info.magnolia.ui.field.SelectFieldSupport;
 import info.magnolia.ui.field.factory.RadioButtonGroupFieldFactory;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import com.merkle.oss.magnolia.definition.builder.simple.RadioButtonGroupFieldDefinitionBuilder;
 import com.vaadin.annotations.StyleSheet;

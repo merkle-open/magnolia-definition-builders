@@ -1,6 +1,6 @@
 package com.merkle.oss.magnolia.definition.custom.richtext.config.table;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class DefaultHeadings {
     @Nullable

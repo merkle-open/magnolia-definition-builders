@@ -2,7 +2,7 @@ package com.merkle.oss.magnolia.definition.builder.datasource;
 
 import info.magnolia.ui.datasource.optionlist.Option;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Optional;
 
 /**

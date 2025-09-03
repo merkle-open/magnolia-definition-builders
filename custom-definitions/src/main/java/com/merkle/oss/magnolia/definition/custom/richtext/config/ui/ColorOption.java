@@ -1,6 +1,6 @@
 package com.merkle.oss.magnolia.definition.custom.richtext.config.ui;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class ColorOption {
     public final String color;

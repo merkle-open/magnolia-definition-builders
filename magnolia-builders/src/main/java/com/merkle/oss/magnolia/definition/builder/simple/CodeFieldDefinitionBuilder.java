@@ -2,7 +2,7 @@ package com.merkle.oss.magnolia.definition.builder.simple;
 
 import info.magnolia.ui.field.CodeFieldDefinition;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Optional;
 
 /**

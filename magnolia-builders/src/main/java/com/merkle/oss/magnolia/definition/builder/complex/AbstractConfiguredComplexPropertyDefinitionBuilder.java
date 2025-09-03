@@ -3,7 +3,7 @@ package com.merkle.oss.magnolia.definition.builder.complex;
 import info.magnolia.ui.editor.ItemProviderDefinition;
 import info.magnolia.ui.field.ConfiguredComplexPropertyDefinition;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Optional;
 
 public abstract class AbstractConfiguredComplexPropertyDefinitionBuilder<T, D extends ConfiguredComplexPropertyDefinition<T>, B extends AbstractConfiguredComplexPropertyDefinitionBuilder<T, D, B>> {

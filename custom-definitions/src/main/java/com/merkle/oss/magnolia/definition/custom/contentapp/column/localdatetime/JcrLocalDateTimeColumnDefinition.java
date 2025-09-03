@@ -6,7 +6,7 @@ import info.magnolia.ui.contentapp.configuration.column.ConfiguredColumnDefiniti
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.jcr.Item;
 import javax.jcr.Node;
 

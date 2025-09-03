@@ -4,9 +4,9 @@ import info.magnolia.ui.datasource.DatasourceDefinition;
 import info.magnolia.ui.editor.ItemPreviewDefinition;
 import info.magnolia.ui.field.LinkFieldDefinition;
 
-import javax.annotation.Nullable;
-import javax.inject.Provider;
 import java.util.Optional;
+
+import jakarta.annotation.Nullable;
 
 public abstract class AbstractLinkFieldDefinitionBuilder<T, D extends LinkFieldDefinition<T>, B extends AbstractLinkFieldDefinitionBuilder<T, D, B>> extends AbstractComboBoxFieldDefinitionBuilder<T, D, B> {
 	@Nullable

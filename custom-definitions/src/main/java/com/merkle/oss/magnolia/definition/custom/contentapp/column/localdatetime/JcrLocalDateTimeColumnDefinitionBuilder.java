@@ -2,7 +2,7 @@ package com.merkle.oss.magnolia.definition.custom.contentapp.column.localdatetim
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.jcr.Item;
 
 import com.merkle.oss.magnolia.definition.builder.contentapp.column.AbstractColumnDefinitionBuilder;

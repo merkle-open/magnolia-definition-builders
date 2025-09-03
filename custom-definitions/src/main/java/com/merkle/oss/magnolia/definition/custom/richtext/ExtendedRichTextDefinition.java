@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import com.merkle.oss.magnolia.definition.custom.richtext.config.font.FontColor;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.font.FontFamily;

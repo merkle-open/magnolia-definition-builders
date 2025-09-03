@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 // https://github.com/ckeditor/ckeditor5/blob/3df56dac515177a96ca56e2bfa7004dbad82973b/packages/ckeditor5-core/src/editor/editorconfig.ts#L919
 public class ToolbarConfigItem {

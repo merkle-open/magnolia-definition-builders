@@ -4,7 +4,7 @@ import info.magnolia.ui.contentapp.action.ConfirmationActionDefinition;
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class AbstractConfirmationActionDefinitionBuilder<D extends ConfirmationActionDefinition, B extends AbstractConfirmationActionDefinitionBuilder<D, B>> extends AbstractActionDefinitionBuilder<D, B> {
     @Nullable

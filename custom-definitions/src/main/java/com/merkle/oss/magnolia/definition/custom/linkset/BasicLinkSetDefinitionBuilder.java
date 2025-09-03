@@ -3,7 +3,7 @@ package com.merkle.oss.magnolia.definition.custom.linkset;
 import com.merkle.oss.magnolia.definition.builder.complex.AbstractConfiguredComplexPropertyDefinitionBuilder;
 import info.magnolia.ui.field.*;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.jcr.Node;
 import java.util.Collection;
 import java.util.List;

@@ -30,8 +30,8 @@ public class DateDependencyValidator extends AbstractValidator<Temporal> {
 	}
 
 	private LocalDateTime convert(final Temporal value) {
-		if(value instanceof LocalDate) {
-			return ((LocalDate)value).atStartOfDay();
+		if(value instanceof LocalDate date) {
+			return date.atStartOfDay();
 		}
 		return LocalDateTime.from(value);
 	}

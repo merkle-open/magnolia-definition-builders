@@ -219,7 +219,7 @@ Link to an internal DAM asset.
    import org.springframework.stereotype.Component;
    import ...TaxonomyService;
    
-   import javax.inject.Inject;
+   import jakarta.inject.Inject;
    import java.util.Locale;
    import java.util.Optional;
    

@@ -4,7 +4,7 @@ import info.magnolia.objectfactory.ComponentProvider;
 import info.magnolia.ui.ValueContext;
 import info.magnolia.ui.field.factory.AbstractFieldFactory;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.jcr.Node;
 
 import com.merkle.oss.magnolia.powernode.PowerNodeService;

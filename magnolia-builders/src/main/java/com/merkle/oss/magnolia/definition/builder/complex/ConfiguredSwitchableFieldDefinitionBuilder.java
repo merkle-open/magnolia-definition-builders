@@ -7,7 +7,7 @@ import info.magnolia.ui.field.AbstractSelectFieldDefinition;
 import info.magnolia.ui.field.ConfiguredSwitchableFieldDefinition;
 import info.magnolia.ui.field.WithPropertyNameDecorator;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;

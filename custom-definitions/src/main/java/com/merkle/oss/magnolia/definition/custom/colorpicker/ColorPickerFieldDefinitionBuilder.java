@@ -2,7 +2,7 @@ package com.merkle.oss.magnolia.definition.custom.colorpicker;
 
 import com.merkle.oss.magnolia.definition.builder.simple.AbstractConfiguredFieldDefinitionBuilder;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Optional;
 
 /**

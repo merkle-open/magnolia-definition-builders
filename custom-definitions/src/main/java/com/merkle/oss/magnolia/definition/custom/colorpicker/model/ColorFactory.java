@@ -3,7 +3,7 @@ package com.merkle.oss.magnolia.definition.custom.colorpicker.model;
 import java.util.Locale;
 import java.util.Optional;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
 import com.merkle.oss.magnolia.powernode.PowerNode;

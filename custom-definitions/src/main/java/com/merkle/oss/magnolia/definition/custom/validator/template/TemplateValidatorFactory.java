@@ -1,12 +1,14 @@
 package com.merkle.oss.magnolia.definition.custom.validator.template;
 
-import com.vaadin.data.Validator;
 import info.magnolia.ui.field.AbstractFieldValidatorFactory;
 
-import javax.inject.Inject;
-import javax.jcr.Node;
 import java.text.MessageFormat;
-import java.util.stream.Collectors;
+
+import javax.jcr.Node;
+
+import com.vaadin.data.Validator;
+
+import jakarta.inject.Inject;
 
 public class TemplateValidatorFactory extends AbstractFieldValidatorFactory<TemplateValidatorDefinition, Node> {
 

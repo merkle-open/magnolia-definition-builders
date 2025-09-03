@@ -6,7 +6,7 @@ import info.magnolia.ui.field.LinkFieldDefinition;
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.jcr.Node;
 
 public class InternalLinkDefinitionBuilder extends AbstractLinkFieldDefinitionBuilder<Node, LinkFieldDefinition<Node>, InternalLinkDefinitionBuilder> {

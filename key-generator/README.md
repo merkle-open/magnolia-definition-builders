@@ -56,7 +56,7 @@ import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.FieldValidatorDefinition;
 import info.magnolia.ui.form.field.definition.FieldDefinition;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 public class SomeModule implements ModuleLifecycle {
     private final KeyGeneratorUpdater keyGeneratorUpdater;

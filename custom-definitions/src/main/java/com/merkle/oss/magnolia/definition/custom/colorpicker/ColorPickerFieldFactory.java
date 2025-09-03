@@ -10,7 +10,7 @@ import info.magnolia.ui.field.factory.AbstractFieldFactory;
 
 import java.util.Optional;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 public class ColorPickerFieldFactory extends AbstractFieldFactory<Integer, ColorPickerFieldDefinition> {
 	final ColorPickerFieldDefinition definition;

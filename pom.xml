@@ -37,12 +37,11 @@
 	<properties>
 		<!-- (check for new versions:  mvn versions:display-property-updates )-->
 
-		<magnolia.version>6.3.17</magnolia.version>
+		<magnolia.version>6.4.0</magnolia.version>
 		<magnolia.workflow.version>6.0.8</magnolia.workflow.version>
-		<spring.version>5.3.39</spring.version>
-		<merkle.powernode.version>2.2.0</merkle.powernode.version>
+    <spring.version>6.1.21</spring.version>
+    <merkle.powernode.version>2.3.1</merkle.powernode.version>
 		<java.poet.version>1.12.1</java.poet.version>
-		<jsr305.nullable.version>3.0.2</jsr305.nullable.version>
 		<qrCodeGenerator.version>0.5.2</qrCodeGenerator.version>
 
 		<!--Test dependency versions-->
@@ -77,11 +76,6 @@
 				<groupId>com.merkle.oss.magnolia</groupId>
 				<artifactId>magnolia-powernode</artifactId>
 				<version>${merkle.powernode.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.google.code.findbugs</groupId>
-				<artifactId>jsr305</artifactId>
-				<version>${jsr305.nullable.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>uk.org.okapibarcode</groupId>
