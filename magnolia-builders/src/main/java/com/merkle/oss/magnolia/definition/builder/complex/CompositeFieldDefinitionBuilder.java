@@ -5,7 +5,7 @@ import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.WithPropertyNameDecorator;
 import info.magnolia.ui.framework.layout.FieldLayoutDefinition;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;

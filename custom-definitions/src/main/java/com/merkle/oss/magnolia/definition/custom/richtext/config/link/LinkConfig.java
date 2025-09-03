@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 // See implementation here:
 // https://github.com/ckeditor/ckeditor5/blob/v41.4.2/packages/ckeditor5-link/src/linkconfig.ts

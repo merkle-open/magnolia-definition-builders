@@ -7,7 +7,7 @@ import info.magnolia.ui.contentapp.configuration.column.ColumnDefinition;
 import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class AbstractGridViewDefinitionBuilder<T, D extends GridViewDefinition<T>, B extends AbstractGridViewDefinitionBuilder<T, D, B>> extends AbstractContentViewDefinitionBuilder<T, D, B> {
     @Nullable

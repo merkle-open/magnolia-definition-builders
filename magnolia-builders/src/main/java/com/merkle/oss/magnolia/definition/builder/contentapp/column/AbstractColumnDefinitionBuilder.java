@@ -5,11 +5,10 @@ import info.magnolia.ui.field.FieldDefinition;
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
-
 import com.vaadin.data.ValueProvider;
-import com.vaadin.ui.DescriptionGenerator;
 import com.vaadin.ui.renderers.AbstractRenderer;
+
+import jakarta.annotation.Nullable;
 
 public class AbstractColumnDefinitionBuilder<T, D extends ConfiguredColumnDefinition<T>, B extends AbstractColumnDefinitionBuilder<T, D, B>> {
     @Nullable

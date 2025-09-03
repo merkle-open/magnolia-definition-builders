@@ -3,7 +3,7 @@ package com.merkle.oss.magnolia.definition.builder.simple;
 import info.magnolia.ui.field.LinkFieldDefinition;
 import info.magnolia.ui.field.RichTextFieldDefinition;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;

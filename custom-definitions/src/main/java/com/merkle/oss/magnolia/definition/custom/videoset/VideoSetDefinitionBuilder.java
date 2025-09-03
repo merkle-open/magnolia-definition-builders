@@ -7,8 +7,6 @@ import com.merkle.oss.magnolia.definition.custom.imageset.ImageSetDefinitionBuil
 import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
 import com.merkle.oss.magnolia.definition.custom.switchable.SingleSwitchableForm;
 
-import javax.inject.Provider;
-
 public class VideoSetDefinitionBuilder extends AbstractVideoSetDefinitionBuilder<VideoSetDefinitionBuilder> {
 	protected static final String LABEL_PREFIX = "merkle.customDefinitions.videoSet.";
 	protected static final String FIELD_LABEL_PREFIX = LABEL_PREFIX + "field.";

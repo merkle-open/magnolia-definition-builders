@@ -3,7 +3,7 @@ package com.merkle.oss.magnolia.definition.custom.validator.nodetype;
 import com.vaadin.data.Validator;
 import info.magnolia.ui.field.AbstractFieldValidatorFactory;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.jcr.Node;
 import java.text.MessageFormat;
 

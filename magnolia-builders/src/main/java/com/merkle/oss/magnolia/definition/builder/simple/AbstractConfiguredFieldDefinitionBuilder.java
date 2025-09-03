@@ -1,17 +1,18 @@
 package com.merkle.oss.magnolia.definition.builder.simple;
 
-import com.vaadin.data.Converter;
 import info.magnolia.ui.field.ConfiguredFieldDefinition;
 import info.magnolia.ui.field.FieldBinder;
 import info.magnolia.ui.field.FieldValidatorDefinition;
 
-import javax.annotation.Nullable;
-import javax.inject.Provider;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import com.vaadin.data.Converter;
+
+import jakarta.annotation.Nullable;
 
 public abstract class AbstractConfiguredFieldDefinitionBuilder<T, D extends ConfiguredFieldDefinition<T>, B extends AbstractConfiguredFieldDefinitionBuilder<T, D, B>> {
 	@Nullable

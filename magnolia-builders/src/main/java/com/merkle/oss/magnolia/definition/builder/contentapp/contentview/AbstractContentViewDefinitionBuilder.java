@@ -5,7 +5,7 @@ import info.magnolia.ui.contentapp.browser.ContentView;
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class AbstractContentViewDefinitionBuilder<T, D extends ContentViewDefinition<T>, B extends AbstractContentViewDefinitionBuilder<T, D, B>> {
     @Nullable

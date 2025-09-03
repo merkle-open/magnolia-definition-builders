@@ -6,7 +6,7 @@ import info.magnolia.ui.field.TokenFieldDefinition;
 import java.util.Collection;
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class TokenFieldDefinitionBuilder<T> extends AbstractConfiguredFieldDefinitionBuilder<Collection<String>, TokenFieldDefinition<T>, TokenFieldDefinitionBuilder<T>> {
 

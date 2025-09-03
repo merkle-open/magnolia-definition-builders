@@ -5,16 +5,17 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Label;
 import info.magnolia.ui.editor.EditorView;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Collections;
 import java.util.List;
 
 public class SeparatorField extends Label implements EditorView<Object> {
-	private static final String VALUE = "<hr style='margin-top: 30px;\n" +
-			"border: 0;\n" +
-			"height: 0;\n" +
-			"border-top: 1px solid rgba(0, 0, 0, 0.1);\n" +
-			"border-bottom: 1px solid rgba(255, 255, 255, 0.3);'>";
+	private static final String VALUE = """
+			<hr style='margin-top: 30px;
+			border: 0;
+			height: 0;
+			border-top: 1px solid rgba(0, 0, 0, 0.1);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.3);'>""";
 
 	@Inject
 	public SeparatorField() {

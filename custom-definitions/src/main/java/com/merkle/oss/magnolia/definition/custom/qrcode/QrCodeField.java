@@ -13,7 +13,7 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.imageio.ImageIO;
 import javax.jcr.Node;
 

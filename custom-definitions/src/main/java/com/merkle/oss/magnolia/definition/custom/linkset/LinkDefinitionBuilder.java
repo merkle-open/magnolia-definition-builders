@@ -3,7 +3,7 @@ package com.merkle.oss.magnolia.definition.custom.linkset;
 import info.magnolia.ui.field.CheckBoxFieldDefinition;
 import info.magnolia.ui.field.TextFieldDefinition;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class LinkDefinitionBuilder extends LinkSetDefinitionBuilder {
 

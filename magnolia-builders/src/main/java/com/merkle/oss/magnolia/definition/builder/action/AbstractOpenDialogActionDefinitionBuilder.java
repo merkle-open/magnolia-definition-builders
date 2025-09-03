@@ -4,7 +4,7 @@ import info.magnolia.ui.dialog.actions.OpenDialogActionDefinition;
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class AbstractOpenDialogActionDefinitionBuilder<D extends OpenDialogActionDefinition, B extends AbstractOpenDialogActionDefinitionBuilder<D, B>>  extends AbstractActionDefinitionBuilder<D, B> {
     @Nullable

@@ -9,7 +9,7 @@ import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
 import info.magnolia.ui.field.CheckBoxFieldDefinition;
 import info.magnolia.ui.field.TextFieldDefinition;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.function.UnaryOperator;
 
 public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitionBuilder<LinkSetDefinitionBuilder> {

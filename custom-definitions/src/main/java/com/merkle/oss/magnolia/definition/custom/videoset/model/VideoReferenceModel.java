@@ -7,8 +7,8 @@ import com.merkle.oss.magnolia.definition.custom.videoset.VideoType;
 import com.merkle.oss.magnolia.powernode.PowerNode;
 import com.merkle.oss.magnolia.powernode.ValueConverter;
 
-import javax.annotation.Nullable;
-import javax.inject.Inject;
+import jakarta.annotation.Nullable;
+import jakarta.inject.Inject;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;

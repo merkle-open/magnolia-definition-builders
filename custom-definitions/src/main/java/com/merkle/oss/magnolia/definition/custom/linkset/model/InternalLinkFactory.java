@@ -1,5 +1,11 @@
 package com.merkle.oss.magnolia.definition.custom.linkset.model;
 
+import static info.magnolia.repository.RepositoryConstants.WEBSITE;
+
+import java.util.Locale;
+import java.util.Optional;
+import java.util.function.Supplier;
+
 import com.merkle.oss.magnolia.definition.custom.configuration.LinkUtil;
 import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
 import com.merkle.oss.magnolia.definition.custom.linkset.LinkSetDefinitionBuilder;
@@ -8,16 +14,9 @@ import com.merkle.oss.magnolia.definition.custom.linkset.LinkTypes;
 import com.merkle.oss.magnolia.powernode.PowerNode;
 import com.merkle.oss.magnolia.powernode.PowerNodeService;
 import com.merkle.oss.magnolia.powernode.ValueConverter;
-import info.magnolia.jcr.util.NodeUtil;
 
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.jcr.Node;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.function.Supplier;
-
-import static info.magnolia.repository.RepositoryConstants.WEBSITE;
+import jakarta.annotation.Nullable;
+import jakarta.inject.Inject;
 
 public class InternalLinkFactory implements LinkModelFactory.LinkFactory {
 	private final PowerNodeService powerNodeService;

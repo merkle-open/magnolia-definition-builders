@@ -2,7 +2,7 @@ package com.merkle.oss.magnolia.definition.builder.complex;
 
 import info.magnolia.ui.field.StaticFieldViewDefinition;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Optional;
 
 /**

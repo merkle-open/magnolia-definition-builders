@@ -2,7 +2,7 @@ package com.merkle.oss.magnolia.definition.custom.richtext.config.heading;
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public enum HeadingOption {
     PARAGRAPH("paragraph", null, "Paragraph", "ck-heading_paragraph"),

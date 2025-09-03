@@ -7,7 +7,7 @@ import info.magnolia.ui.field.LinkFieldDefinition;
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * builds a {@link LinkFieldDefinition}

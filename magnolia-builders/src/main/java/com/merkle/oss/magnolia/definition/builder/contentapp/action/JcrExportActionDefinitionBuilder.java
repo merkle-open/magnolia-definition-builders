@@ -5,7 +5,7 @@ import info.magnolia.ui.contentapp.action.JcrExportActionDefinition;
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import com.merkle.oss.magnolia.definition.builder.action.AbstractCommandActionDefinitionBuilder;
 

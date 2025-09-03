@@ -16,9 +16,7 @@ import info.magnolia.ui.vaadin.ckeditor.MagnoliaCKEditorConfig;
 
 import java.lang.invoke.MethodHandles;
 import java.util.Collections;
-import java.util.Set;
 
-import javax.inject.Inject;
 import javax.jcr.Node;
 
 import org.slf4j.Logger;
@@ -30,6 +28,8 @@ import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSuppor
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
 import com.vaadin.ui.Component;
+
+import jakarta.inject.Inject;
 
 public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 	private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -84,9 +84,8 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 	@Override
 	protected MagnoliaLink createMagnoliaLink(final Object object) {
 		//TODO broken in magnolia info.magnolia.ui.field.factory.RichTextFieldFactory
-		if (object instanceof Node) {
+		if (object instanceof Node node) {
 			return Exceptions.wrap().get(() -> {
-				final Node node = (Node) object;
 				final MagnoliaLink mlink = new MagnoliaLink();
 				mlink.identifier = node.getIdentifier();
 				mlink.repository = RepositoryConstants.WEBSITE;

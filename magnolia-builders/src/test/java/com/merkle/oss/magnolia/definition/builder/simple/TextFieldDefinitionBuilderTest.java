@@ -1,14 +1,12 @@
 package com.merkle.oss.magnolia.definition.builder.simple;
 
-import com.merkle.oss.magnolia.definition.builder.AbstractFieldDefinitionBuilderTestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import info.magnolia.ui.field.TextFieldDefinition;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 
-import javax.inject.Provider;
-import javax.xml.namespace.QName;
-
-import static org.junit.jupiter.api.Assertions.*;
+import com.merkle.oss.magnolia.definition.builder.AbstractFieldDefinitionBuilderTestCase;
 
 class TextFieldDefinitionBuilderTest extends AbstractFieldDefinitionBuilderTestCase {
 	@Test

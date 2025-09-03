@@ -5,7 +5,7 @@ import info.magnolia.ui.field.AbstractFieldValidatorFactory;
 
 import java.text.MessageFormat;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.jcr.Node;
 
 import com.merkle.oss.magnolia.powernode.PowerNodeService;

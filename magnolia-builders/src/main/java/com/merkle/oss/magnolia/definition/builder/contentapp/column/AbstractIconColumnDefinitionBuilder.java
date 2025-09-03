@@ -5,7 +5,7 @@ import info.magnolia.ui.contentapp.configuration.column.icon.IconColumnDefinitio
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 // since magnolia messed up generics, we cannot be typed here
 public class AbstractIconColumnDefinitionBuilder<T, D extends IconColumnDefinition, B extends AbstractIconColumnDefinitionBuilder<T, D, B>> extends AbstractColumnDefinitionBuilder<T, ConfiguredColumnDefinition<T>, B> {

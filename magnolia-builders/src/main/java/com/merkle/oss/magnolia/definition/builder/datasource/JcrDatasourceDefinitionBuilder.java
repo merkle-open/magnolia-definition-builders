@@ -4,7 +4,7 @@ import com.vaadin.shared.data.sort.SortDirection;
 import info.magnolia.ui.contentapp.preview.JcrPreviewDefinition;
 import info.magnolia.ui.datasource.jcr.JcrDatasourceDefinition;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;

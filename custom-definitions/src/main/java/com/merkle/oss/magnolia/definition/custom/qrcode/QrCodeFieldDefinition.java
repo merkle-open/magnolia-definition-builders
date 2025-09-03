@@ -6,7 +6,7 @@ import info.magnolia.ui.field.FieldType;
 import java.util.Optional;
 import java.util.function.Function;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import com.merkle.oss.magnolia.powernode.PowerNode;
 
