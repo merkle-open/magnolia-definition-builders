@@ -14,17 +14,20 @@ public class VideoSetDefinitionBuilder extends AbstractVideoSetDefinitionBuilder
 	protected static final String FIELD_LABEL_PREFIX = LABEL_PREFIX + "field.";
 
 	public VideoSetDefinitionBuilder() {
-		this(true);
+		this(true, false);
 	}
-	public VideoSetDefinitionBuilder(final boolean videoFieldI18n) {
-		this(new ImageSetDefinitionBuilder(), videoFieldI18n, false);
+
+	public VideoSetDefinitionBuilder(final boolean videoFieldI18n, final boolean removePreviouslySelected) {
+		this(new ImageSetDefinitionBuilder(true, removePreviouslySelected), videoFieldI18n, false, removePreviouslySelected);
 	}
+
 	public VideoSetDefinitionBuilder(
 			final AbstractImageSetDefinitionBuilder<?> imageSetDefinitionBuilder,
 			final boolean videoFieldI18n,
-			final boolean previewImageRequired
+			final boolean previewImageRequired,
+			final boolean removePreviouslySelected
 	) {
-		super(imageSetDefinitionBuilder, LABEL_PREFIX, videoFieldI18n, previewImageRequired);
+		super(imageSetDefinitionBuilder, LABEL_PREFIX, videoFieldI18n, previewImageRequired, removePreviouslySelected);
 	}
 
 	@Override

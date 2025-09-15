@@ -27,6 +27,7 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 	public static final UnaryOperator<String> ALT_TEXT_PROPERTY_NAME_PROVIDER = name -> name + "_" + ALT_TEXT;
 	private final String labelPrefix;
     private final boolean imageFieldI18n;
+	private final boolean removePreviouslySelected;
 
     @Nullable
 	private List<ImageType> imageOptions;
@@ -41,9 +42,10 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 	@Nullable
 	private Map<ImageType, List<EditorPropertyDefinition>> additionalPropertiesMapping;
 
-	protected AbstractImageSetDefinitionBuilder(final String labelPrefix, final boolean imageFieldI18n) {
+	protected AbstractImageSetDefinitionBuilder(final String labelPrefix, final boolean imageFieldI18n, final boolean removePreviouslySelected) {
 		this.labelPrefix = labelPrefix;
         this.imageFieldI18n = imageFieldI18n;
+		this.removePreviouslySelected = removePreviouslySelected;
         imageOptions(Arrays.stream(ImageTypes.values()).collect(Collectors.toList()));
 	}
 
@@ -135,6 +137,7 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 						.optionPropertyNameDecorator(SELECTION_PROPERTY_NAME_PROVIDER::apply)
 						.fieldOptions(Stream.ofNullable(imageOptions).flatMap(Collection::stream).map(this::createFieldOption).collect(Collectors.toList()))
 						.label(labelPrefix + "image.label")
+						.removePreviouslySelected(removePreviouslySelected)
 						.build(name),
 				new TextFieldDefinitionBuilder()
 						.label(labelPrefix + "altText.label")

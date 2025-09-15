@@ -42,6 +42,8 @@ public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, 
 	@Nullable
 	private Boolean required;
 	@Nullable
+	private Boolean removePreviouslySelected;
+	@Nullable
 	private List<FieldValidatorDefinition> allTypeValidators;
 	@Nullable
 	private Map<T, List<FieldValidatorDefinition>> typeValidatorsMapping;
@@ -98,6 +100,15 @@ public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, 
 		return self();
 	}
 
+	public B removePreviouslySelected() {
+		return removePreviouslySelected(true);
+	}
+
+	public B removePreviouslySelected(final boolean removePreviouslySelected) {
+		this.removePreviouslySelected = removePreviouslySelected;
+		return self();
+	}
+
 	public B validator(final FieldValidatorDefinition validator) {
 		return validators(Stream.concat(
 				Stream.ofNullable(allTypeValidators).flatMap(Collection::stream),
@@ -143,7 +154,7 @@ public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, 
 	}
 
 	public SwitchableDefinition build(final String name) {
-		final SwitchableDefinition definition =new SwitchableDefinition(
+		final SwitchableDefinition definition = new SwitchableDefinition(
 				propertyNameDecorator != null ? propertyNameDecorator : PrefixNameDecorator.class,
 				new RadioButtonGroupFieldDefinitionBuilder<Option>()
 						.defaultValue(Optional.ofNullable(fieldOptions).flatMap(options -> getDefault(options, selected)).map(OptionEnum::getValue).orElse(null))
@@ -170,6 +181,7 @@ public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, 
 		super.populate(definition, name);
 		Optional.ofNullable(readOnly).ifPresent(definition::setReadOnly);
 		Optional.ofNullable(required).ifPresent(definition::setRequired);
+		Optional.ofNullable(removePreviouslySelected).ifPresent(definition::setRemovePreviouslySelected);
 		Optional.ofNullable(allTypeValidators).ifPresent(definition::setValidators);
 		Optional.ofNullable(typeValidatorsMapping).map(Map::entrySet).stream().flatMap(Collection::stream).forEach(entry ->
 				definition.setValidators(
