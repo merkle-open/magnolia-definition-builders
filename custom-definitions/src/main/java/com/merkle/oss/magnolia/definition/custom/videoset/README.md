@@ -65,7 +65,7 @@ Vimeo video, specified by ID.
    
    public class CustomVideoSetDefinitionBuilder extends VideoSetDefinitionBuilder {
       public CustomVideoSetDefinitionBuilder() {
-         super(false);
+         super(false, false);
       }
    }
    ```

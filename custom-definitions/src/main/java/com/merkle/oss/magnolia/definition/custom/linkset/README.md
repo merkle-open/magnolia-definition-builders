@@ -60,7 +60,7 @@ Link to an internal DAM asset.
       
       public class CustomLinkSetDefinitionBuilder extends LinkSetDefinitionBuilder {
          public CustomLinkSetDefinitionBuilder() {
-            super(true, false);
+            super(true, false, false);
          }
       }
    ```

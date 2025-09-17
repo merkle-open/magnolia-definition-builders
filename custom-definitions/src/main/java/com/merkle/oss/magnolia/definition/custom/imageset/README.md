@@ -50,7 +50,7 @@ Internal magnolia DAM asset.
    
    public class CustomImageSetDefinitionBuilder extends ImageSetDefinitionBuilder {
       public CustomImageSetDefinitionBuilder() {
-         super(false);
+         super(false, false);
       }
    }
    ```
