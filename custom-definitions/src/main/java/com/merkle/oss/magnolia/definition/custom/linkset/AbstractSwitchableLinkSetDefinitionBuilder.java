@@ -20,7 +20,7 @@ public abstract class AbstractSwitchableLinkSetDefinitionBuilder<B extends Abstr
 	@Nullable
 	private List<LinkType> linkOptions;
 
-	protected AbstractSwitchableLinkSetDefinitionBuilder(final String labelPrefix, final boolean switchableFieldI18n) {
+	protected AbstractSwitchableLinkSetDefinitionBuilder(final String labelPrefix, final boolean switchableFieldI18n, final boolean removePreviouslySelected) {
 		super(labelPrefix, switchableFieldI18n);
 		final JcrChildNodeProviderDefinition childNodeProvider = new JcrChildNodeProviderDefinition();
 		childNodeProvider.setSupportI18N(false);
@@ -28,6 +28,7 @@ public abstract class AbstractSwitchableLinkSetDefinitionBuilder<B extends Abstr
 		propertyNameDecorator(PrefixFormNameExceptFieldPropertyNameDecorator.class);
 		optionPropertyNameDecorator(ignored -> LINK_TYPE_PROPERTY);
 		linkOptions(List.of(LinkTypes.values()));
+		removePreviouslySelected(removePreviouslySelected);
 	}
 
 	protected abstract FieldOption<LinkType> createFieldOption(LinkType linkType);

@@ -27,6 +27,7 @@ public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<No
 	private final boolean fieldI18n;
 	private boolean readOnly;
 	private boolean required;
+	private boolean removePreviouslySelected;
 
 	public SwitchableDefinition(
 			final Class<? extends PropertyNameDecorator> propertyNameDecoratorClass,
@@ -84,6 +85,15 @@ public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<No
 
 	public boolean isRequired() {
 		return required;
+	}
+
+	public void setRemovePreviouslySelected(final boolean removePreviouslySelected) {
+		this.removePreviouslySelected = removePreviouslySelected;
+	}
+
+	@Override
+	public boolean isRemovePreviouslySelected() {
+		return removePreviouslySelected;
 	}
 
 	public void setValidators(final List<FieldValidatorDefinition> validators) {
