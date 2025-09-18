@@ -18,6 +18,7 @@ import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbu
 public class ExtendedCKEditor5TextFieldConfig extends CKEditor5TextFieldConfig {
     public final Heading heading;
     public final LinkConfig link;
+    public final LinkConfig mgnllink;
     public final HtmlSupport htmlSupport;
 
     public ExtendedCKEditor5TextFieldConfig(
@@ -25,10 +26,12 @@ public class ExtendedCKEditor5TextFieldConfig extends CKEditor5TextFieldConfig {
             final List<ToolbarGroup> toolbarGroups,
             final List<HeadingOption> options,
             final LinkConfig link,
+            final LinkConfig mgnllink,
             final HtmlSupport htmlSupport
     ) {
         super(licenseKey);
         this.link = link;
+        this.mgnllink = mgnllink;
         this.htmlSupport = htmlSupport;
         this.toolbar = new ExtendedToolbar(toolbarGroups, true);
         this.heading = new Heading(options);

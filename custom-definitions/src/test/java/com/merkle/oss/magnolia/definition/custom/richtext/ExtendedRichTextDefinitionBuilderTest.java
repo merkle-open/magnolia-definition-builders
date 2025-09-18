@@ -24,12 +24,14 @@ class ExtendedRichTextDefinitionBuilderTest {
 				.heading(HeadingOption.HEADING_2)
 				.toolbarConfig(richTextToolbar)
 				.linkConfig(linkConfig)
+				.mgnlLinkConfig(linkConfig)
 				.htmlSupport(htmlSupport)
 				.build("extendedRichText");
 
 		assertEquals(List.of(HeadingOption.PARAGRAPH, HeadingOption.HEADING_1, HeadingOption.HEADING_2), definition.getHeadings());
 		assertEquals(Optional.of(richTextToolbar), definition.getToolbarConfig());
 		assertEquals(Optional.of(linkConfig), definition.getLinkConfig());
+		assertEquals(Optional.of(linkConfig), definition.getMgnlLinkConfig());
 		assertEquals(Optional.of(htmlSupport), definition.getHtmlSupport());
 	}
 }

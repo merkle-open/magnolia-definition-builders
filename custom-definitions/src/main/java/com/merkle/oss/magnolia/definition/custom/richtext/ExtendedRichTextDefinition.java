@@ -24,6 +24,9 @@ public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
 	private LinkConfig linkConfig;
 
 	@Nullable
+	private LinkConfig mgnlLinkConfig;
+
+	@Nullable
 	private HtmlSupport htmlSupport;
 
 	private List<HeadingOption> headings = List.of(
@@ -58,6 +61,14 @@ public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
 
 	public void setLinkConfig(final LinkConfig linkConfig) {
 		this.linkConfig = linkConfig;
+	}
+
+	public Optional<LinkConfig> getMgnlLinkConfig() {
+		return Optional.ofNullable(mgnlLinkConfig);
+	}
+
+	public void setMgnlLinkConfig(final LinkConfig mgnlLinkConfig) {
+		this.mgnlLinkConfig = mgnlLinkConfig;
 	}
 
 	public List<HeadingOption> getHeadings() {

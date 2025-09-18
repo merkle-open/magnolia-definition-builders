@@ -24,6 +24,7 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
       }
 
       cleanUpDecoratorProperties(config.link.decorators);
+      cleanUpDecoratorProperties(config.mgnllink.decorators);
 
       const mapPattern = (pattern) => {
         pattern.name = new RegExp(pattern.name);
@@ -41,7 +42,6 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
       config.htmlSupport.disallow.forEach(mapPattern);
 
       console.log("config: " + JSON.stringify(config));
-      //different from magnolia
 
       let CKEDITOR5 = window["CKEDITOR5"];
       // in case custom-builds are object-wrapped, otherwise, just use the original
@@ -52,6 +52,10 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
           CKEDITOR5 = CKEDITOR5["ClassicEditor"];
         }
       }
+
+      // deletes default open in new tab decorator
+      delete CKEDITOR5.defaultConfig.mgnllink.decorators;
+      // different from magnolia
 
       // Import CSS inline
       if (!document.querySelector('style[data-mgnl-ckeditor-css]')) {

@@ -105,6 +105,7 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 					Collections.emptyList(),
 					Collections.emptyList(),
 					new LinkConfig.Builder().build(),
+					new LinkConfig.Builder().build(),
 					new HtmlSupport.Builder().build()
 			);
 		}
@@ -113,6 +114,7 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 				getDefinition().getToolbarConfig().map(RichTextToolbarConfig::getConfig).orElseGet(Collections::emptyList),
 				getDefinition().getHeadings(),
 				getDefinition().getLinkConfig().orElseGet(() -> new LinkConfig.Builder().build()),
+				getDefinition().getMgnlLinkConfig().orElseGet(() -> new LinkConfig.Builder().build()),
 				getDefinition().getHtmlSupport().orElseGet(() -> new HtmlSupport.Builder().build())
 		);
 	}

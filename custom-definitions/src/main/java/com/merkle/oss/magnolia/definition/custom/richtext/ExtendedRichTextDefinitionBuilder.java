@@ -26,6 +26,8 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 	@Nullable
 	private LinkConfig linkConfig;
 	@Nullable
+	private LinkConfig mgnlLinkConfig;
+	@Nullable
 	private HtmlSupport htmlSupport;
 	@Nullable
 	private List<HeadingOption> headings;
@@ -50,6 +52,11 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 
 	public ExtendedRichTextDefinitionBuilder linkConfig(final LinkConfig linkConfig) {
 		this.linkConfig = linkConfig;
+		return self();
+	}
+
+	public ExtendedRichTextDefinitionBuilder mgnlLinkConfig(final LinkConfig mgnlLinkConfig) {
+		this.mgnlLinkConfig = mgnlLinkConfig;
 		return self();
 	}
 
@@ -92,6 +99,7 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		super.populate(definition, name);
 		Optional.ofNullable(toolbarConfig).ifPresent(definition::setToolbarConfig);
 		Optional.ofNullable(linkConfig).ifPresent(definition::setLinkConfig);
+		Optional.ofNullable(mgnlLinkConfig).ifPresent(definition::setMgnlLinkConfig);
 		Optional.ofNullable(htmlSupport).ifPresent(definition::setHtmlSupport);
 		Optional.ofNullable(headings).ifPresent(definition::setHeadings);
 		definition.setImages(contains(new ImageGroupBuilder()));
