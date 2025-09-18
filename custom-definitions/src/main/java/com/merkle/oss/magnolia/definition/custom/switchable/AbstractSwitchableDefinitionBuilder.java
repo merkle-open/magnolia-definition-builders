@@ -156,7 +156,7 @@ public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, 
 	public SwitchableDefinition build(final String name) {
 		final SwitchableDefinition definition = new SwitchableDefinition(
 				propertyNameDecorator != null ? propertyNameDecorator : PrefixNameDecorator.class,
-				new RadioButtonGroupFieldDefinitionBuilder<Option>()
+                getRadioBuilder()
 						.defaultValue(Optional.ofNullable(fieldOptions).flatMap(options -> getDefault(options, selected)).map(OptionEnum::getValue).orElse(null))
 						.layout(Layout.horizontal)
 						.build(
@@ -194,6 +194,13 @@ public abstract class AbstractSwitchableDefinitionBuilder<T extends OptionEnum, 
 		);
 		return definition;
 	}
+
+    private RadioButtonGroupFieldDefinitionBuilder<Option> getRadioBuilder() {
+        if(fieldOptions == null || fieldOptions.size() < 2) {
+            return new HiddenRadioButtonGroup.Definition.Builder<>();
+        }
+        return new RadioButtonGroupFieldDefinitionBuilder<>();
+    }
 
 	private void applyAdditionalProperties(final FieldOption<T> option) {
 		Optional.ofNullable(additionalPropertiesMapping).map(mapping -> mapping.get(option.getType())).ifPresent(additionalProperties ->

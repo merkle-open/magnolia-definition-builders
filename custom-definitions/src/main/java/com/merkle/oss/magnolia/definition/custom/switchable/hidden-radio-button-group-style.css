@@ -1,0 +1,7 @@
+.v-slot-form-field-layout:has(.v-slot-hide-switchable-field).v-slot-form-field-layout:not(:has(.v-slot-form-field-layout)) {
+  display: none;
+
+  ~.v-slot>div {
+    padding: 0;
+  }
+}
