@@ -16,7 +16,9 @@ import info.magnolia.ui.vaadin.ckeditor.MagnoliaCKEditorConfig;
 
 import java.lang.invoke.MethodHandles;
 import java.util.Collections;
-import java.util.Set;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.jcr.Node;
@@ -28,6 +30,8 @@ import com.google.gson.Gson;
 import com.machinezoo.noexception.Exceptions;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSupport;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkDecoratorDefinition;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.link.MgnlLinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
 import com.vaadin.ui.Component;
 
@@ -105,17 +109,41 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 					Collections.emptyList(),
 					Collections.emptyList(),
 					new LinkConfig.Builder().build(),
+					new MgnlLinkConfig.Builder().build(),
 					new HtmlSupport.Builder().build()
 			);
 		}
-		return new ExtendedCKEditor5TextFieldConfig(
+        final MgnlLinkConfig mgnlLinkConfig = getDefinition().getMgnlLinkConfig().orElseGet(() -> new MgnlLinkConfig.Builder().build());
+        final LinkConfig linkConfig = getDefinition().getLinkConfig().orElseGet(() -> new LinkConfig.Builder().build());
+        return new ExtendedCKEditor5TextFieldConfig(
 				ckEditor5Config.getCkeditor5License(),
 				getDefinition().getToolbarConfig().map(RichTextToolbarConfig::getConfig).orElseGet(Collections::emptyList),
 				getDefinition().getHeadings(),
-				getDefinition().getLinkConfig().orElseGet(() -> new LinkConfig.Builder().build()),
+                mergeAutomaticDecorators(linkConfig, mgnlLinkConfig),
+                removeAutomaticDecorators(mgnlLinkConfig),
 				getDefinition().getHtmlSupport().orElseGet(() -> new HtmlSupport.Builder().build())
 		);
 	}
+
+    /*
+     * Magnolia links only support manual decorators. However, they are also applied if they are added to normal links.
+     */
+    private LinkConfig mergeAutomaticDecorators(final LinkConfig linkConfig, final MgnlLinkConfig mgnlLinkConfig) {
+        final LinkConfig.Builder builder = new LinkConfig.Builder(linkConfig);
+        mgnlLinkConfig.decorators.entrySet().stream()
+                .filter(entry -> Objects.equals(LinkDecoratorDefinition.AutomaticBuilder.MODE, entry.getValue().mode))
+                .forEach(entry ->
+                        builder.decorator("mgnl-" + entry.getKey(), entry.getValue())
+                );
+        return builder.build();
+    }
+    private MgnlLinkConfig removeAutomaticDecorators(final MgnlLinkConfig mgnlLinkConfig) {
+        return new MgnlLinkConfig.Builder(mgnlLinkConfig).decorators(
+                mgnlLinkConfig.decorators.entrySet().stream()
+                        .filter(entry -> !Objects.equals(LinkDecoratorDefinition.AutomaticBuilder.MODE, entry.getValue().mode))
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+        ).build();
+    }
 
 	@Override
 	protected MagnoliaCKEditorConfig initializeCKEditorConfig() {

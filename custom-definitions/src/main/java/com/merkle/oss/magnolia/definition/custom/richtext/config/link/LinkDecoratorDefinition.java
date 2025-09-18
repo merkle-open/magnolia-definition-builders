@@ -92,20 +92,23 @@ public class LinkDecoratorDefinition {
     }
 
     public static class AutomaticBuilder extends Builder<AutomaticBuilder> {
-            public LinkDecoratorDefinition build(final String urlPredicateRegex) {
-                return new LinkDecoratorDefinition(
-                        "automatic",
-                        urlPredicateRegex,
-                        null,
-                        null,
-                        Optional.ofNullable(attributes).orElseGet(Collections::emptyMap),
-                        Optional.ofNullable(styles).orElseGet(Collections::emptyMap),
-                        Optional.ofNullable(classes).orElseGet(Collections::emptySet)
-                );
+        public static final String MODE = "automatic";
+
+        public LinkDecoratorDefinition build(final String urlPredicateRegex) {
+            return new LinkDecoratorDefinition(
+                    MODE,
+                    urlPredicateRegex,
+                    null,
+                    null,
+                    Optional.ofNullable(attributes).orElseGet(Collections::emptyMap),
+                    Optional.ofNullable(styles).orElseGet(Collections::emptyMap),
+                    Optional.ofNullable(classes).orElseGet(Collections::emptySet)
+            );
         }
     }
 
     public static class ManualBuilder extends Builder<ManualBuilder> {
+        public static final String MODE = "manual";
         @Nullable
         private Boolean defaultValue;
 
@@ -116,7 +119,7 @@ public class LinkDecoratorDefinition {
 
         public LinkDecoratorDefinition build(final String label) {
             return new LinkDecoratorDefinition(
-                    "manual",
+                    MODE,
                     null,
                     label,
                     defaultValue,

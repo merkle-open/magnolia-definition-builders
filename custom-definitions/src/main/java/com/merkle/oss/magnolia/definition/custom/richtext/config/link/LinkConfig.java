@@ -48,6 +48,15 @@ public class LinkConfig {
         @Nullable
         private Map<String, LinkDecoratorDefinition> decorators;
 
+        public Builder() {}
+        public Builder(final LinkConfig linkConfig) {
+            this.defaultProtocol = linkConfig.defaultProtocol;
+            this.allowedProtocols = linkConfig.allowedProtocols;
+            this.allowCreatingEmptyLinks = linkConfig.allowCreatingEmptyLinks;
+            this.addTargetToExternalLinks = linkConfig.addTargetToExternalLinks;
+            this.decorators = linkConfig.decorators;
+        }
+
         public Builder defaultProtocol(@Nullable final String defaultProtocol) {
             this.defaultProtocol = defaultProtocol;
             return this;
