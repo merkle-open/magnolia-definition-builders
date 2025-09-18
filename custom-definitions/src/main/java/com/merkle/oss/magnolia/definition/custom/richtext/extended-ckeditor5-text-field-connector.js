@@ -15,6 +15,16 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
         decorator.callback = (url) => new RegExp(decorator.urlPredicateRegex).test(url)
       );
 
+      const cleanUpDecoratorProperties = (decorators) => {
+          Object.values(decorators).forEach(decorator =>
+              Object.keys(decorator).forEach((k) =>
+                  (decorator[k] == null || Array.isArray(decorator[k]) && decorator[k].length === 0) && delete decorator[k]
+              )
+          );
+      }
+
+      cleanUpDecoratorProperties(config.link.decorators);
+
       const mapPattern = (pattern) => {
         pattern.name = new RegExp(pattern.name);
         pattern.classes = mapPropertyPattern(pattern.classes);
