@@ -16,6 +16,7 @@ import com.merkle.oss.magnolia.definition.builder.simple.AbstractConfiguredField
 import com.merkle.oss.magnolia.definition.custom.richtext.config.heading.HeadingOption;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSupport;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.link.MgnlLinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.AbstractToolbarGroupBuilder;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.ImageGroupBuilder;
@@ -25,6 +26,8 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 	private RichTextToolbarConfig toolbarConfig;
 	@Nullable
 	private LinkConfig linkConfig;
+	@Nullable
+	private MgnlLinkConfig mgnlLinkConfig;
 	@Nullable
 	private HtmlSupport htmlSupport;
 	@Nullable
@@ -50,6 +53,11 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 
 	public ExtendedRichTextDefinitionBuilder linkConfig(final LinkConfig linkConfig) {
 		this.linkConfig = linkConfig;
+		return self();
+	}
+
+	public ExtendedRichTextDefinitionBuilder mgnlLinkConfig(final MgnlLinkConfig mgnlLinkConfig) {
+		this.mgnlLinkConfig = mgnlLinkConfig;
 		return self();
 	}
 
@@ -92,6 +100,7 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		super.populate(definition, name);
 		Optional.ofNullable(toolbarConfig).ifPresent(definition::setToolbarConfig);
 		Optional.ofNullable(linkConfig).ifPresent(definition::setLinkConfig);
+		Optional.ofNullable(mgnlLinkConfig).ifPresent(definition::setMgnlLinkConfig);
 		Optional.ofNullable(htmlSupport).ifPresent(definition::setHtmlSupport);
 		Optional.ofNullable(headings).ifPresent(definition::setHeadings);
 		definition.setImages(contains(new ImageGroupBuilder()));

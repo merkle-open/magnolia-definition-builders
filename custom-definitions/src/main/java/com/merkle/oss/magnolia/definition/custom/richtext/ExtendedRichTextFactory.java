@@ -5,10 +5,14 @@ import static info.magnolia.ui.vaadin.ckeditor.MagnoliaCKEditorTextFieldEvents.*
 import info.magnolia.dam.api.AssetProviderRegistry;
 import info.magnolia.dam.api.Item;
 import info.magnolia.dam.app.field.factory.DamRichTextFieldFactory;
+import info.magnolia.i18nsystem.FixedLocaleProvider;
 import info.magnolia.i18nsystem.I18nizer;
 import info.magnolia.i18nsystem.SimpleTranslator;
+import info.magnolia.i18nsystem.TranslationService;
+import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.ui.dialog.DialogDefinitionRegistry;
+import info.magnolia.ui.editor.LocaleContext;
 import info.magnolia.ui.field.RichTextFieldDefinition;
 import info.magnolia.ui.framework.ioc.UiComponentProvider;
 import info.magnolia.ui.vaadin.ckeditor.CKEditor5Config;
@@ -16,7 +20,9 @@ import info.magnolia.ui.vaadin.ckeditor.MagnoliaCKEditorConfig;
 
 import java.lang.invoke.MethodHandles;
 import java.util.Collections;
-import java.util.Set;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.jcr.Node;
@@ -28,6 +34,8 @@ import com.google.gson.Gson;
 import com.machinezoo.noexception.Exceptions;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSupport;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkDecoratorDefinition;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.link.MgnlLinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
 import com.vaadin.ui.Component;
 
@@ -35,20 +43,29 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 	private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	private final SimpleTranslator i18n;
     private final CKEditor5Config ckEditor5Config;
+	private final LocaleContext localeContext;
+	private final TranslationService translationService;
+    private final MagnoliaConfigurationProperties properties;
 
     @Inject
 	public ExtendedRichTextFactory(
-			final ExtendedRichTextDefinition definition,
-			final UiComponentProvider componentProvider,
-			final SimpleTranslator i18n,
-			final DialogDefinitionRegistry dialogDefinitionRegistry,
-			final I18nizer i18nizer,
-			final AssetProviderRegistry assetProviderRegistry,
-			final CKEditor5Config CKEditor5Config
-	) {
+            final ExtendedRichTextDefinition definition,
+            final UiComponentProvider componentProvider,
+            final SimpleTranslator i18n,
+            final DialogDefinitionRegistry dialogDefinitionRegistry,
+            final I18nizer i18nizer,
+            final AssetProviderRegistry assetProviderRegistry,
+            final CKEditor5Config CKEditor5Config,
+			final LocaleContext localeContext,
+			final TranslationService translationService,
+            final MagnoliaConfigurationProperties properties
+    ) {
 		super(definition, componentProvider, i18n, dialogDefinitionRegistry, i18nizer, assetProviderRegistry, CKEditor5Config);
         this.i18n = i18n;
         ckEditor5Config = CKEditor5Config;
+		this.localeContext = localeContext;
+		this.translationService = translationService;
+        this.properties = properties;
     }
 
 	@Override
@@ -99,23 +116,73 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 	}
 
 	private ExtendedCKEditor5TextFieldConfig getConfig() {
+        final boolean printDebugLogs = properties.getBooleanProperty("magnolia.develop");
 		if (getDefinition().getEditorType() != null) {
 			return new ExtendedCKEditor5TextFieldConfig(
 					ckEditor5Config.getCkeditor5License(),
 					Collections.emptyList(),
 					Collections.emptyList(),
 					new LinkConfig.Builder().build(),
-					new HtmlSupport.Builder().build()
+					new MgnlLinkConfig.Builder().build(),
+					new HtmlSupport.Builder().build(),
+                    printDebugLogs
 			);
 		}
-		return new ExtendedCKEditor5TextFieldConfig(
+        final MgnlLinkConfig mgnlLinkConfig = getDefinition().getMgnlLinkConfig().orElseGet(() -> new MgnlLinkConfig.Builder().build());
+        final LinkConfig linkConfig = getDefinition().getLinkConfig().orElseGet(() -> new LinkConfig.Builder().build());
+        return new ExtendedCKEditor5TextFieldConfig(
 				ckEditor5Config.getCkeditor5License(),
 				getDefinition().getToolbarConfig().map(RichTextToolbarConfig::getConfig).orElseGet(Collections::emptyList),
 				getDefinition().getHeadings(),
-				getDefinition().getLinkConfig().orElseGet(() -> new LinkConfig.Builder().build()),
-				getDefinition().getHtmlSupport().orElseGet(() -> new HtmlSupport.Builder().build())
+				updateManualDecoratorLabels(mergeAutomaticDecorators(linkConfig, mgnlLinkConfig)),
+				updateManualDecoratorLabels(removeAutomaticDecorators(mgnlLinkConfig)),
+				getDefinition().getHtmlSupport().orElseGet(() -> new HtmlSupport.Builder().build()),
+                printDebugLogs
 		);
 	}
+
+    /*
+     * Magnolia links only support manual decorators. However, they are also applied if they are added to normal links.
+     */
+    private LinkConfig mergeAutomaticDecorators(final LinkConfig linkConfig, final MgnlLinkConfig mgnlLinkConfig) {
+        final LinkConfig.Builder builder = new LinkConfig.Builder(linkConfig);
+        mgnlLinkConfig.decorators.entrySet().stream()
+                .filter(entry -> Objects.equals(LinkDecoratorDefinition.AutomaticBuilder.MODE, entry.getValue().mode))
+                .forEach(entry ->
+                        builder.decorator("mgnl-" + entry.getKey(), entry.getValue())
+                );
+        return builder.build();
+    }
+    private MgnlLinkConfig removeAutomaticDecorators(final MgnlLinkConfig mgnlLinkConfig) {
+        return new MgnlLinkConfig.Builder(mgnlLinkConfig).decorators(
+                mgnlLinkConfig.decorators.entrySet().stream()
+                        .filter(entry -> !Objects.equals(LinkDecoratorDefinition.AutomaticBuilder.MODE, entry.getValue().mode))
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+        ).build();
+    }
+
+    private LinkConfig updateManualDecoratorLabels(final LinkConfig linkConfig) {
+        return new LinkConfig.Builder(linkConfig).decorators(updateManualDecoratorLabels(linkConfig.decorators)).build();
+    }
+    private MgnlLinkConfig updateManualDecoratorLabels(final MgnlLinkConfig mgnlLinkConfig) {
+        return new MgnlLinkConfig.Builder(mgnlLinkConfig).decorators(updateManualDecoratorLabels(mgnlLinkConfig.decorators)).build();
+    }
+    private Map<String, LinkDecoratorDefinition> updateManualDecoratorLabels(final Map<String, LinkDecoratorDefinition> decorators) {
+        final FixedLocaleProvider localeProvider = new FixedLocaleProvider(localeContext.getCurrent());
+        return decorators.entrySet().stream()
+                .map(entry -> {
+                    if(Objects.equals(LinkDecoratorDefinition.ManualBuilder.MODE, entry.getValue().mode)) {
+                        return Map.entry(
+                                entry.getKey(),
+                                new LinkDecoratorDefinition.ManualBuilder(entry.getValue()).build(
+                                        translationService.translate(localeProvider, new String[] { entry.getValue().label })
+                                )
+                        );
+                    }
+                    return entry;
+                })
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
 
 	@Override
 	protected MagnoliaCKEditorConfig initializeCKEditorConfig() {

@@ -3,6 +3,7 @@ package com.merkle.oss.magnolia.definition.custom.richtext.config.link;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -49,6 +50,13 @@ public class LinkDecoratorDefinition {
         @Nullable
         protected Set<String> classes;
 
+        protected Builder() {}
+        protected Builder(final LinkDecoratorDefinition definition) {
+            this.attributes = definition.attributes;
+            this.styles = definition.styles;
+            this.classes = definition.classes;
+        }
+
         public B attribute(final String key, final String value) {
             return attributes(Stream.concat(
                     Stream.ofNullable(attributes).map(Map::entrySet).flatMap(Collection::stream),
@@ -92,31 +100,51 @@ public class LinkDecoratorDefinition {
     }
 
     public static class AutomaticBuilder extends Builder<AutomaticBuilder> {
-            public LinkDecoratorDefinition build(final String urlPredicateRegex) {
-                return new LinkDecoratorDefinition(
-                        "automatic",
-                        urlPredicateRegex,
-                        null,
-                        null,
-                        Optional.ofNullable(attributes).orElseGet(Collections::emptyMap),
-                        Optional.ofNullable(styles).orElseGet(Collections::emptyMap),
-                        Optional.ofNullable(classes).orElseGet(Collections::emptySet)
-                );
+        public static final String MODE = "automatic";
+
+        public AutomaticBuilder() {}
+        public AutomaticBuilder(final LinkDecoratorDefinition definition) {
+            super(definition);
+            if(!Objects.equals(definition.mode, MODE)) {
+                throw new IllegalArgumentException("Not an automatic link decorator definition!");
+            }
+        }
+
+        public LinkDecoratorDefinition build(final String urlPredicateRegex) {
+            return new LinkDecoratorDefinition(
+                    MODE,
+                    urlPredicateRegex,
+                    null,
+                    null,
+                    Optional.ofNullable(attributes).orElseGet(Collections::emptyMap),
+                    Optional.ofNullable(styles).orElseGet(Collections::emptyMap),
+                    Optional.ofNullable(classes).orElseGet(Collections::emptySet)
+            );
         }
     }
 
     public static class ManualBuilder extends Builder<ManualBuilder> {
+        public static final String MODE = "manual";
         @Nullable
         private Boolean defaultValue;
 
+        public ManualBuilder() {}
+        public ManualBuilder(final LinkDecoratorDefinition definition) {
+            super(definition);
+            if(!Objects.equals(definition.mode, MODE)) {
+                throw new IllegalArgumentException("Not a manual link decorator definition!");
+            }
+            this.defaultValue = definition.defaultValue;
+        }
+
         public ManualBuilder defaultValue(final boolean defaultValue) {
             this.defaultValue = defaultValue;
-            return this;
+            return self();
         }
 
         public LinkDecoratorDefinition build(final String label) {
             return new LinkDecoratorDefinition(
-                    "manual",
+                    MODE,
                     null,
                     label,
                     defaultValue,

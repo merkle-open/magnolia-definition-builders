@@ -12,24 +12,31 @@ import com.merkle.oss.magnolia.definition.custom.richtext.config.heading.Heading
 import com.merkle.oss.magnolia.definition.custom.richtext.config.heading.HeadingOption;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSupport;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.link.MgnlLinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.ToolbarGroup;
 import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.FontGroupBuilder;
 
 public class ExtendedCKEditor5TextFieldConfig extends CKEditor5TextFieldConfig {
     public final Heading heading;
     public final LinkConfig link;
+    public final MgnlLinkConfig mgnllink;
     public final HtmlSupport htmlSupport;
+    public final boolean printDebugLogs;
 
     public ExtendedCKEditor5TextFieldConfig(
             final String licenseKey,
             final List<ToolbarGroup> toolbarGroups,
             final List<HeadingOption> options,
             final LinkConfig link,
-            final HtmlSupport htmlSupport
+            final MgnlLinkConfig mgnllink,
+            final HtmlSupport htmlSupport,
+            final boolean printDebugLogs
     ) {
         super(licenseKey);
         this.link = link;
+        this.mgnllink = mgnllink;
         this.htmlSupport = htmlSupport;
+        this.printDebugLogs = printDebugLogs;
         this.toolbar = new ExtendedToolbar(toolbarGroups, true);
         this.heading = new Heading(options);
         getToolbarGroup(toolbarGroups, FontGroupBuilder.FontToolbarGroup.class).ifPresent(fontToolbarGroup -> {

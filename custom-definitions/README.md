@@ -1,7 +1,7 @@
 # Custom Definitions
 ## fields
 
- - Extened richtext
+ - [Extened richtext](src/main/java/com/merkle/oss/magnolia/definition/custom/richtext/README.md)
  - Separator 
  - [LinkSet](src/main/java/com/merkle/oss/magnolia/definition/custom/linkset/README.md)
  - [ImageSet](src/main/java/com/merkle/oss/magnolia/definition/custom/imageset/README.md)

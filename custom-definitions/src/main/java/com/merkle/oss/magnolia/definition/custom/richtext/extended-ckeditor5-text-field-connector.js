@@ -1,5 +1,21 @@
-// copied from info.magnolia.ui.vaadin.ckeditor ckeditor5-text-field-connector
+function isEmptyObject(obj) {
+  return obj.constructor === Object && Object.keys(obj).length === 0;
+}
 
+function isEmptyArray(obj) {
+  return Array.isArray(obj) && obj.length === 0;
+}
+
+function pruneEmpty(obj) {
+  return JSON.parse(JSON.stringify(obj), (key, value) => {
+    if (value === null || isEmptyArray(value) || isEmptyObject(value)) {
+      return undefined;
+    }
+    return value;
+  });
+}
+
+// copied from info.magnolia.ui.vaadin.ckeditor ckeditor5-text-field-connector
 com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
   function () {
     try {
@@ -9,11 +25,12 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
 
       //different from magnolia
       let config = state.extendedConfig;
-      console.log("config: " + JSON.stringify(config));
       config.heading.options.forEach((option) => option.class = option.clazz);
-      Object.values(config.link.decorators).filter((decorator) => decorator.mode === 'automatic').forEach((decorator) =>
-        decorator.callback = (url) => new RegExp(decorator.urlPredicateRegex).test(url)
-      );
+
+      const updateAutomaticDecorators = (decorators) =>
+        decorators && Object.values(decorators).filter((decorator) => decorator.mode === 'automatic').forEach(decorator =>
+          decorator.callback = (url) => new RegExp(decorator.urlPredicateRegex).test(url)
+        )
 
       const mapPattern = (pattern) => {
         pattern.name = new RegExp(pattern.name);
@@ -29,9 +46,8 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
       };
       config.htmlSupport.allow.forEach(mapPattern);
       config.htmlSupport.disallow.forEach(mapPattern);
-
-      console.log("config: " + JSON.stringify(config));
-      //different from magnolia
+      config = pruneEmpty(config);
+      updateAutomaticDecorators(config.link?.decorators);
 
       let CKEDITOR5 = window["CKEDITOR5"];
       // in case custom-builds are object-wrapped, otherwise, just use the original
@@ -42,6 +58,13 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
           CKEDITOR5 = CKEDITOR5["ClassicEditor"];
         }
       }
+
+      CKEDITOR5.defaultConfig.mgnllink.decorators = {}; // delete default decorators (open in new tab)
+      if (config.printDebugLogs) {
+        console.log("config: " + JSON.stringify(config));
+        console.log("default config: " + JSON.stringify(CKEDITOR5.defaultConfig));
+      }
+      // different from magnolia
 
       // Import CSS inline
       if (!document.querySelector('style[data-mgnl-ckeditor-css]')) {
