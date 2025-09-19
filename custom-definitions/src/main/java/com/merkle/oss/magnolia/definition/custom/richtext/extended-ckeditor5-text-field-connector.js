@@ -60,8 +60,10 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
       }
 
       CKEDITOR5.defaultConfig.mgnllink.decorators = {}; // delete default decorators (open in new tab)
-      console.log("config: " + JSON.stringify(config));
-      console.log("default config: " + JSON.stringify(CKEDITOR5.defaultConfig));
+      if (config.printDebugLogs) {
+        console.log("config: " + JSON.stringify(config));
+        console.log("default config: " + JSON.stringify(CKEDITOR5.defaultConfig));
+      }
       // different from magnolia
 
       // Import CSS inline

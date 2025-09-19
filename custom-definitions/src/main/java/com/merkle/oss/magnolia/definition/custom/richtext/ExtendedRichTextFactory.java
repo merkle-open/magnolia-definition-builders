@@ -7,6 +7,7 @@ import info.magnolia.dam.api.Item;
 import info.magnolia.dam.app.field.factory.DamRichTextFieldFactory;
 import info.magnolia.i18nsystem.I18nizer;
 import info.magnolia.i18nsystem.SimpleTranslator;
+import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.ui.dialog.DialogDefinitionRegistry;
 import info.magnolia.ui.field.RichTextFieldDefinition;
@@ -39,20 +40,23 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 	private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	private final SimpleTranslator i18n;
     private final CKEditor5Config ckEditor5Config;
+    private final MagnoliaConfigurationProperties properties;
 
     @Inject
 	public ExtendedRichTextFactory(
-			final ExtendedRichTextDefinition definition,
-			final UiComponentProvider componentProvider,
-			final SimpleTranslator i18n,
-			final DialogDefinitionRegistry dialogDefinitionRegistry,
-			final I18nizer i18nizer,
-			final AssetProviderRegistry assetProviderRegistry,
-			final CKEditor5Config CKEditor5Config
-	) {
+            final ExtendedRichTextDefinition definition,
+            final UiComponentProvider componentProvider,
+            final SimpleTranslator i18n,
+            final DialogDefinitionRegistry dialogDefinitionRegistry,
+            final I18nizer i18nizer,
+            final AssetProviderRegistry assetProviderRegistry,
+            final CKEditor5Config CKEditor5Config,
+            final MagnoliaConfigurationProperties properties
+    ) {
 		super(definition, componentProvider, i18n, dialogDefinitionRegistry, i18nizer, assetProviderRegistry, CKEditor5Config);
         this.i18n = i18n;
         ckEditor5Config = CKEditor5Config;
+        this.properties = properties;
     }
 
 	@Override
@@ -103,6 +107,7 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 	}
 
 	private ExtendedCKEditor5TextFieldConfig getConfig() {
+        final boolean printDebugLogs = properties.getBooleanProperty("magnolia.develop");
 		if (getDefinition().getEditorType() != null) {
 			return new ExtendedCKEditor5TextFieldConfig(
 					ckEditor5Config.getCkeditor5License(),
@@ -110,7 +115,8 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 					Collections.emptyList(),
 					new LinkConfig.Builder().build(),
 					new MgnlLinkConfig.Builder().build(),
-					new HtmlSupport.Builder().build()
+					new HtmlSupport.Builder().build(),
+                    printDebugLogs
 			);
 		}
         final MgnlLinkConfig mgnlLinkConfig = getDefinition().getMgnlLinkConfig().orElseGet(() -> new MgnlLinkConfig.Builder().build());
@@ -121,7 +127,8 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 				getDefinition().getHeadings(),
                 mergeAutomaticDecorators(linkConfig, mgnlLinkConfig),
                 removeAutomaticDecorators(mgnlLinkConfig),
-				getDefinition().getHtmlSupport().orElseGet(() -> new HtmlSupport.Builder().build())
+				getDefinition().getHtmlSupport().orElseGet(() -> new HtmlSupport.Builder().build()),
+                printDebugLogs
 		);
 	}
 

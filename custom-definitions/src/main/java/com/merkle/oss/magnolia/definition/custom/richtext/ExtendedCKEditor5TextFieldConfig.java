@@ -21,6 +21,7 @@ public class ExtendedCKEditor5TextFieldConfig extends CKEditor5TextFieldConfig {
     public final LinkConfig link;
     public final MgnlLinkConfig mgnllink;
     public final HtmlSupport htmlSupport;
+    public final boolean printDebugLogs;
 
     public ExtendedCKEditor5TextFieldConfig(
             final String licenseKey,
@@ -28,12 +29,14 @@ public class ExtendedCKEditor5TextFieldConfig extends CKEditor5TextFieldConfig {
             final List<HeadingOption> options,
             final LinkConfig link,
             final MgnlLinkConfig mgnllink,
-            final HtmlSupport htmlSupport
+            final HtmlSupport htmlSupport,
+            final boolean printDebugLogs
     ) {
         super(licenseKey);
         this.link = link;
         this.mgnllink = mgnllink;
         this.htmlSupport = htmlSupport;
+        this.printDebugLogs = printDebugLogs;
         this.toolbar = new ExtendedToolbar(toolbarGroups, true);
         this.heading = new Heading(options);
         getToolbarGroup(toolbarGroups, FontGroupBuilder.FontToolbarGroup.class).ifPresent(fontToolbarGroup -> {
