@@ -5,11 +5,14 @@ import static info.magnolia.ui.vaadin.ckeditor.MagnoliaCKEditorTextFieldEvents.*
 import info.magnolia.dam.api.AssetProviderRegistry;
 import info.magnolia.dam.api.Item;
 import info.magnolia.dam.app.field.factory.DamRichTextFieldFactory;
+import info.magnolia.i18nsystem.FixedLocaleProvider;
 import info.magnolia.i18nsystem.I18nizer;
 import info.magnolia.i18nsystem.SimpleTranslator;
+import info.magnolia.i18nsystem.TranslationService;
 import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.ui.dialog.DialogDefinitionRegistry;
+import info.magnolia.ui.editor.LocaleContext;
 import info.magnolia.ui.field.RichTextFieldDefinition;
 import info.magnolia.ui.framework.ioc.UiComponentProvider;
 import info.magnolia.ui.vaadin.ckeditor.CKEditor5Config;
@@ -40,6 +43,8 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 	private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	private final SimpleTranslator i18n;
     private final CKEditor5Config ckEditor5Config;
+	private final LocaleContext localeContext;
+	private final TranslationService translationService;
     private final MagnoliaConfigurationProperties properties;
 
     @Inject
@@ -51,11 +56,15 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
             final I18nizer i18nizer,
             final AssetProviderRegistry assetProviderRegistry,
             final CKEditor5Config CKEditor5Config,
+			final LocaleContext localeContext,
+			final TranslationService translationService,
             final MagnoliaConfigurationProperties properties
     ) {
 		super(definition, componentProvider, i18n, dialogDefinitionRegistry, i18nizer, assetProviderRegistry, CKEditor5Config);
         this.i18n = i18n;
         ckEditor5Config = CKEditor5Config;
+		this.localeContext = localeContext;
+		this.translationService = translationService;
         this.properties = properties;
     }
 
@@ -125,8 +134,8 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 				ckEditor5Config.getCkeditor5License(),
 				getDefinition().getToolbarConfig().map(RichTextToolbarConfig::getConfig).orElseGet(Collections::emptyList),
 				getDefinition().getHeadings(),
-                mergeAutomaticDecorators(linkConfig, mgnlLinkConfig),
-                removeAutomaticDecorators(mgnlLinkConfig),
+				updateManualDecoratorLabels(mergeAutomaticDecorators(linkConfig, mgnlLinkConfig)),
+				updateManualDecoratorLabels(removeAutomaticDecorators(mgnlLinkConfig)),
 				getDefinition().getHtmlSupport().orElseGet(() -> new HtmlSupport.Builder().build()),
                 printDebugLogs
 		);
@@ -150,6 +159,29 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
                         .filter(entry -> !Objects.equals(LinkDecoratorDefinition.AutomaticBuilder.MODE, entry.getValue().mode))
                         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
         ).build();
+    }
+
+    private LinkConfig updateManualDecoratorLabels(final LinkConfig linkConfig) {
+        return new LinkConfig.Builder(linkConfig).decorators(updateManualDecoratorLabels(linkConfig.decorators)).build();
+    }
+    private MgnlLinkConfig updateManualDecoratorLabels(final MgnlLinkConfig mgnlLinkConfig) {
+        return new MgnlLinkConfig.Builder(mgnlLinkConfig).decorators(updateManualDecoratorLabels(mgnlLinkConfig.decorators)).build();
+    }
+    private Map<String, LinkDecoratorDefinition> updateManualDecoratorLabels(final Map<String, LinkDecoratorDefinition> decorators) {
+        final FixedLocaleProvider localeProvider = new FixedLocaleProvider(localeContext.getCurrent());
+        return decorators.entrySet().stream()
+                .map(entry -> {
+                    if(Objects.equals(LinkDecoratorDefinition.ManualBuilder.MODE, entry.getValue().mode)) {
+                        return Map.entry(
+                                entry.getKey(),
+                                new LinkDecoratorDefinition.ManualBuilder(entry.getValue()).build(
+                                        translationService.translate(localeProvider, new String[] { entry.getValue().label })
+                                )
+                        );
+                    }
+                    return entry;
+                })
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
 	@Override
