@@ -6,6 +6,8 @@ import com.merkle.oss.magnolia.definition.builder.simple.InternalLinkDefinitionB
 import com.merkle.oss.magnolia.definition.builder.simple.TextFieldDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.builder.validator.RegexpValidatorDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
+import com.merkle.oss.magnolia.definition.custom.validator.ValidateEmptyFieldBinder;
+
 import info.magnolia.ui.field.CheckBoxFieldDefinition;
 import info.magnolia.ui.field.TextFieldDefinition;
 
@@ -52,11 +54,17 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 				name -> new BasicLinkSetDefinitionBuilder<>()
 						.singleTree(singleTree)
 						.anchorId(anchor(name))
-						.linkText(linkText(name))
-						.openInNewWindow(openInNewTab(name))
-						.label("")
-						.build(name, new InternalLinkDefinitionBuilder().label(FIELD_LABEL_PREFIX + linkType.getLabel()).build(name))
-		);
+                        .linkText(linkText(name))
+                        .openInNewWindow(openInNewTab(name))
+                        .label("")
+                        .build(
+                                name,
+                                new InternalLinkDefinitionBuilder()
+                                        .fieldBinderClass((Class) ValidateEmptyFieldBinder.Link.class)
+                                        .label(FIELD_LABEL_PREFIX + linkType.getLabel())
+                                        .build(name)
+                        )
+        );
 	}
 
 	protected FieldOption<LinkType> external(final LinkType linkType) {
@@ -67,7 +75,13 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 						.linkText(linkText(name))
 						.openInNewWindow(openInNewTab(name))
 						.label("")
-						.build(name, new TextFieldDefinitionBuilder().label(FIELD_LABEL_PREFIX + linkType.getLabel()).build(name))
+						.build(
+                                name,
+                                new TextFieldDefinitionBuilder()
+                                        .fieldBinderClass((Class) ValidateEmptyFieldBinder.Text.class)
+                                        .label(FIELD_LABEL_PREFIX + linkType.getLabel())
+                                        .build(name)
+                        )
 		);
 	}
 
@@ -78,7 +92,13 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 						.linkText(linkText(name))
 						.openInNewWindow(openInNewTab(name))
 						.label("")
-						.build(name, new AssetLinkDefinitionBuilder().label(FIELD_LABEL_PREFIX + linkType.getLabel()).build(name))
+						.build(
+                                name,
+                                new AssetLinkDefinitionBuilder()
+                                        .fieldBinderClass((Class) ValidateEmptyFieldBinder.Link.class)
+                                        .label(FIELD_LABEL_PREFIX + linkType.getLabel())
+                                        .build(name)
+                        )
 		);
 	}
 

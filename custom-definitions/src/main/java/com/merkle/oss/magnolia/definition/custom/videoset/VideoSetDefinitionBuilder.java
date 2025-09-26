@@ -6,6 +6,7 @@ import com.merkle.oss.magnolia.definition.custom.imageset.AbstractImageSetDefini
 import com.merkle.oss.magnolia.definition.custom.imageset.ImageSetDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
 import com.merkle.oss.magnolia.definition.custom.switchable.SingleSwitchableForm;
+import com.merkle.oss.magnolia.definition.custom.validator.ValidateEmptyFieldBinder;
 
 import javax.inject.Provider;
 
@@ -51,7 +52,8 @@ public class VideoSetDefinitionBuilder extends AbstractVideoSetDefinitionBuilder
 						new TextFieldDefinitionBuilder()
 								.label(FIELD_LABEL_PREFIX + VideoTypes.VIMEO.getLabel())
 								.description(FIELD_LABEL_PREFIX + VideoTypes.VIMEO.getLabel().replaceAll(".label$", ".description"))
-								.converterClass(VimeoTextValueConverter.class)
+                                .fieldBinderClass((Class) ValidateEmptyFieldBinder.Text.class)
+                                .converterClass(VimeoTextValueConverter.class)
 								.build(name)
 				)
 		);
@@ -64,7 +66,8 @@ public class VideoSetDefinitionBuilder extends AbstractVideoSetDefinitionBuilder
 						new TextFieldDefinitionBuilder()
 								.label(FIELD_LABEL_PREFIX + VideoTypes.YOUTUBE.getLabel())
 								.description(FIELD_LABEL_PREFIX + VideoTypes.YOUTUBE.getLabel().replaceAll(".label$", ".description"))
-								.converterClass(YoutubeTextValueConverter.class)
+                                .fieldBinderClass((Class) ValidateEmptyFieldBinder.Text.class)
+                                .converterClass(YoutubeTextValueConverter.class)
 								.build(name)
 				)
 		);
@@ -76,7 +79,8 @@ public class VideoSetDefinitionBuilder extends AbstractVideoSetDefinitionBuilder
 				name -> new SingleSwitchableForm<>(
 						new AssetLinkDefinitionBuilder()
 								.label(FIELD_LABEL_PREFIX + VideoTypes.DAM.getLabel())
-								.build(name)
+                                .fieldBinderClass((Class) ValidateEmptyFieldBinder.Link.class)
+                                .build(name)
 				)
 		);
 	}

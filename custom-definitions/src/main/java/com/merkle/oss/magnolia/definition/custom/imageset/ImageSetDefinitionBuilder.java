@@ -3,6 +3,7 @@ package com.merkle.oss.magnolia.definition.custom.imageset;
 import com.merkle.oss.magnolia.definition.builder.simple.AssetLinkDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
 import com.merkle.oss.magnolia.definition.custom.switchable.SingleSwitchableForm;
+import com.merkle.oss.magnolia.definition.custom.validator.ValidateEmptyFieldBinder;
 
 public class ImageSetDefinitionBuilder extends AbstractImageSetDefinitionBuilder<ImageSetDefinitionBuilder> {
 	protected static final String LABEL_PREFIX = "merkle.customDefinitions.imageSet.";
@@ -29,6 +30,7 @@ public class ImageSetDefinitionBuilder extends AbstractImageSetDefinitionBuilder
 				n -> new SingleSwitchableForm<>(
 						new AssetLinkDefinitionBuilder()
 								.label(FIELD_LABEL_PREFIX + ImageTypes.DAM.getLabel())
+                                .fieldBinderClass((Class)ValidateEmptyFieldBinder.Link.class)
 								.build(n)
 				)
 		);
