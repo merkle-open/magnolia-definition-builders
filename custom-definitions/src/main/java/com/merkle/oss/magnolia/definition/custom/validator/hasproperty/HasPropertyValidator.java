@@ -1,6 +1,11 @@
 package com.merkle.oss.magnolia.definition.custom.validator.hasproperty;
 
-import info.magnolia.ui.editor.LocaleContext;
+import info.magnolia.cms.i18n.I18nContentSupport;
+import info.magnolia.module.site.Site;
+import info.magnolia.module.site.SiteManager;
+
+import java.util.Collection;
+import java.util.Optional;
 
 import javax.jcr.Node;
 
@@ -12,20 +17,20 @@ import com.vaadin.data.validator.AbstractValidator;
 
 public class HasPropertyValidator extends AbstractValidator<Node> {
     private final PowerNodeService powerNodeService;
-    private final LocaleContext localeContext;
+    private final SiteManager siteManager;
     private final String propertyName;
     private final boolean i18n;
 
     public HasPropertyValidator(
             final PowerNodeService powerNodeService,
-            final LocaleContext localeContext,
+            final SiteManager siteManager,
             final String errorMessage,
             final String propertyName,
             final boolean i18n
     ) {
         super(errorMessage);
         this.powerNodeService = powerNodeService;
-        this.localeContext = localeContext;
+        this.siteManager = siteManager;
         this.propertyName = propertyName;
         this.i18n = i18n;
     }
@@ -37,7 +42,13 @@ public class HasPropertyValidator extends AbstractValidator<Node> {
 
     private boolean isValid(final PowerNode node) {
         if (i18n) {
-            return localeContext.getAvailableLocales().allMatch(locale -> node.hasProperty(propertyName, locale));
+            return Optional
+                    .ofNullable(siteManager.getAssignedSite(node))
+                    .stream()
+                    .map(Site::getI18n)
+                    .map(I18nContentSupport::getLocales)
+                    .flatMap(Collection::stream)
+                    .allMatch(locale -> node.hasProperty(propertyName, locale));
         }
         return node.hasProperty(propertyName);
     }

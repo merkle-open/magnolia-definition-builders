@@ -1,6 +1,6 @@
 package com.merkle.oss.magnolia.definition.custom.validator.hasproperty;
 
-import info.magnolia.ui.editor.LocaleContext;
+import info.magnolia.module.site.SiteManager;
 import info.magnolia.ui.field.AbstractFieldValidatorFactory;
 
 import java.text.MessageFormat;
@@ -13,24 +13,24 @@ import com.vaadin.data.Validator;
 
 public class HasPropertyValidatorFactory extends AbstractFieldValidatorFactory<HasPropertyValidatorDefinition, Node> {
 	private final PowerNodeService powerNodeService;
-	private final LocaleContext localeContext;
+    private final SiteManager siteManager;
 
 	@Inject
 	public HasPropertyValidatorFactory(
 		final HasPropertyValidatorDefinition definition,
 		final PowerNodeService powerNodeService,
-		final LocaleContext localeContext
+		final SiteManager siteManager
 	) {
 		super(definition);
 		this.powerNodeService = powerNodeService;
-		this.localeContext = localeContext;
+        this.siteManager = siteManager;
 	}
 
 	@Override
 	public Validator<Node> createValidator() {
 		return new HasPropertyValidator(
 			powerNodeService,
-			localeContext,
+            siteManager,
 			getI18nErrorMessage(),
 			definition.getPropertyName(),
 			definition.isI18n()
