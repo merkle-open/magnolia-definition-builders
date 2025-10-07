@@ -11,19 +11,24 @@ import info.magnolia.ui.field.TextFieldDefinition;
 import info.magnolia.ui.framework.layout.FieldLayoutDefinition;
 import info.magnolia.ui.framework.layout.StackedLayoutProducer;
 
+import javax.annotation.Nullable;
 import javax.jcr.Node;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ImageSetDefinition extends ConfiguredComplexPropertyDefinition<Node> implements FormDefinition<Node> {
 	private final SwitchableDefinition image;
-	private final TextFieldDefinition altText;
+    @Nullable
+    private final TextFieldDefinition altText;
     private final boolean imageFieldI18n;
     private boolean readOnly;
 	private boolean required;
 
 	public ImageSetDefinition(
 			final SwitchableDefinition image,
-			final TextFieldDefinition altText,
+			@Nullable final TextFieldDefinition altText,
 			final boolean imageFieldI18n
 	) {
 		this.image = image;
@@ -37,13 +42,16 @@ public class ImageSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 		return image;
 	}
 
-	public TextFieldDefinition getAltTextField() {
-		return altText;
+	public Optional<TextFieldDefinition> getAltTextField() {
+		return Optional.ofNullable(altText);
 	}
 
 	@Override
 	public List<EditorPropertyDefinition> getProperties() {
-		return List.of(image, altText);
+		return Stream.concat(
+                Stream.of(image),
+                Stream.ofNullable(altText)
+        ).collect(Collectors.toList());
 	}
 
 	@Override
@@ -55,13 +63,17 @@ public class ImageSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 	public void setI18n(final boolean i18n) {
 		super.setI18n(i18n);
 		image.setI18n(imageFieldI18n && i18n);
-		altText.setI18n(i18n);
+		if(altText != null) {
+            altText.setI18n(i18n);
+        }
 	}
 
 	public void setReadOnly(final boolean readOnly) {
 		this.readOnly = readOnly;
 		image.setReadOnly(readOnly);
-		altText.setReadOnly(readOnly);
+        if(altText != null) {
+            altText.setReadOnly(readOnly);
+        }
 	}
 
 	public boolean isReadOnly() {

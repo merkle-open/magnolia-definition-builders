@@ -2,6 +2,7 @@ package com.merkle.oss.magnolia.definition.custom.imageset;
 
 import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.FieldValidatorDefinition;
+import info.magnolia.ui.field.TextFieldDefinition;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -139,9 +140,7 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 						.label(labelPrefix + "image.label")
 						.removePreviouslySelected(removePreviouslySelected)
 						.build(name),
-				new TextFieldDefinitionBuilder()
-						.label(labelPrefix + "altText.label")
-						.build(ALT_TEXT_PROPERTY_NAME_PROVIDER.apply(name)),
+				createAltTextField(name).orElse(null),
 				imageFieldI18n
 		);
 		super.populate(definition, name);
@@ -159,4 +158,10 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 		);
 		return definition;
 	}
+
+    protected Optional<TextFieldDefinition> createAltTextField(final String name) {
+        return Optional.of(new TextFieldDefinitionBuilder()
+                .label(labelPrefix + "altText.label")
+                .build(ALT_TEXT_PROPERTY_NAME_PROVIDER.apply(name)));
+    }
 }
