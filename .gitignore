@@ -6,11 +6,13 @@ Thumbs.db
 _.*
 .project
 .idea
-/*.iml
+*.iml
 .vscode
 atlassian-ide-plugin.xml
 
-/magnolia-builders/target
+*/target
 /custom-definitions/target
 /custom-definitions-spring/target/
 /key-generator/target
+
+rebel.xml

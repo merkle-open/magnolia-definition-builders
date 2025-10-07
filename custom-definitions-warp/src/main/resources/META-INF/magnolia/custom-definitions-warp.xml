@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd" >
+<module>
+  <name>custom-definitions-warp</name>
+  <version>${project.version}</version>
+
+  <components>
+    <id>main</id>
+    <configurer>
+      <class>com.merkle.oss.magnolia.definition.custom.example.GuiceComponentConfigurer</class>
+    </configurer>
+
+    <component>
+      <type>com.merkle.oss.magnolia.definition.custom.mapper.ChildNodeWrapperDefinitionMapper</type>
+      <implementation>com.merkle.oss.magnolia.definition.custom.mapper.ChildNodeWrapperDefinitionMapper</implementation>
+    </component>
+    <component>
+      <type>com.merkle.oss.magnolia.definition.custom.processor.ChildNodeWrapperDataProcessor</type>
+      <implementation>com.merkle.oss.magnolia.definition.custom.processor.ChildNodeWrapperDataProcessor</implementation>
+    </component>
+
+    <component>
+      <type>com.merkle.oss.magnolia.definition.custom.mapper.SwitchableDefinitionMapper</type>
+      <implementation>com.merkle.oss.magnolia.definition.custom.mapper.SwitchableDefinitionMapper</implementation>
+    </component>
+
+    <component>
+      <type>com.merkle.oss.magnolia.definition.custom.mapper.SetDefinitionMapper</type>
+      <implementation>com.merkle.oss.magnolia.definition.custom.mapper.SetDefinitionMapper</implementation>
+    </component>
+    <component>
+      <type>com.merkle.oss.magnolia.definition.custom.processor.SetDataProcessor</type>
+      <implementation>com.merkle.oss.magnolia.definition.custom.processor.SetDataProcessor</implementation>
+    </component>
+
+    <component>
+      <type>com.merkle.oss.magnolia.definition.custom.mapper.ExtendedRichTextDefinitionMapper</type>
+      <implementation>com.merkle.oss.magnolia.definition.custom.mapper.ExtendedRichTextDefinitionMapper</implementation>
+    </component>
+
+    <component>
+      <type>com.merkle.oss.magnolia.definition.custom.mapper.SeparatorFieldMapper</type>
+      <implementation>com.merkle.oss.magnolia.definition.custom.mapper.SeparatorFieldMapper</implementation>
+    </component>
+    <component>
+      <type>com.merkle.oss.magnolia.definition.custom.processor.SeparatorFieldProcessor</type>
+      <implementation>com.merkle.oss.magnolia.definition.custom.processor.SeparatorFieldProcessor</implementation>
+    </component>
+
+    <component>
+      <type>com.merkle.oss.magnolia.definition.custom.mapper.ColorPickerFieldDefinitionMapper</type>
+      <implementation>com.merkle.oss.magnolia.definition.custom.mapper.ColorPickerFieldDefinitionMapper</implementation>
+    </component>
+
+  </components>
+
+  <dependencies>
+    <dependency>
+      <name>form-schema</name>
+      <version>1.0/*</version>
+    </dependency>
+  </dependencies>
+</module>

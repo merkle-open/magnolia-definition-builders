@@ -32,6 +32,7 @@
 		<module>custom-definitions</module>
 		<module>key-generator</module>
 		<module>custom-definitions-spring</module>
+		<module>custom-definitions-warp</module>
 	</modules>
 
 	<properties>
@@ -40,7 +41,7 @@
 		<magnolia.version>6.4.0-beta1</magnolia.version>
 		<magnolia.workflow.version>6.0.8</magnolia.workflow.version>
 		<spring.version>6.1.21</spring.version>
-		<merkle.powernode.version>2.2.0-SNAPSHOT</merkle.powernode.version>
+		<merkle.powernode.version>2.3.0-SNAPSHOT</merkle.powernode.version>
 		<java.poet.version>1.12.1</java.poet.version>
 		<qrCodeGenerator.version>0.5.2</qrCodeGenerator.version>
 
