@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd" >
+<module>
+  <name>custom-definitions-warp</name>
+  <version>${project.version}</version>
+
+  <components>
+    <id>main</id>
+    <configurer>
+      <class>com.merkle.oss.magnolia.definition.custom.configuration.CustomDefinitionsWarpGuiceComponentConfigurer</class>
+    </configurer>
+  </components>
+
+  <dependencies>
+    <dependency>
+      <name>form-schema</name>
+      <version>1.0/*</version>
+    </dependency>
+  </dependencies>
+</module>

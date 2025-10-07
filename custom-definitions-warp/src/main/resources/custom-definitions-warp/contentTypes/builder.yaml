@@ -1,0 +1,9 @@
+#TODO remove, only for testing
+datasource:
+  $type: jcrContentTypeDatasource
+  workspace: contacts
+model:
+  nodeType: mgnl:contact
+  properties:
+    name:
+      type: Text
