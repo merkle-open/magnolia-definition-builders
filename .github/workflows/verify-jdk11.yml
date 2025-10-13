@@ -1,9 +1,10 @@
-name: verify
+name: verify (jdk11)
 
 on:
   push:
     branches-ignore:
-      - main
+      - main*
+    branches:
       - '**-6_2'
 
 jobs:
@@ -14,11 +15,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up JDK 17
+      - name: Set up JDK 11
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 11
       - name: Maven setup
         uses: s4u/maven-settings-action@v3.0.0
         with:
