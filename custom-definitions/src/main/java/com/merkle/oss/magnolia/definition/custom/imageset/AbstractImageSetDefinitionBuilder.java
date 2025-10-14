@@ -19,6 +19,7 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 	public static final String SELECTION_SUFFIX = "_selection";
 	public static final String ALT_TEXT_SUFFIX = "_alt";
 	private final String labelPrefix;
+	private final boolean removePreviouslySelected;
 
 	@Nullable
 	private List<ImageType> imageOptions;
@@ -29,9 +30,10 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 	@Nullable
 	private List<FieldValidatorDefinition> validators;
 
-	protected AbstractImageSetDefinitionBuilder(final String labelPrefix) {
+	protected AbstractImageSetDefinitionBuilder(final String labelPrefix, final boolean removePreviouslySelected) {
 		this.labelPrefix = labelPrefix;
 		imageOptions(Arrays.stream(ImageTypes.values()).collect(Collectors.toList()));
+		this.removePreviouslySelected = removePreviouslySelected;
 	}
 
 	protected abstract FieldOption<ImageType> createFieldOption(ImageType imageType);
@@ -88,6 +90,7 @@ public abstract class AbstractImageSetDefinitionBuilder<B extends AbstractImageS
 						.optionPropertyNameDecorator(source -> source + SELECTION_SUFFIX)
 						.fieldOptions(Stream.ofNullable(imageOptions).flatMap(Collection::stream).map(this::createFieldOption).collect(Collectors.toList()))
 						.label(labelPrefix + "image.label")
+						.removePreviouslySelected(removePreviouslySelected)
 						.build(name),
 				new TextFieldDefinitionBuilder()
 						.label(labelPrefix + "altText.label")

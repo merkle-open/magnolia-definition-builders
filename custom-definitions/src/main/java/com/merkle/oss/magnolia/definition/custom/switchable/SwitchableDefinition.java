@@ -12,7 +12,6 @@ import info.magnolia.ui.field.FieldValidatorDefinition;
 import info.magnolia.ui.field.WithPropertyNameDecorator.PropertyNameDecorator;
 
 import javax.jcr.Node;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -24,6 +23,7 @@ public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<No
 	private final boolean fieldI18n;
 	private boolean readOnly;
 	private boolean required;
+	private boolean removePreviouslySelected;
 	private List<FieldValidatorDefinition> validators;
 
 	public SwitchableDefinition(
@@ -57,7 +57,7 @@ public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<No
 
 	@Override
 	public void setI18n(boolean i18n) {
-		if(fieldI18n) {
+		if (fieldI18n) {
 			super.setI18n(i18n);
 			applyField(field -> field.setI18n(i18n));
 		}
@@ -82,6 +82,15 @@ public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<No
 
 	public boolean isRequired() {
 		return required;
+	}
+
+	public void setRemovePreviouslySelected(final boolean removePreviouslySelected) {
+		this.removePreviouslySelected = removePreviouslySelected;
+	}
+
+	@Override
+	public boolean isRemovePreviouslySelected() {
+		return removePreviouslySelected;
 	}
 
 	public void setValidators(final List<FieldValidatorDefinition> validators) {

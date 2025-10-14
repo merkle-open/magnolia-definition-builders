@@ -14,11 +14,11 @@ public class VideoSetDefinitionBuilder extends AbstractVideoSetDefinitionBuilder
 	protected static final String FIELD_LABEL_PREFIX = LABEL_PREFIX + "field.";
 
 	public VideoSetDefinitionBuilder() {
-		this(new ImageSetDefinitionBuilder());
+		this(new ImageSetDefinitionBuilder(), false);
 	}
 
-	public VideoSetDefinitionBuilder(final AbstractImageSetDefinitionBuilder<?> imageSetDefinitionBuilder) {
-		super(imageSetDefinitionBuilder, LABEL_PREFIX);
+	public VideoSetDefinitionBuilder(final AbstractImageSetDefinitionBuilder<?> imageSetDefinitionBuilder, final boolean removePreviouslySelected) {
+		super(imageSetDefinitionBuilder, LABEL_PREFIX, removePreviouslySelected);
 	}
 
 	@Override

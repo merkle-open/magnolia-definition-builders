@@ -22,6 +22,8 @@ public abstract class AbstractVideoSetDefinitionBuilder<B extends AbstractVideoS
 	public static final String PREVIEW_IMAGE_SUFFIX = "_previewImage";
 	private final AbstractImageSetDefinitionBuilder<?> imageSetDefinitionBuilder;
 	private final String labelPrefix;
+	private final boolean removePreviouslySelected;
+
 	@Nullable
 	private List<VideoType> videoOptions;
 	@Nullable
@@ -33,11 +35,13 @@ public abstract class AbstractVideoSetDefinitionBuilder<B extends AbstractVideoS
 
 	protected AbstractVideoSetDefinitionBuilder(
 			final AbstractImageSetDefinitionBuilder<?> imageSetDefinitionBuilder,
-			final String labelPrefix
+			final String labelPrefix,
+			final boolean removePreviouslySelected
 	) {
 		this.labelPrefix = labelPrefix;
 		this.imageSetDefinitionBuilder = imageSetDefinitionBuilder;
 		videoOptions(Arrays.stream(VideoTypes.values()).collect(Collectors.toList()));
+		this.removePreviouslySelected = removePreviouslySelected;
 	}
 
 	protected abstract FieldOption<VideoType> createFieldOption(VideoType videoType);
@@ -108,6 +112,7 @@ public abstract class AbstractVideoSetDefinitionBuilder<B extends AbstractVideoS
 						.optionPropertyNameDecorator(source -> source + SELECTION_SUFFIX)
 						.fieldOptions(Stream.ofNullable(videoOptions).flatMap(Collection::stream).map(this::createFieldOption).collect(Collectors.toList()))
 						.label(labelPrefix + "video.label")
+						.removePreviouslySelected(removePreviouslySelected)
 						.build(name),
 				imageSetDefinitionBuilder
 						.label(labelPrefix + "previewImage.label")
