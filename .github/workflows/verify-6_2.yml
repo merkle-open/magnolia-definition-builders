@@ -1,4 +1,4 @@
-name: verify (jdk11)
+name: verify (6_2)
 
 on:
   push:
