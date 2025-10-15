@@ -30,7 +30,6 @@ public class ExtendedCKEditor5TextField extends CKEditor5TextField {
 
     public void setConfig(final ExtendedCKEditor5TextFieldConfig config) {
         getState().extendedConfig = config;
-        getState().config = config;
     }
 
     /**

@@ -5,7 +5,6 @@ import info.magnolia.ui.field.LinkFieldDefinition;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -17,13 +16,13 @@ import com.merkle.oss.magnolia.definition.custom.richtext.config.heading.Heading
 import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSupport;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.MgnlLinkConfig;
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.AbstractToolbarGroupBuilder;
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.ImageGroupBuilder;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.ToolbarConfig;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.ToolbarConfigItem;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.items.ImageToolbarConfigItem;
 
 public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDefinitionBuilder<String, ExtendedRichTextDefinition, ExtendedRichTextDefinitionBuilder> {
 	@Nullable
-	private RichTextToolbarConfig toolbarConfig;
+	private ToolbarConfig toolbarConfig;
 	@Nullable
 	private LinkConfig linkConfig;
 	@Nullable
@@ -46,7 +45,7 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		height(definition.getHeight());
 	}
 
-	public ExtendedRichTextDefinitionBuilder toolbarConfig(final RichTextToolbarConfig toolbarConfig) {
+	public ExtendedRichTextDefinitionBuilder toolbarConfig(final ToolbarConfig toolbarConfig) {
 		this.toolbarConfig = toolbarConfig;
 		return self();
 	}
@@ -103,8 +102,8 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		Optional.ofNullable(mgnlLinkConfig).ifPresent(definition::setMgnlLinkConfig);
 		Optional.ofNullable(htmlSupport).ifPresent(definition::setHtmlSupport);
 		Optional.ofNullable(headings).ifPresent(definition::setHeadings);
-		definition.setImages(contains(new ImageGroupBuilder()));
-		definition.setLists(contains(new ImageGroupBuilder()));
+		definition.setImages(contains(ImageToolbarConfigItem.class));
+		definition.setLists(contains(ImageToolbarConfigItem.class));
 		Stream.ofNullable(linkFieldDefinitions).map(Map::entrySet).flatMap(Collection::stream).forEach(entry ->
 				definition.getLinkFieldDefinitions().put(entry.getKey(), entry.getValue())
 		);
@@ -112,12 +111,9 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		return definition;
 	}
 
-	private boolean contains(final AbstractToolbarGroupBuilder<?> toolbarGroupBuilder) {
+	private boolean contains(final Class<? extends ToolbarConfigItem.NestedToolbarConfigItem> toolbarConfigItemClass) {
 		return Optional.ofNullable(toolbarConfig)
-				.map(RichTextToolbarConfig::getConfig)
-				.stream().flatMap(Collection::parallelStream)
-				.anyMatch(toolbarGroup ->
-						Objects.equals(toolbarGroup.getName(), toolbarGroupBuilder.getLabel())
-				);
+                .flatMap(toolbar -> toolbar.getToolbarConfigItem(toolbarConfigItemClass))
+                .isPresent();
 	}
 }

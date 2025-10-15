@@ -44,6 +44,20 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
         }
         return propertyPattern;
       };
+
+      const mapToolbarItems = (toolbarItems) => {
+        return toolbarItems.map(mapToolbarItem);
+      }
+      const mapToolbarItem = (toolbarItem) => {
+        if(toolbarItem.flatValue) {
+          return toolbarItem.flatValue;
+        }
+        const nested = toolbarItem.nestedValue;
+        nested.items = nested.items.map(mapToolbarItem)
+        return nested;
+      }
+      config.toolbar.items = mapToolbarItems(config.toolbar.items);
+
       config.htmlSupport.allow.forEach(mapPattern);
       config.htmlSupport.disallow.forEach(mapPattern);
       config = pruneEmpty(config);

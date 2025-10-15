@@ -36,7 +36,7 @@ import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSuppor
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkDecoratorDefinition;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.MgnlLinkConfig;
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.ToolbarConfig;
 import com.vaadin.ui.Component;
 
 public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
@@ -120,7 +120,7 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 		if (getDefinition().getEditorType() != null) {
 			return new ExtendedCKEditor5TextFieldConfig(
 					ckEditor5Config.getCkeditor5License(),
-					Collections.emptyList(),
+					new ToolbarConfig.Builder().build(),
 					Collections.emptyList(),
 					new LinkConfig.Builder().build(),
 					new MgnlLinkConfig.Builder().build(),
@@ -132,7 +132,7 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
         final LinkConfig linkConfig = getDefinition().getLinkConfig().orElseGet(() -> new LinkConfig.Builder().build());
         return new ExtendedCKEditor5TextFieldConfig(
 				ckEditor5Config.getCkeditor5License(),
-				getDefinition().getToolbarConfig().map(RichTextToolbarConfig::getConfig).orElseGet(Collections::emptyList),
+				getDefinition().getToolbarConfig().orElseGet(() -> new ToolbarConfig.Builder().build()),
 				getDefinition().getHeadings(),
 				updateManualDecoratorLabels(mergeAutomaticDecorators(linkConfig, mgnlLinkConfig)),
 				updateManualDecoratorLabels(removeAutomaticDecorators(mgnlLinkConfig)),

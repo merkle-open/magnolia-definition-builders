@@ -3,57 +3,14 @@ An extended richtext.
 
 ## Usage
 ### Toolbar config
-```java
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbar;
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.RichTextToolbarConfig;
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.ToolbarGroup;
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.FontGroupBuilder;
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.FormattingGroupBuilder;
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.LinksGroupBuilder;
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.ListGroupBuilder;
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.ToolsGroupBuilder;
-import com.merkle.oss.magnolia.definition.custom.richtext.toolbarbuilder.groupbuilder.UndoGroupBuilder;
-
-import java.util.List;
-import java.util.function.Function;
-
-public class SomeToolbar implements RichTextToolbarConfig {
-	@Override
-	public List<ToolbarGroup> getConfig() {
-		return RichTextToolbar.builder()
-            .add(new FormattingGroupBuilder()
-                    .bold()
-                    .italic()
-                    .superscript()
-                    .specialChar()
-            )
-            .add(new ListGroupBuilder()
-                    .numberedList()
-                    .bulletedList()
-            )
-            .add(new LinksGroupBuilder()
-                    .link()
-                    .internalLink()
-                    .damLink()
-            )
-            .add(new FontGroupBuilder()
-                    .heading()
-            )
-            .add(new UndoGroupBuilder()
-                    .undo()
-                    .redo()
-            )
-            .add(new ToolsGroupBuilder().source())
-            .build()
-            .getConfig();
-	}
-}
-```
 
 ### Dialog
+
 ```java
 import com.merkle.oss.magnolia.definition.custom.richtext.ExtendedRichTextDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.heading.HeadingOption;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.ToolbarConfig;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.items.*;
 
 import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.module.blossom.annotation.TabFactory;
@@ -63,10 +20,45 @@ import java.util.List;
 @TabFactory("someTab")
 public List<EditorPropertyDefinition> someTab() {
     return List.of(
-        new ExtendedRichTextDefinitionBuilder()
-            .toolbarConfig(new SomeToolbar())
-            .headings(List.of(HeadingOption.PARAGRAPH, HeadingOption.HEADING_3, HeadingOption.HEADING_4))
-            .build("someRichText")
+            new ExtendedRichTextDefinitionBuilder()
+                    .toolbarConfig(new ToolbarConfig.Builder()
+                            .item(
+                                new FormattingToolbarConfigItem.Builder()
+                                    .bold()
+                                    .italic()
+                                    .superscript()
+                                    .subscript()
+                                    .specialChar()
+                                    .build()
+                            )
+                            .item(
+                                new ListToolbarConfigItem.Builder()
+                                    .numberedList()
+                                    .bulletedList()
+                                    .build()
+                            )
+                            .item(
+                                new LinksToolbarConfigItem.Builder()
+                                    .link()
+                                    .internalLink()
+                                    .damLink()
+                                    .build()
+                            )
+                            .item(
+                                new FontToolbarConfigItem.Builder()
+                                    .heading()
+                                    .build()
+                            )
+                            .item(
+                                new UndoToolbarConfigItem.Builder()
+                                    .undo()
+                                    .redo()
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .headings(List.of(HeadingOption.PARAGRAPH, HeadingOption.HEADING_3, HeadingOption.HEADING_4))
+                    .build("someRichText")
     );
 }
 ```
