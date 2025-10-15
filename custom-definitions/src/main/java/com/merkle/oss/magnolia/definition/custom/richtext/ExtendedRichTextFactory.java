@@ -36,6 +36,7 @@ import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSuppor
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkDecoratorDefinition;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.MgnlLinkConfig;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.table.TableConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.ToolbarConfig;
 import com.vaadin.ui.Component;
 
@@ -124,6 +125,7 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 					Collections.emptyList(),
 					new LinkConfig.Builder().build(),
 					new MgnlLinkConfig.Builder().build(),
+					new TableConfig.Builder().build(),
 					new HtmlSupport.Builder().build(),
                     printDebugLogs
 			);
@@ -136,6 +138,7 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 				getDefinition().getHeadings(),
 				updateManualDecoratorLabels(mergeAutomaticDecorators(linkConfig, mgnlLinkConfig)),
 				updateManualDecoratorLabels(removeAutomaticDecorators(mgnlLinkConfig)),
+				getDefinition().getTableConfig().orElseGet(() -> new TableConfig.Builder().build()),
 				getDefinition().getHtmlSupport().orElseGet(() -> new HtmlSupport.Builder().build()),
                 printDebugLogs
 		);

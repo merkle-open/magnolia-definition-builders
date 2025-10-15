@@ -15,6 +15,7 @@ import com.merkle.oss.magnolia.definition.custom.richtext.config.heading.Heading
 import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSupport;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.MgnlLinkConfig;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.table.TableConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.ToolbarConfig;
 
 public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
@@ -24,7 +25,8 @@ public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
 	private LinkConfig linkConfig;
 	@Nullable
 	private MgnlLinkConfig mgnlLinkConfig;
-
+    @Nullable
+    private TableConfig tableConfig;
 	@Nullable
 	private HtmlSupport htmlSupport;
 	private List<HeadingOption> headings = List.of(
@@ -65,6 +67,13 @@ public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
 	public void setMgnlLinkConfig(final MgnlLinkConfig mgnlLinkConfig) {
 		this.mgnlLinkConfig = mgnlLinkConfig;
 	}
+
+    public Optional<TableConfig> getTableConfig() {
+        return Optional.ofNullable(tableConfig);
+    }
+    public void setTableConfig(final TableConfig tableConfig) {
+        this.tableConfig = tableConfig;
+    }
 
 	public List<HeadingOption> getHeadings() {
 		return headings;

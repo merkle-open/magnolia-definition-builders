@@ -11,6 +11,7 @@ import com.merkle.oss.magnolia.definition.custom.richtext.config.heading.Heading
 import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSupport;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.MgnlLinkConfig;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.table.TableConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.ToolbarConfig;
 
 class ExtendedRichTextDefinitionBuilderTest {
@@ -19,6 +20,7 @@ class ExtendedRichTextDefinitionBuilderTest {
 	void testBuilder() {
 		final ToolbarConfig toolbarConfig = new ToolbarConfig.Builder().build();
 		final LinkConfig linkConfig = new LinkConfig.Builder().build();
+		final TableConfig tableConfig = new TableConfig.Builder().build();
 		final MgnlLinkConfig mgnlLinkConfig = new MgnlLinkConfig.Builder().build();
 		final HtmlSupport htmlSupport = new HtmlSupport.Builder().build();
 		final ExtendedRichTextDefinition definition = new ExtendedRichTextDefinitionBuilder()
@@ -26,6 +28,7 @@ class ExtendedRichTextDefinitionBuilderTest {
 				.heading(HeadingOption.HEADING_2)
 				.toolbarConfig(toolbarConfig)
 				.linkConfig(linkConfig)
+				.tableConfig(tableConfig)
 				.mgnlLinkConfig(mgnlLinkConfig)
 				.htmlSupport(htmlSupport)
 				.build("extendedRichText");
@@ -33,6 +36,7 @@ class ExtendedRichTextDefinitionBuilderTest {
 		assertEquals(List.of(HeadingOption.PARAGRAPH, HeadingOption.HEADING_1, HeadingOption.HEADING_2), definition.getHeadings());
 		assertEquals(Optional.of(toolbarConfig), definition.getToolbarConfig());
 		assertEquals(Optional.of(linkConfig), definition.getLinkConfig());
+		assertEquals(Optional.of(tableConfig), definition.getTableConfig());
 		assertEquals(Optional.of(mgnlLinkConfig), definition.getMgnlLinkConfig());
 		assertEquals(Optional.of(htmlSupport), definition.getHtmlSupport());
 	}

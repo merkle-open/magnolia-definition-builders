@@ -15,6 +15,14 @@ function pruneEmpty(obj) {
   });
 }
 
+function DisallowNestingTables(editor) {
+  editor.model.schema.addChildCheck( ( context, childDefinition ) => {
+    if ( childDefinition.name === 'table' && Array.from( context.getNames() ).includes( 'table' ) ) {
+      return false;
+    }
+  });
+}
+
 // copied from info.magnolia.ui.vaadin.ckeditor ckeditor5-text-field-connector
 com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
   function () {
@@ -58,9 +66,17 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
       }
       config.toolbar.items = mapToolbarItems(config.toolbar.items);
 
+      config.table.contentToolbar = mapToolbarItems(config.table.contentToolbar);
+      config.table.tableToolbar = mapToolbarItems(config.table.tableToolbar);
+
       config.htmlSupport.allow.forEach(mapPattern);
       config.htmlSupport.disallow.forEach(mapPattern);
       config = pruneEmpty(config);
+      const extraPlugins = [];
+      if(!config.table.allowNesting) {
+        extraPlugins.push(DisallowNestingTables)
+      }
+      config.extraPlugins = extraPlugins;
       updateAutomaticDecorators(config.link?.decorators);
 
       let CKEDITOR5 = window["CKEDITOR5"];
@@ -74,6 +90,8 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
       }
 
       CKEDITOR5.defaultConfig.mgnllink.decorators = {}; // delete default decorators (open in new tab)
+      CKEDITOR5.defaultConfig.table = {}; // delete default table config
+
       if (config.printDebugLogs) {
         console.log("config: " + JSON.stringify(config));
         console.log("default config: " + JSON.stringify(CKEDITOR5.defaultConfig));

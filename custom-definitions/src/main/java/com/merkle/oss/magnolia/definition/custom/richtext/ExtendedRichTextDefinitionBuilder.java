@@ -16,6 +16,7 @@ import com.merkle.oss.magnolia.definition.custom.richtext.config.heading.Heading
 import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSupport;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.MgnlLinkConfig;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.table.TableConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.ToolbarConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.ToolbarConfigItem;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.items.ImageToolbarConfigItem;
@@ -27,6 +28,8 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 	private LinkConfig linkConfig;
 	@Nullable
 	private MgnlLinkConfig mgnlLinkConfig;
+    @Nullable
+    private TableConfig tableConfig;
 	@Nullable
 	private HtmlSupport htmlSupport;
 	@Nullable
@@ -59,6 +62,11 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		this.mgnlLinkConfig = mgnlLinkConfig;
 		return self();
 	}
+
+    public ExtendedRichTextDefinitionBuilder tableConfig(final TableConfig tableConfig) {
+        this.tableConfig = tableConfig;
+        return self();
+    }
 
 	public ExtendedRichTextDefinitionBuilder htmlSupport(final HtmlSupport htmlSupport) {
 		this.htmlSupport = htmlSupport;
@@ -99,6 +107,7 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		super.populate(definition, name);
 		Optional.ofNullable(toolbarConfig).ifPresent(definition::setToolbarConfig);
 		Optional.ofNullable(linkConfig).ifPresent(definition::setLinkConfig);
+		Optional.ofNullable(tableConfig).ifPresent(definition::setTableConfig);
 		Optional.ofNullable(mgnlLinkConfig).ifPresent(definition::setMgnlLinkConfig);
 		Optional.ofNullable(htmlSupport).ifPresent(definition::setHtmlSupport);
 		Optional.ofNullable(headings).ifPresent(definition::setHeadings);
