@@ -23,6 +23,43 @@ function DisallowNestingTables(editor) {
   });
 }
 
+function mapPattern(pattern) {
+  pattern.name = new RegExp(pattern.name);
+  pattern.classes = mapPropertyPattern(pattern.classes);
+  pattern.styles = mapPropertyPattern(pattern.styles);
+  pattern.attributes = mapPropertyPattern(pattern.attributes);
+}
+
+function mapPropertyPattern(propertyPattern) {
+  if (Object.keys(propertyPattern).length === 0) {
+    return true;
+  }
+  return propertyPattern;
+}
+
+function mapToolbarItems(toolbarItems) {
+  return toolbarItems.map(mapToolbarItem);
+}
+
+function mapToolbarItem(toolbarItem) {
+  if(toolbarItem.flatValue) {
+    return toolbarItem.flatValue;
+  }
+  const nested = toolbarItem.nestedValue;
+  nested.items = nested.items.map(mapToolbarItem)
+  return nested;
+}
+
+function updateAutomaticDecorators(decorators) {
+  decorators && Object.values(decorators).filter((decorator) => decorator.mode === 'automatic').forEach(decorator =>
+    decorator.callback = (url) => new RegExp(decorator.urlPredicateRegex).test(url)
+  )
+}
+
+function updateHeadingOptions(options) {
+  options.forEach((option) => option.class = option.clazz);
+}
+
 // copied from info.magnolia.ui.vaadin.ckeditor ckeditor5-text-field-connector
 com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
   function () {
@@ -33,37 +70,8 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
 
       //different from magnolia
       let config = state.extendedConfig;
-      config.heading.options.forEach((option) => option.class = option.clazz);
+      updateHeadingOptions(config.heading.options);
 
-      const updateAutomaticDecorators = (decorators) =>
-        decorators && Object.values(decorators).filter((decorator) => decorator.mode === 'automatic').forEach(decorator =>
-          decorator.callback = (url) => new RegExp(decorator.urlPredicateRegex).test(url)
-        )
-
-      const mapPattern = (pattern) => {
-        pattern.name = new RegExp(pattern.name);
-        pattern.classes = mapPropertyPattern(pattern.classes);
-        pattern.styles = mapPropertyPattern(pattern.styles);
-        pattern.attributes = mapPropertyPattern(pattern.attributes);
-      }
-      const mapPropertyPattern = (propertyPattern) => {
-        if (Object.keys(propertyPattern).length === 0) {
-          return true;
-        }
-        return propertyPattern;
-      };
-
-      const mapToolbarItems = (toolbarItems) => {
-        return toolbarItems.map(mapToolbarItem);
-      }
-      const mapToolbarItem = (toolbarItem) => {
-        if(toolbarItem.flatValue) {
-          return toolbarItem.flatValue;
-        }
-        const nested = toolbarItem.nestedValue;
-        nested.items = nested.items.map(mapToolbarItem)
-        return nested;
-      }
       config.toolbar.items = mapToolbarItems(config.toolbar.items);
 
       config.table.contentToolbar = mapToolbarItems(config.table.contentToolbar);
