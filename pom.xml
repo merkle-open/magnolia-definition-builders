@@ -5,7 +5,7 @@
 
 	<groupId>com.merkle.oss.magnolia</groupId>
 	<artifactId>magnolia-definition-builders-parent</artifactId>
-	<version>1.1.4-Magnolia6_2</version>
+	<version>1.1.5-M6_2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>${project.artifactId}</name>
