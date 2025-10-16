@@ -1,5 +1,15 @@
 package com.merkle.oss.magnolia.definition.custom.linkset;
 
+import info.magnolia.dam.app.field.DamLinkFieldDefinition;
+import info.magnolia.ui.field.CheckBoxFieldDefinition;
+import info.magnolia.ui.field.LinkFieldDefinition;
+import info.magnolia.ui.field.TextFieldDefinition;
+
+import java.util.function.UnaryOperator;
+
+import javax.annotation.Nullable;
+import javax.jcr.Node;
+
 import com.merkle.oss.magnolia.definition.builder.simple.AssetLinkDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.builder.simple.CheckBoxFieldDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.builder.simple.InternalLinkDefinitionBuilder;
@@ -7,12 +17,6 @@ import com.merkle.oss.magnolia.definition.builder.simple.TextFieldDefinitionBuil
 import com.merkle.oss.magnolia.definition.builder.validator.RegexpValidatorDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
 import com.merkle.oss.magnolia.definition.custom.validator.ValidateEmptyFieldBinder;
-
-import info.magnolia.ui.field.CheckBoxFieldDefinition;
-import info.magnolia.ui.field.TextFieldDefinition;
-
-import javax.annotation.Nullable;
-import java.util.function.UnaryOperator;
 
 public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitionBuilder<LinkSetDefinitionBuilder> {
 	private static final String ANCHOR_ID_PROPERTY = "anchorId";
@@ -57,15 +61,15 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
                         .linkText(linkText(name))
                         .openInNewWindow(openInNewTab(name))
                         .label("")
-                        .build(
-                                name,
-                                new InternalLinkDefinitionBuilder()
-                                        .fieldBinderClass((Class) ValidateEmptyFieldBinder.Link.class)
-                                        .label(FIELD_LABEL_PREFIX + linkType.getLabel())
-                                        .build(name)
-                        )
+                        .build(name, internalLinkField(name))
         );
 	}
+    protected LinkFieldDefinition<Node> internalLinkField(final String name) {
+        return new InternalLinkDefinitionBuilder()
+                .fieldBinderClass((Class) ValidateEmptyFieldBinder.Link.class)
+                .label(FIELD_LABEL_PREFIX + LinkTypes.INTERNAL.getLabel())
+                .build(name);
+    }
 
 	protected FieldOption<LinkType> external(final LinkType linkType) {
 		return new FieldOption<>(
@@ -75,15 +79,15 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 						.linkText(linkText(name))
 						.openInNewWindow(openInNewTab(name))
 						.label("")
-						.build(
-                                name,
-                                new TextFieldDefinitionBuilder()
-                                        .fieldBinderClass((Class) ValidateEmptyFieldBinder.Text.class)
-                                        .label(FIELD_LABEL_PREFIX + linkType.getLabel())
-                                        .build(name)
-                        )
+						.build(name, externalLinkField(name))
 		);
 	}
+    protected TextFieldDefinition externalLinkField(final String name) {
+        return new TextFieldDefinitionBuilder()
+                .fieldBinderClass((Class) ValidateEmptyFieldBinder.Text.class)
+                .label(FIELD_LABEL_PREFIX + LinkTypes.EXTERNAL.getLabel())
+                .build(name);
+    }
 
 	protected FieldOption<LinkType> asset(final LinkType linkType) {
 		return new FieldOption<>(
@@ -92,15 +96,15 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 						.linkText(linkText(name))
 						.openInNewWindow(openInNewTab(name))
 						.label("")
-						.build(
-                                name,
-                                new AssetLinkDefinitionBuilder()
-                                        .fieldBinderClass((Class) ValidateEmptyFieldBinder.Link.class)
-                                        .label(FIELD_LABEL_PREFIX + linkType.getLabel())
-                                        .build(name)
-                        )
+						.build(name, assetLinkField(name))
 		);
 	}
+    protected DamLinkFieldDefinition assetLinkField(final String name) {
+        return new AssetLinkDefinitionBuilder()
+                .fieldBinderClass((Class) ValidateEmptyFieldBinder.Link.class)
+                .label(FIELD_LABEL_PREFIX + LinkTypes.ASSET_DAM.getLabel())
+                .build(name);
+    }
 
 	@Nullable
 	protected CheckBoxFieldDefinition openInNewTab(final String name) {
