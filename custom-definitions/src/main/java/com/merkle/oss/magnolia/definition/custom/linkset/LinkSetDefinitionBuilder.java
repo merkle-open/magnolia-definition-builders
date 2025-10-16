@@ -85,6 +85,11 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
     protected TextFieldDefinition externalLinkField(final String name) {
         return new TextFieldDefinitionBuilder()
                 .fieldBinderClass((Class) ValidateEmptyFieldBinder.Text.class)
+                .validator(new RegexpValidatorDefinitionBuilder()
+                        .errorMessage(FIELD_LABEL_PREFIX + "linkType.external.schemaValidator.errorMessage")
+                        .pattern("^(http|https)://.*")
+                        .build()
+                )
                 .label(FIELD_LABEL_PREFIX + LinkTypes.EXTERNAL.getLabel())
                 .build(name);
     }
