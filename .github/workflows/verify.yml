@@ -3,7 +3,7 @@ name: verify
 on:
   push:
     branches-ignore:
-      - main
+      - main-6_3
 
 jobs:
   verify:
