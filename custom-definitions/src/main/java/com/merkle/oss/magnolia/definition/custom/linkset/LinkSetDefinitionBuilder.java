@@ -87,7 +87,7 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
                 .fieldBinderClass((Class) ValidateEmptyFieldBinder.Text.class)
                 .validator(new RegexpValidatorDefinitionBuilder()
                         .errorMessage(FIELD_LABEL_PREFIX + "linkType.external.schemaValidator.errorMessage")
-                        .pattern("^(http|https)://.*")
+                        .pattern("^$|^(http|https)://.*")
                         .build()
                 )
                 .label(FIELD_LABEL_PREFIX + LinkTypes.EXTERNAL.getLabel())
