@@ -173,7 +173,10 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
       this.onUnregister = function () {
         editor.destroy().catch(error => console.error(error));
         //remove the data-mgnl-ckeditor-css
-        document.querySelector('style[data-mgnl-ckeditor-css]').remove();
+        let mgnlCkeditorCSS = document.querySelector('style[data-mgnl-ckeditor-css]');
+        if (mgnlCkeditorCSS) {
+          mgnlCkeditorCSS.remove();
+        }
       }
     } catch (err) {
       console.error("Failed to init richtext editor", err);
