@@ -12,6 +12,9 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.merkle.oss.magnolia.definition.builder.simple.AbstractConfiguredFieldDefinitionBuilder;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.font.FontColor;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.font.FontFamily;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.font.FontSize;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.heading.HeadingOption;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSupport;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
@@ -20,6 +23,7 @@ import com.merkle.oss.magnolia.definition.custom.richtext.config.table.TableConf
 import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.ToolbarConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.ToolbarConfigItem;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.items.ImageToolbarConfigItem;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.items.ListToolbarConfigItem;
 
 public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDefinitionBuilder<String, ExtendedRichTextDefinition, ExtendedRichTextDefinitionBuilder> {
 	@Nullable
@@ -34,6 +38,12 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 	private HtmlSupport htmlSupport;
 	@Nullable
 	private List<HeadingOption> headings;
+    @Nullable
+    private FontFamily fontFamily;
+    @Nullable
+    private FontSize fontSize;
+    @Nullable
+    private FontColor fontColor;
 	@Nullable
 	private Map<String, LinkFieldDefinition<?>> linkFieldDefinitions;
 	@Nullable
@@ -85,6 +95,21 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		return self();
 	}
 
+    public ExtendedRichTextDefinitionBuilder fontFamily(final FontFamily fontFamily) {
+        this.fontFamily = fontFamily;
+        return self();
+    }
+
+    public ExtendedRichTextDefinitionBuilder fontSize(final FontSize fontSize) {
+        this.fontSize = fontSize;
+        return self();
+    }
+
+    public ExtendedRichTextDefinitionBuilder fontColor(final FontColor fontColor) {
+        this.fontColor = fontColor;
+        return self();
+    }
+
 	public ExtendedRichTextDefinitionBuilder linkFieldDefinition(final String key, final LinkFieldDefinition<?> value) {
 		return linkFieldDefinitions(Stream.concat(
 				Stream.ofNullable(linkFieldDefinitions).map(Map::entrySet).flatMap(Collection::stream),
@@ -111,8 +136,11 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		Optional.ofNullable(mgnlLinkConfig).ifPresent(definition::setMgnlLinkConfig);
 		Optional.ofNullable(htmlSupport).ifPresent(definition::setHtmlSupport);
 		Optional.ofNullable(headings).ifPresent(definition::setHeadings);
-		definition.setImages(contains(ImageToolbarConfigItem.class));
-		definition.setLists(contains(ImageToolbarConfigItem.class));
+		Optional.ofNullable(fontFamily).ifPresent(definition::setFontFamily);
+		Optional.ofNullable(fontSize).ifPresent(definition::setFontSize);
+		Optional.ofNullable(fontColor).ifPresent(definition::setFontColor);
+		definition.setImages(contains(new ImageToolbarConfigItem.Builder().image().build()));
+		definition.setLists(contains(new ListToolbarConfigItem.Builder().bulletedList().numberedList().todoList().build()));
 		Stream.ofNullable(linkFieldDefinitions).map(Map::entrySet).flatMap(Collection::stream).forEach(entry ->
 				definition.getLinkFieldDefinitions().put(entry.getKey(), entry.getValue())
 		);
@@ -120,9 +148,12 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		return definition;
 	}
 
-	private boolean contains(final Class<? extends ToolbarConfigItem.NestedToolbarConfigItem> toolbarConfigItemClass) {
+	private boolean contains(final ToolbarConfigItem.NestedToolbarConfigItem toolbarConfigItem) {
+        return toolbarConfigItem.streamValues().anyMatch(this::contains);
+    }
+	private boolean contains(final String toolbarConfigItem) {
 		return Optional.ofNullable(toolbarConfig)
-                .flatMap(toolbar -> toolbar.getToolbarConfigItem(toolbarConfigItemClass))
-                .isPresent();
+                .map(toolbar -> toolbar.containsToolbarConfigItem(toolbarConfigItem))
+                .orElse(false);
 	}
 }

@@ -32,6 +32,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.machinezoo.noexception.Exceptions;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.font.FontColor;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.font.FontFamily;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.font.FontSize;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSupport;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkDecoratorDefinition;
@@ -123,6 +126,9 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 					ckEditor5Config.getCkeditor5License(),
 					new ToolbarConfig.Builder().build(),
 					Collections.emptyList(),
+                    new FontFamily.Builder().build(),
+                    new FontSize.Builder().build(),
+                    new FontColor.Builder().build(),
 					new LinkConfig.Builder().build(),
 					new MgnlLinkConfig.Builder().build(),
 					new TableConfig.Builder().build(),
@@ -136,6 +142,9 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 				ckEditor5Config.getCkeditor5License(),
 				getDefinition().getToolbarConfig().orElseGet(() -> new ToolbarConfig.Builder().build()),
 				getDefinition().getHeadings(),
+                getDefinition().getFontFamily().orElseGet(() -> new FontFamily.Builder().build()),
+                getDefinition().getFontSize().orElseGet(() -> new FontSize.Builder().build()),
+                getDefinition().getFontColor().orElseGet(() -> new FontColor.Builder().build()),
 				updateManualDecoratorLabels(mergeAutomaticDecorators(linkConfig, mgnlLinkConfig)),
 				updateManualDecoratorLabels(removeAutomaticDecorators(mgnlLinkConfig)),
 				getDefinition().getTableConfig().orElseGet(() -> new TableConfig.Builder().build()),

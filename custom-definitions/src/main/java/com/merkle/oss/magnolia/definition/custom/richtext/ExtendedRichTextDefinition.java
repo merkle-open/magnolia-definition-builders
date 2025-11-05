@@ -11,6 +11,9 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
+import com.merkle.oss.magnolia.definition.custom.richtext.config.font.FontColor;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.font.FontFamily;
+import com.merkle.oss.magnolia.definition.custom.richtext.config.font.FontSize;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.heading.HeadingOption;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.html.HtmlSupport;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.link.LinkConfig;
@@ -38,6 +41,12 @@ public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
 			HeadingOption.HEADING_5,
 			HeadingOption.HEADING_6
 	);
+    @Nullable
+    private FontFamily fontFamily;
+    @Nullable
+    private FontSize fontSize;
+    @Nullable
+    private FontColor fontColor;
 
     public ExtendedRichTextDefinition() {
 		setFactoryClass(ExtendedRichTextFactory.class);
@@ -81,6 +90,27 @@ public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
 	public void setHeadings(final List<HeadingOption> headings) {
 		this.headings = headings;
 	}
+
+    public Optional<FontFamily> getFontFamily() {
+        return Optional.ofNullable(fontFamily);
+    }
+    public void setFontFamily(final FontFamily fontFamily) {
+        this.fontFamily = fontFamily;
+    }
+
+    public Optional<FontSize> getFontSize() {
+        return Optional.ofNullable(fontSize);
+    }
+    public void setFontSize(final FontSize fontSize) {
+        this.fontSize = fontSize;
+    }
+
+    public Optional<FontColor> getFontColor() {
+        return Optional.ofNullable(fontColor);
+    }
+    public void setFontColor(final FontColor fontColor) {
+        this.fontColor = fontColor;
+    }
 
     public Optional<HtmlSupport> getHtmlSupport() {
         return Optional.ofNullable(htmlSupport);

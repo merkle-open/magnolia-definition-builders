@@ -40,7 +40,6 @@ function mapPropertyPattern(propertyPattern) {
 function mapToolbarItems(toolbarItems) {
   return toolbarItems.map(mapToolbarItem);
 }
-
 function mapToolbarItem(toolbarItem) {
   if(toolbarItem.flatValue) {
     return toolbarItem.flatValue;
@@ -60,6 +59,23 @@ function updateHeadingOptions(options) {
   options.forEach((option) => option.class = option.clazz);
 }
 
+function updateDefaultFontOptions(options) {
+  return options.map(updateDefaultFontOption);
+}
+function updateDefaultFontOption(option) {
+  if(option.model === 'default' || option.color === 'default') {
+    return 'default';
+  }
+  return option;
+}
+
+function updateColorPicker(colorPicker) {
+  if(colorPicker === undefined) {
+    return false;
+  }
+  return colorPicker;
+}
+
 // copied from info.magnolia.ui.vaadin.ckeditor ckeditor5-text-field-connector
 com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
   function () {
@@ -71,6 +87,10 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
       //different from magnolia
       let config = state.extendedConfig;
       updateHeadingOptions(config.heading.options);
+      config.fontFamily.options = updateDefaultFontOptions(config.fontFamily.options);
+      config.fontSize.options = updateDefaultFontOptions(config.fontSize.options);
+      config.fontColor.colors = updateDefaultFontOptions(config.fontColor.colors);
+      config.fontColor.colorPicker = updateColorPicker(config.fontColor.colorPicker);
 
       config.toolbar.items = mapToolbarItems(config.toolbar.items);
 

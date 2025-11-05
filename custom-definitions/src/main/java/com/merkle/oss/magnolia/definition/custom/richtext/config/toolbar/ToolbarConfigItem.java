@@ -30,6 +30,13 @@ public class ToolbarConfigItem {
                 .orElseGet(() -> Stream.of(this));
     }
 
+    public Stream<String> streamValues() {
+        return Stream.concat(
+                Stream.ofNullable(flatValue),
+                Stream.ofNullable(nestedValue).flatMap(NestedToolbarConfigItem::streamValues)
+        );
+    }
+
     public static class NestedToolbarConfigItem {
         public final List<ToolbarConfigItem> items;
         public final String label;
@@ -58,6 +65,10 @@ public class ToolbarConfigItem {
 
         public Stream<ToolbarConfigItem> flatten() {
             return items.stream();
+        }
+
+        public Stream<String> streamValues() {
+            return flatten().flatMap(ToolbarConfigItem::streamValues);
         }
 
         public static class Builder extends AbstractBuilder<Builder>{
