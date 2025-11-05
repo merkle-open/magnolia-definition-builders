@@ -32,13 +32,8 @@ public class ToolbarConfig {
         this.icon = icon;
     }
 
-    public <T extends ToolbarConfigItem.NestedToolbarConfigItem> Optional<T> getToolbarConfigItem(final Class<T> clazz) {
-        return items.stream()
-                .map(item -> Optional.ofNullable(item.nestedValue))
-                .flatMap(Optional::stream)
-                .filter(clazz::isInstance)
-                .findFirst()
-                .map(clazz::cast);
+    public boolean containsToolbarConfigItem(final String item) {
+        return items.stream().flatMap(ToolbarConfigItem::streamValues).anyMatch(item::equals);
     }
 
     public static class Builder {
