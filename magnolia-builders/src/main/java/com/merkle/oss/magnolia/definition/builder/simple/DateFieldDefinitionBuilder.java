@@ -4,7 +4,7 @@ import info.magnolia.ui.field.DateFieldDefinition;
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import com.vaadin.shared.ui.datefield.DateResolution;
 import com.vaadin.shared.ui.datefield.DateTimeResolution;

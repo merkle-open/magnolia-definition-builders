@@ -3,7 +3,7 @@ package com.merkle.oss.magnolia.definition.custom.colorpicker;
 import info.magnolia.ui.field.ConfiguredFieldDefinition;
 import info.magnolia.ui.field.FieldType;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 @FieldType("colorPickerField")
 public class ColorPickerFieldDefinition extends ConfiguredFieldDefinition<Integer> {

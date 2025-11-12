@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 //vaadin can't handle inheritance work around with nullable fields - https://stackoverflow.com/questions/70238854/vaadin-binder-writing-to-an-instance-of-an-inherited-abstract-class
 public class LinkDecoratorDefinition {

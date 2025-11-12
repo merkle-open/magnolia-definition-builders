@@ -57,7 +57,7 @@ Internal magnolia DAM asset.
 2. Extend ImageReferenceModel.Factory
    ```java
    import java.util.Set;
-   import javax.inject.Inject;
+   import jakarta.inject.Inject;
    import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
    import com.merkle.oss.magnolia.definition.custom.imageset.ImageType;
    import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageReferenceModel;
@@ -75,7 +75,7 @@ Internal magnolia DAM asset.
 3. Extend ImageModel.Factory
    ```java
    import java.util.Set;
-   import javax.inject.Inject;
+   import jakarta.inject.Inject;
    import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
    import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageModel;
    

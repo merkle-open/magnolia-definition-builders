@@ -3,7 +3,7 @@ package com.merkle.oss.magnolia.definition.custom.configuration;
 import com.merkle.oss.magnolia.powernode.PowerNode;
 import info.magnolia.cms.i18n.I18nContentSupport;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Locale;
 
 public class DefaultLocaleProvider implements LocaleProvider {

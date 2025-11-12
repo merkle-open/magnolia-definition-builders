@@ -5,7 +5,7 @@ import info.magnolia.ui.editor.MultiFormView;
 import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.MultiFieldDefinition;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Optional;
 
 public abstract class AbstractMultiFieldDefinitionBuilder<T, D extends MultiFieldDefinition<T>, B extends AbstractMultiFieldDefinitionBuilder<T, D, B>> extends AbstractConfiguredComplexPropertyDefinitionBuilder<T, D, B> {

@@ -4,7 +4,7 @@ import info.magnolia.ui.contentapp.action.OpenLocationActionDefinition;
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import com.merkle.oss.magnolia.definition.builder.action.AbstractActionDefinitionBuilder;
 

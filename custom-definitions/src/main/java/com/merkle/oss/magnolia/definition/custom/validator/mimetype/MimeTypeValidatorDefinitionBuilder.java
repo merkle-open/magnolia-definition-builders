@@ -2,7 +2,7 @@ package com.merkle.oss.magnolia.definition.custom.validator.mimetype;
 
 import com.merkle.oss.magnolia.definition.builder.validator.AbstractConfiguredFieldValidatorDefinitionBuilder;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;

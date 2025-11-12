@@ -4,7 +4,7 @@ import com.vaadin.ui.ComboBox;
 import info.magnolia.ui.datasource.DatasourceDefinition;
 import info.magnolia.ui.field.ComboBoxFieldDefinition;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Optional;
 
 public abstract class AbstractComboBoxFieldDefinitionBuilder<T, D extends ComboBoxFieldDefinition<T>, B extends AbstractComboBoxFieldDefinitionBuilder<T, D, B>> extends AbstractSelectFieldDefinitionBuilder<T, DatasourceDefinition, D, B> {

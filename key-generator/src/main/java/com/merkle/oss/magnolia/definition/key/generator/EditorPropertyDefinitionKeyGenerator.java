@@ -14,8 +14,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import javax.annotation.Nullable;
-import javax.inject.Inject;
+import jakarta.annotation.Nullable;
+import jakarta.inject.Inject;
 
 public class EditorPropertyDefinitionKeyGenerator extends info.magnolia.ui.editor.i18n.EditorPropertyDefinitionKeyGenerator {
     private final KeyGeneratorUtil keyGeneratorUtil;

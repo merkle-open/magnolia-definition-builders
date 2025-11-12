@@ -3,7 +3,7 @@ package com.merkle.oss.magnolia.definition.builder.datasource;
 import info.magnolia.ui.datasource.optionlist.Option;
 import info.magnolia.ui.datasource.optionlist.OptionListDefinition;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;

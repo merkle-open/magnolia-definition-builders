@@ -8,8 +8,8 @@ import java.time.ZoneId;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import javax.jcr.Item;
 
 import com.vaadin.ui.DescriptionGenerator;

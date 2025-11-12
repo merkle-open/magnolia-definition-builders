@@ -6,7 +6,7 @@ import com.merkle.oss.magnolia.definition.custom.videoset.model.VideoModel.Video
 import com.merkle.oss.magnolia.definition.custom.videoset.model.VideoModel.VideoSourceTransformer;
 import info.magnolia.dam.templating.functions.DamTemplatingFunctions;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Locale;
 import java.util.Optional;
 

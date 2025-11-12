@@ -3,28 +3,22 @@ package com.merkle.oss.magnolia.definition.key.generator;
 import info.magnolia.config.NamedDefinition;
 import info.magnolia.context.Context;
 import info.magnolia.i18nsystem.bytebudddy.ByteBuddyI18nizer;
-import info.magnolia.ui.api.app.AppDescriptor;
 import info.magnolia.ui.contentapp.configuration.ContentAppDescriptor;
 import info.magnolia.ui.contentapp.detail.DetailDescriptor;
-import info.magnolia.ui.contentapp.detail.DetailSubAppDescriptor;
 import info.magnolia.ui.datasource.DatasourceDefinition;
 import info.magnolia.ui.dialog.ConfiguredFormDialogDefinition;
 import info.magnolia.ui.editor.ConfiguredFormDefinition;
 import info.magnolia.ui.editor.FormDefinition;
 import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.MultiFieldDefinition;
-import info.magnolia.ui.framework.layout.ConfiguredTabDefinition;
 import info.magnolia.ui.framework.layout.TabDefinition;
 import info.magnolia.ui.framework.layout.TabbedLayoutDefinition;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
-
-import javax.inject.Provider;
 
 import org.mockito.Mockito;
 

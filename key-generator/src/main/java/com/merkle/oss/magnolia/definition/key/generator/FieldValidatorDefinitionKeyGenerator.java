@@ -37,8 +37,8 @@ public class FieldValidatorDefinitionKeyGenerator extends info.magnolia.ui.field
             final FieldValidatorDefinition definition,
             final AnnotatedElement el
     ) {
-        if (definition instanceof ConfiguredFieldValidatorDefinition && !keyGeneratorUtil.isMagnoliaModule(definition)) {
-            keysFor(list, (ConfiguredFieldValidatorDefinition) definition, el);
+        if (definition instanceof ConfiguredFieldValidatorDefinition validatorDefinition && !keyGeneratorUtil.isMagnoliaModule(definition)) {
+            keysFor(list, validatorDefinition, el);
         } else {
             super.keysFor(list, definition, el);
         }

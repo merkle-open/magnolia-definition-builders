@@ -4,7 +4,7 @@ import com.merkle.oss.magnolia.definition.builder.datasource.OptionListDefinitio
 import info.magnolia.ui.datasource.DatasourceDefinition;
 import info.magnolia.ui.field.TwinColSelectFieldDefinition;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Optional;
 
 public class TwinColSelectFieldDefinitionBuilder<T> extends AbstractMultiselectFieldDefinitionBuilder<T, DatasourceDefinition, TwinColSelectFieldDefinition<T>, TwinColSelectFieldDefinitionBuilder<T>> {

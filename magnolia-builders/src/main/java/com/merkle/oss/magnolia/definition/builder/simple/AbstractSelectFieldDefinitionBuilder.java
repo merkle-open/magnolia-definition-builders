@@ -4,9 +4,9 @@ import info.magnolia.ui.contentapp.FilteringMode;
 import info.magnolia.ui.datasource.DatasourceDefinition;
 import info.magnolia.ui.field.AbstractSelectFieldDefinition;
 
-import javax.annotation.Nullable;
-import javax.inject.Provider;
 import java.util.Optional;
+
+import jakarta.annotation.Nullable;
 
 public abstract class AbstractSelectFieldDefinitionBuilder<T, S extends DatasourceDefinition, D extends AbstractSelectFieldDefinition<T, S>, B extends AbstractSelectFieldDefinitionBuilder<T, S, D, B>> extends AbstractConfiguredFieldDefinitionBuilder<T, D, B> {
 	@Nullable

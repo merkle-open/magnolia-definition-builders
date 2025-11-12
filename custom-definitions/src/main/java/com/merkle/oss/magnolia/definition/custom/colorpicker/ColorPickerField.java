@@ -3,7 +3,7 @@ package com.merkle.oss.magnolia.definition.custom.colorpicker;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import com.vaadin.shared.ui.colorpicker.Color;
 import com.vaadin.ui.CheckBox;

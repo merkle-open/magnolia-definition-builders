@@ -72,7 +72,7 @@ Vimeo video, specified by ID.
 2. Extend VideoReferenceModel.Factory
    ```java
    import java.util.Set;
-   import javax.inject.Inject;
+   import jakarta.inject.Inject;
    import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
    import com.merkle.oss.magnolia.definition.custom.videoset.VideoType;
    import com.merkle.oss.magnolia.definition.custom.videoset.model.VideoReferenceModel;
@@ -91,7 +91,7 @@ Vimeo video, specified by ID.
 3. Extend VideoModel.Factory
    ```java
    import java.util.Set;
-   import javax.inject.Inject;
+   import jakarta.inject.Inject;
    import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
    import com.merkle.oss.magnolia.definition.custom.videoset.model.VideoModel;
    

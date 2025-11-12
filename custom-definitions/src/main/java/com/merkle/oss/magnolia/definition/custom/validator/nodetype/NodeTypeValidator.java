@@ -5,7 +5,7 @@ import com.vaadin.data.ValueContext;
 import com.vaadin.data.validator.AbstractValidator;
 import info.magnolia.jcr.predicate.NodeTypePredicate;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.jcr.Node;
 
 public class NodeTypeValidator extends AbstractValidator<Node> {

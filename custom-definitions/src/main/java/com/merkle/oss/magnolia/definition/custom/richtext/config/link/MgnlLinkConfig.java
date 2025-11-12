@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 // See implementation here:
 // https://gitlab.com/magnolia-ce/ckeditor5-plugins/-/blob/main/packages/ckeditor5-plugins/src/mgnllink/mgnllinkconfig.ts?ref_type=heads#L16
