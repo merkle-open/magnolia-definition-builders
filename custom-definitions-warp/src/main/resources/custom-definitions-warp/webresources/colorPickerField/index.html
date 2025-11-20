@@ -1,0 +1,40 @@
+<!--TODO full replacement for com.merkle.oss.magnolia.definition.custom.colorpicker.ColorPickerField -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+</head>
+<body>
+<input id="input" type="color" />
+<script>
+  let input = document.getElementById('input');
+  let correlationId;
+  input.addEventListener('change', function () {
+    let value = hexToInt(input.value);
+    window.iframeClient.magnoliaAPI.changeValue(value);
+
+    function hexToInt(hex) {
+      // 1. Remove the '#' if present
+      hex = hex.replace(/^#/, '');
+
+      // 2. Parse the remaining hexadecimal string as an integer (Base 16)
+      // For RRGGBB, this results in a 24-bit integer: 0xFF4500
+      return parseInt(hex, 16);
+    }
+  });
+
+
+  window.addEventListener(
+    'message',
+    function (event) {
+      if (event.data.action === 'init') {
+        correlationId = event.data.correlationId;
+        input.value = event.data.state.value || event.data.state.defaultValue || ''; //TODO this doesn't hold the current value
+      }
+    },
+    false
+  );
+</script>
+</body>
+</html>

@@ -10,7 +10,4 @@ _.*
 .vscode
 atlassian-ide-plugin.xml
 
-/magnolia-builders/target
-/custom-definitions/target
-/custom-definitions-spring/target/
-/key-generator/target
+/*/target

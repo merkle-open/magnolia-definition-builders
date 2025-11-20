@@ -36,6 +36,10 @@
             <artifactId>magnolia-dam-templating</artifactId>
         </dependency>
         <dependency>
+          <groupId>info.magnolia.warp</groupId>
+          <artifactId>form-content-handler</artifactId>
+        </dependency>
+        <dependency>
             <groupId>uk.org.okapibarcode</groupId>
             <artifactId>okapibarcode</artifactId>
         </dependency>
