@@ -1,7 +1,0 @@
-#TODO remove, only for testing
-!content-type:builder
-name: builder
-subApps:
-  detail:
-    form:
-      class: com.merkle.oss.magnolia.definition.custom.example.CustomFormDefinitionExample
