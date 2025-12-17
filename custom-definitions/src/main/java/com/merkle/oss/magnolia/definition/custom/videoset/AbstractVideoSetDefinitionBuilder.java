@@ -2,6 +2,7 @@ package com.merkle.oss.magnolia.definition.custom.videoset;
 
 import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.FieldValidatorDefinition;
+import info.magnolia.ui.field.TextFieldDefinition;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,6 +17,7 @@ import jakarta.annotation.Nullable;
 import javax.jcr.Node;
 
 import com.merkle.oss.magnolia.definition.builder.complex.AbstractConfiguredComplexPropertyDefinitionBuilder;
+import com.merkle.oss.magnolia.definition.builder.simple.TextFieldDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.imageset.AbstractImageSetDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.imageset.ImageType;
 import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
@@ -23,8 +25,10 @@ import com.merkle.oss.magnolia.definition.custom.switchable.SwitchableDefinition
 
 public abstract class AbstractVideoSetDefinitionBuilder<B extends AbstractVideoSetDefinitionBuilder<B>> extends AbstractConfiguredComplexPropertyDefinitionBuilder<Node, VideoSetDefinition, B> {
 	private static final String SELECTION = "selection";
+	private static final String ALT_TEXT = "alt";
 	private static final String PREVIEW_IMAGE = "previewImage";
 	public static final UnaryOperator<String> SELECTION_PROPERTY_NAME_PROVIDER = name -> name + "_" + SELECTION;
+	public static final UnaryOperator<String> ALT_TEXT_PROPERTY_NAME_PROVIDER = name -> name + "_" + ALT_TEXT;
 	public static final UnaryOperator<String> PREVIEW_IMAGE_PROPERTY_NAME_PROVIDER = name -> name + "_" + PREVIEW_IMAGE;
 
 	private final AbstractImageSetDefinitionBuilder<?> imageSetDefinitionBuilder;
@@ -165,6 +169,7 @@ public abstract class AbstractVideoSetDefinitionBuilder<B extends AbstractVideoS
 						.label(labelPrefix + "video.label")
 						.removePreviouslySelected(removePreviouslySelected)
 						.build(name),
+				createAltTextField(name).orElse(null),
 				imageSetDefinitionBuilder
 						.label(labelPrefix + "previewImage.label")
 						.build(PREVIEW_IMAGE_PROPERTY_NAME_PROVIDER.apply(name)),
@@ -185,5 +190,11 @@ public abstract class AbstractVideoSetDefinitionBuilder<B extends AbstractVideoS
 				)
 		);
 		return definition;
+	}
+
+	protected Optional<TextFieldDefinition> createAltTextField(final String name) {
+		return Optional.of(new TextFieldDefinitionBuilder()
+				.label(labelPrefix + "altText.label")
+				.build(ALT_TEXT_PROPERTY_NAME_PROVIDER.apply(name)));
 	}
 }

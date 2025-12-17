@@ -1,5 +1,10 @@
 package com.merkle.oss.magnolia.definition.custom.videoset.model;
 
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
 import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
 import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageReferenceModel;
 import com.merkle.oss.magnolia.definition.custom.videoset.VideoSetDefinitionBuilder;
@@ -9,25 +14,25 @@ import com.merkle.oss.magnolia.powernode.ValueConverter;
 
 import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
 
 public class VideoReferenceModel {
 	private final String assetId;
 	private final VideoType videoType;
+	@Nullable
+	private final String altText;
 	@Nullable
 	private final ImageReferenceModel previewImage;
 
 	public VideoReferenceModel(
 			final String assetId,
 			final VideoType videoType,
+			@Nullable final String altText,
 			@Nullable final ImageReferenceModel previewImage
 	) {
 		this.assetId = assetId;
 		this.videoType = videoType;
-		this.previewImage = previewImage;
+        this.altText = altText;
+        this.previewImage = previewImage;
 	}
 
 	public String getAssetId() {
@@ -36,6 +41,10 @@ public class VideoReferenceModel {
 
 	public VideoType getVideoType() {
 		return videoType;
+	}
+
+	public Optional<String> getAltText() {
+		return Optional.ofNullable(altText);
 	}
 
 	public Optional<ImageReferenceModel> getPreviewImage() {
@@ -47,19 +56,20 @@ public class VideoReferenceModel {
 		if (!(o instanceof VideoReferenceModel that)) {
 			return false;
 		}
-        return Objects.equals(assetId, that.assetId) && Objects.equals(videoType, that.videoType) && Objects.equals(previewImage, that.previewImage);
+        return Objects.equals(assetId, that.assetId) && Objects.equals(videoType, that.videoType) && Objects.equals(altText, that.altText) && Objects.equals(previewImage, that.previewImage);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(assetId, videoType, previewImage);
+		return Objects.hash(assetId, videoType, altText, previewImage);
 	}
 
 	@Override
 	public String toString() {
-		return "VideoReference{" +
+		return "VideoReferenceModel{" +
 				"assetId='" + assetId + '\'' +
 				", videoType=" + videoType +
+				", altText='" + altText + '\'' +
 				", previewImage=" + previewImage +
 				'}';
 	}
@@ -102,6 +112,7 @@ public class VideoReferenceModel {
 							new VideoReferenceModel(
 									assetId,
 									videoType,
+									video.getProperty(VideoSetDefinitionBuilder.ALT_TEXT_PROPERTY_NAME_PROVIDER.apply(propertyName), dialogLocale, ValueConverter::getString).orElse(null),
 									imageReferenceFactory
 											.create(VideoSetDefinitionBuilder.PREVIEW_IMAGE_PROPERTY_NAME_PROVIDER.apply(propertyName), dialogLocale, video)
 											.orElse(null)

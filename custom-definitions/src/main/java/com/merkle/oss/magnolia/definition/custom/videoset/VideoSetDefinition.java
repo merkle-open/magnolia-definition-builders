@@ -6,18 +6,27 @@ import info.magnolia.ui.editor.FormView;
 import info.magnolia.ui.field.ConfiguredComplexPropertyDefinition;
 import info.magnolia.ui.field.EditorPropertyDefinition;
 import info.magnolia.ui.field.FieldValidatorDefinition;
+import info.magnolia.ui.field.TextFieldDefinition;
 import info.magnolia.ui.framework.layout.FieldLayoutDefinition;
 import info.magnolia.ui.framework.layout.StackedLayoutProducer;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.jcr.Node;
 
 import com.merkle.oss.magnolia.definition.custom.imageset.ImageSetDefinition;
 import com.merkle.oss.magnolia.definition.custom.switchable.SwitchableDefinition;
 
+import jakarta.annotation.Nullable;
+
 public class VideoSetDefinition extends ConfiguredComplexPropertyDefinition<Node> implements FormDefinition<Node> {
 	private final SwitchableDefinition video;
+	@Nullable
+	private final TextFieldDefinition altText;
 	private final ImageSetDefinition previewImage;
     private final boolean videoFieldI18n;
     private final boolean previewImageRequired;
@@ -26,11 +35,13 @@ public class VideoSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 
 	public VideoSetDefinition(
 			final SwitchableDefinition video,
+			@Nullable final TextFieldDefinition altText,
 			final ImageSetDefinition previewImage,
 			final boolean videoFieldI18n,
 			final boolean previewImageRequired
 	) {
 		this.video = video;
+		this.altText = altText;
 		this.previewImage = previewImage;
         this.videoFieldI18n = videoFieldI18n;
         this.previewImageRequired = previewImageRequired;
@@ -42,13 +53,21 @@ public class VideoSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 		return video;
 	}
 
+	public Optional<TextFieldDefinition> getAltTextField() {
+		return Optional.ofNullable(altText);
+	}
+
 	public ImageSetDefinition getPreviewImage() {
 		return previewImage;
 	}
 
 	@Override
 	public List<EditorPropertyDefinition> getProperties() {
-		return List.of(video, previewImage);
+		return Stream.of(
+				Stream.of(video),
+				Stream.ofNullable(altText),
+				Stream.of(previewImage)
+		).flatMap(field -> field).collect(Collectors.toList());
 	}
 
 	@Override
@@ -61,12 +80,18 @@ public class VideoSetDefinition extends ConfiguredComplexPropertyDefinition<Node
 		super.setI18n(i18n);
 		video.setI18n(videoFieldI18n && i18n);
 		previewImage.setI18n(i18n);
+		if(altText != null) {
+			altText.setI18n(i18n);
+		}
 	}
 
 	public void setReadOnly(final boolean readOnly) {
 		this.readOnly = readOnly;
 		video.setReadOnly(readOnly);
 		previewImage.setReadOnly(readOnly);
+		if(altText != null) {
+			altText.setReadOnly(readOnly);
+		}
 	}
 
 	public boolean isReadOnly() {
