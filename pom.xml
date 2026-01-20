@@ -37,20 +37,20 @@
 	<properties>
 		<!-- (check for new versions:  mvn versions:display-property-updates )-->
 
-		<magnolia.version>6.4.0</magnolia.version>
+		<magnolia.version>6.4.1</magnolia.version>
 		<magnolia.workflow.version>6.0.8</magnolia.workflow.version>
     <spring.version>6.1.21</spring.version>
-    <merkle.powernode.version>2.3.1</merkle.powernode.version>
+    <merkle.powernode.version>2.3.2</merkle.powernode.version>
 		<java.poet.version>1.12.1</java.poet.version>
 		<qrCodeGenerator.version>0.5.2</qrCodeGenerator.version>
 
 		<!--Test dependency versions-->
-		<junit.version>6.0.0</junit.version>
-		<mockito.version>5.20.0</mockito.version>
+		<junit.version>6.0.2</junit.version>
+		<mockito.version>5.21.0</mockito.version>
 
 		<!-- Maven Plugins -->
 		<mvn.compiler.plugin.version>3.14.1</mvn.compiler.plugin.version>
-		<mvn.source.plugin.version>3.3.1</mvn.source.plugin.version>
+		<mvn.source.plugin.version>3.4.0</mvn.source.plugin.version>
 		<mvn.surefire.plugin.version>3.5.4</mvn.surefire.plugin.version>
 		<mvn.javadoc.version>3.12.0</mvn.javadoc.version>
 		<mvn.gpg.plugin.version>3.2.5</mvn.gpg.plugin.version>
