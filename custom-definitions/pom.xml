@@ -63,6 +63,7 @@
         <!-- default resources configuration which will filter the module descriptor -->
         <resources>
             <resource>
+                <filtering>true</filtering>
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*</include>
