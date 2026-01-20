@@ -8,6 +8,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+/**
+ * info.magnolia.i18nsystem.bytebudddy.ByteBuddyI18nizer.generateByteBuddyDecorator --> I18nKeyGeneratorFactory.newKeyGeneratorFor
+ * uses I18nable of the definition (e.g. info.magnolia.ui.field.FieldValidatorDefinition) to get the keyGenerator.
+ * Since it is an annotation we have to resort to reflection :-/
+ */
 public class KeyGeneratorUpdater {
 
 	public <T> void update(final Class<T> definition, final Class<? extends I18nKeyGenerator<?>> keyGenerator) {

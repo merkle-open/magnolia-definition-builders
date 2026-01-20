@@ -3,6 +3,7 @@
 <module>
     <name>magnolia-definition-keyGenerators</name>
     <displayName>magnolia definition key-generators</displayName>
+    <versionHandler>com.merkle.oss.magnolia.definition.key.generator.configuration.KeyGeneratorModuleVersionHandler</versionHandler>
     <version>${project.version}</version>
 
     <components>
