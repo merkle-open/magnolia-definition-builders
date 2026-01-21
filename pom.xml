@@ -32,6 +32,7 @@
 		<module>custom-definitions</module>
 		<module>key-generator</module>
 		<module>custom-definitions-spring</module>
+		<module>custom-definitions-warp</module>
 	</modules>
 
 	<properties>
@@ -39,10 +40,12 @@
 
 		<magnolia.version>6.4.1</magnolia.version>
 		<magnolia.workflow.version>6.0.8</magnolia.workflow.version>
+		<magnolia.ui-framework.javascript-warp.version>4.0-SNAPSHOT</magnolia.ui-framework.javascript-warp.version>
     <spring.version>6.1.21</spring.version>
     <merkle.powernode.version>2.3.2</merkle.powernode.version>
 		<java.poet.version>1.12.1</java.poet.version>
 		<qrCodeGenerator.version>0.5.2</qrCodeGenerator.version>
+    <reflections.version>0.10.2</reflections.version>
 
 		<!--Test dependency versions-->
 		<junit.version>6.0.2</junit.version>
@@ -60,7 +63,7 @@
 		<javaVersion>17</javaVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.version.ignore>.*-M.*,.*-alpha.*,.*-beta.*,.*-rc.*,.*-RC.*</maven.version.ignore>
-	</properties>
+  </properties>
 
 	<dependencyManagement>
 		<dependencies>
@@ -72,6 +75,11 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+      <dependency>
+        <groupId>info.magnolia.ui</groupId>
+        <artifactId>magnolia-ui-framework-javascript-warp-integration</artifactId>
+        <version>${magnolia.ui-framework.javascript-warp.version}</version>
+      </dependency>
 			<dependency>
 				<groupId>com.merkle.oss.magnolia</groupId>
 				<artifactId>magnolia-powernode</artifactId>
@@ -82,6 +90,11 @@
 				<artifactId>okapibarcode</artifactId>
 				<version>${qrCodeGenerator.version}</version>
 			</dependency>
+      <dependency>
+        <groupId>org.reflections</groupId>
+        <artifactId>reflections</artifactId>
+        <version>${reflections.version}</version>
+      </dependency>
 
 			<!-- TESTING DEPENDENCIES -->
 			<dependency>
