@@ -107,15 +107,7 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
       config.extraPlugins = extraPlugins;
       updateAutomaticDecorators(config.link?.decorators);
 
-      let CKEDITOR5 = window["CKEDITOR5"];
-      // in case custom-builds are object-wrapped, otherwise, just use the original
-      if (typeof window["CKEDITOR5"] !== 'function') {
-        if (this.getState().editorType) {
-          CKEDITOR5 = CKEDITOR5[this.getState().editorType];
-        } else {
-          CKEDITOR5 = CKEDITOR5["ClassicEditor"];
-        }
-      }
+      const CKEDITOR5 = window["CKEDITOR5"]["ClassicEditor"];
 
       CKEDITOR5.defaultConfig.mgnllink.decorators = {}; // delete default decorators (open in new tab)
       CKEDITOR5.defaultConfig.table = {}; // delete default table config
@@ -126,31 +118,42 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
       }
       // different from magnolia
 
-      // Import CSS inline
-      if (!document.querySelector('style[data-mgnl-ckeditor-css]')) {
-        const style = document.createElement('style');
-        style.setAttribute('data-mgnl-ckeditor-css', 'true');
-        style.textContent = `
-        :root {
-          --ck-z-default: 10000;
-          --ck-z-panel: calc(var(--ck-z-default) + 999);
-          --ck-z-dialog: calc(var(--ck-z-panel) + 1);
-          --ck-color-base-background: #f5f5f5;
-          --ck-image-insert-insert-by-url-width: 200px;
-          --ck-color-focus-border-coordinates: 260, 13%, 9%;
-        }
-        .ck.ck-image-insert-url { width: 100%; }
-        .ck-editor__editable { background: var(--ck-color-base-background); }
-        .ck-editor__editable:hover:not(:focus) { border-color: #e1dfe4; }
-        .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) { border-color: transparent; }
-        .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content { border-width: 1px 1px 1px; }
-        .ck.ck-editor__main>.ck-editor__editable:hover:not(.ck-focused) { border-color: #e1dfe4; }
-      `;
-        document.head.appendChild(style);
-      }
-
       CKEDITOR5.create(this.getElement(), config)
         .then(newEditor => {
+          // Import CSS to the head
+          if (!document.querySelector('style[data-mgnl-ckeditor-css]')) {
+            const style = document.createElement('style');
+            const colorBaseBackground = '#f5f4f6'; //align with the variables.scss$light-grey
+            const contentFontColor = '#17151b'
+            const contentFont = 'Roboto, sans-serif';
+            const contentFontSize = '14px';
+            const contentLineHeight = '1.6';
+            style.setAttribute('data-mgnl-ckeditor-css', 'true');
+            style.textContent = `
+            :root {
+              --ck-z-default: 10000;
+              --ck-z-panel: calc(var(--ck-z-default) + 999);
+              --ck-z-dialog: calc(var(--ck-z-panel) + 1);
+              --ck-color-base-background: ${colorBaseBackground};
+              --ck-image-insert-insert-by-url-width: 200px;
+              --ck-color-focus-border-coordinates: 260, 13%, 9%;
+              
+              --ck-content-font-color: ${contentFontColor};
+              --ck-content-font-family: ${contentFont};
+              --ck-content-font-size: ${contentFontSize};
+              --ck-content-line-height: ${contentLineHeight};
+            }
+            .ck-content { font-weight: 400; }
+            .ck.ck-image-insert-url { width: 100%; }
+            .ck-editor__editable { background: var(--ck-color-base-background); }
+            .ck-editor__editable:hover:not(:focus) { border-color: transparent; }
+            .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) { border-color: transparent; }
+            .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content { border-width: 1px 1px 1px; }
+            .ck.ck-editor__main>.ck-editor__editable:hover:not(.ck-focused) { border-color: transparent; }
+          `;
+            document.head.appendChild(style);
+          }
+
           let data = this.getState().value;
           if (data != null) {
             newEditor.setData(data);
