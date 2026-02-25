@@ -17,6 +17,14 @@
  - [DateDependency](src/main/java/com/merkle/oss/magnolia/definition/custom/validator/datedependency/README.md)
  - HasProperty
 
+## content-app
+### column
+ - LocalDate
+ - LocalDateTime
+ - ModificationDate
+### filter
+ - PropertySearchFilterView (filter property by text)
+
 ## Configuration
 
 ```java
