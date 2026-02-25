@@ -1,14 +1,18 @@
 package com.merkle.oss.magnolia.definition.key.generator;
 
+import info.magnolia.config.NamedDefinition;
 import info.magnolia.i18nsystem.AbstractI18nKeyGenerator;
 import info.magnolia.ui.api.app.AppDescriptor;
+import info.magnolia.ui.api.app.registry.ConfiguredSubAppDescriptor;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -59,6 +63,27 @@ public class KeyGeneratorUtil extends AbstractI18nKeyGenerator<Object> {
 
     public Set<Class<?>> getExcludedAncestors() {
         return excludedAncestors;
+    }
+
+    public Stream<String> streamAncestorNames(final Predicate<Object> filter, final Object definition) {
+        final List<Object> ancestors = getAncestors(definition);
+        Collections.reverse(ancestors);
+        return ancestors.stream()
+                .filter(ancestor ->
+                        filter.test(ancestor) && getExcludedAncestors().stream().noneMatch(excluded -> excluded.isInstance(ancestor))
+                )
+                .map(this::getName)
+                .flatMap(Optional::stream)
+                .distinct();
+    }
+    private Optional<String> getName(final Object definition) {
+        if(definition instanceof NamedDefinition namedDefinition) {
+            return Optional.of(namedDefinition.getName());
+        }
+        if(definition instanceof ConfiguredSubAppDescriptor subAppDescriptor) {
+            return Optional.of(subAppDescriptor.getName());
+        }
+        return Optional.empty();
     }
 
     //Same as parent, but has defined order id -> name if object has both id and name

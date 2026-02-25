@@ -1,6 +1,5 @@
 package com.merkle.oss.magnolia.definition.key.generator;
 
-import info.magnolia.config.NamedDefinition;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.ui.contentapp.detail.DetailDescriptor;
 import info.magnolia.ui.field.EditorPropertyDefinition;
@@ -8,7 +7,6 @@ import info.magnolia.ui.form.field.definition.FieldDefinition;
 import info.magnolia.ui.form.field.definition.FieldDefinitionKeyGenerator;
 
 import java.lang.reflect.AnnotatedElement;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -64,29 +62,15 @@ public class EditorPropertyDefinitionKeyGenerator extends info.magnolia.ui.edito
     }
 
     protected String[] getKeys(final String name, final Predicate<Object> filter, final EditorPropertyDefinition definition, final AnnotatedElement el) {
-        final String rootDefinitionName = keyGeneratorUtil.getRootDefinitionName(definition);
         return Stream.of(
                 Stream.of(name),
                 keyPrefixer.getKeyPrefix(definition),
                 Stream.of("field"),
-                streamNames(filter, definition).filter(Predicate.not(rootDefinitionName::equals)),
+                keyGeneratorUtil.streamAncestorNames(filter, definition).filter(Predicate.not(name::equals)),
                 Stream.of(
                         replaceColons(definition.getName()),
                         fieldOrGetterName(el)
                 )
         ).flatMap(Function.identity()).sequential().toArray(String[]::new);
-    }
-
-    private Stream<String> streamNames(final Predicate<Object> filter, final Object definition) {
-        final List<Object> ancestors = getAncestors(definition);
-        Collections.reverse(ancestors);
-        return ancestors.stream()
-                .filter(ancestor ->
-                        filter.test(ancestor) && keyGeneratorUtil.getExcludedAncestors().stream().noneMatch(excluded -> excluded.isInstance(ancestor))
-                )
-                .filter(NamedDefinition.class::isInstance)
-                .map(NamedDefinition.class::cast)
-                .map(NamedDefinition::getName)
-                .distinct();
     }
 }
