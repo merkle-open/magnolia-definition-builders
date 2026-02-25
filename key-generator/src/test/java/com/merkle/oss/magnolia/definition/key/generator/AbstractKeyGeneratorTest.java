@@ -23,6 +23,7 @@ import java.util.stream.Stream;
 import org.mockito.Mockito;
 
 abstract class AbstractKeyGeneratorTest {
+    protected final ByteBuddyI18nizer byteBuddyI18nizer = new ByteBuddyI18nizer(new TranslationServiceMock(), () -> Mockito.mock(Context.class));
 
     protected <T, D extends NamedDefinition> D i18nIfy(final String dialogId, final List<EditorPropertyDefinition> properties, final D definition) {
         return i18nIfy(properties, definition, getDialogFormI18nizer(dialogId));
@@ -37,7 +38,7 @@ abstract class AbstractKeyGeneratorTest {
             final ConfiguredFormDialogDefinition<T> dialog = new ConfiguredFormDialogDefinition<>();
             dialog.setId(dialogId);
             dialog.setForm(form);
-            final ConfiguredFormDialogDefinition<T> decoratedDialog = new ByteBuddyI18nizer(new TranslationServiceMock(), () -> Mockito.mock(Context.class)).decorate(dialog);
+            final ConfiguredFormDialogDefinition<T> decoratedDialog = byteBuddyI18nizer.decorate(dialog);
             return decoratedDialog.getForm();
         };
     }
