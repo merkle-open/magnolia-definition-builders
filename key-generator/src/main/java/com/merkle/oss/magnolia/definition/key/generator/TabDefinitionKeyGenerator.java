@@ -43,10 +43,11 @@ public class TabDefinitionKeyGenerator extends info.magnolia.ui.editor.i18n.TabD
     }
 
     protected String[] getKeys(final String name, final Predicate<Object> filter, final TabDefinition definition, final AnnotatedElement el) {
+        final String rootDefinitionName = keyGeneratorUtil.getRootDefinitionName(definition);
         return Stream.of(
                 Stream.of(name),
                 Stream.of("tab"),
-                keyGeneratorUtil.streamAncestorNames(filter, definition).filter(Predicate.not(name::equals)),
+                keyGeneratorUtil.streamAncestorNames(filter, definition).filter(Predicate.not(rootDefinitionName::equals)),
                 Stream.of(
                         replaceColons(definition.getName()),
                         fieldOrGetterName(el)

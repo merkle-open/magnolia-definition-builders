@@ -40,9 +40,10 @@ public class FilterViewDefinitionKeyGenerator extends info.magnolia.ui.filtering
     }
 
     protected String[] getKeys(final String name, final Predicate<Object> filter, final FilterViewDefinition<?> definition, final AnnotatedElement el) {
+        final String rootDefinitionName = keyGeneratorUtil.getRootDefinitionName(definition);
         return Stream.of(
                 Stream.of(name),
-                keyGeneratorUtil.streamAncestorNames(filter, definition).filter(Predicate.not(name::equals)),
+                keyGeneratorUtil.streamAncestorNames(filter, definition).filter(Predicate.not(rootDefinitionName::equals)),
                 Stream.of("filters"),
                 Stream.of(
                         replaceColons(definition.getName()),

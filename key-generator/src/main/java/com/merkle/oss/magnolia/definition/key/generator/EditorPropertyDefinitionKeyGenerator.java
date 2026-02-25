@@ -62,11 +62,12 @@ public class EditorPropertyDefinitionKeyGenerator extends info.magnolia.ui.edito
     }
 
     protected String[] getKeys(final String name, final Predicate<Object> filter, final EditorPropertyDefinition definition, final AnnotatedElement el) {
+        final String rootDefinitionName = keyGeneratorUtil.getRootDefinitionName(definition);
         return Stream.of(
                 Stream.of(name),
                 keyPrefixer.getKeyPrefix(definition),
                 Stream.of("field"),
-                keyGeneratorUtil.streamAncestorNames(filter, definition).filter(Predicate.not(name::equals)),
+                keyGeneratorUtil.streamAncestorNames(filter, definition).filter(Predicate.not(rootDefinitionName::equals)),
                 Stream.of(
                         replaceColons(definition.getName()),
                         fieldOrGetterName(el)
