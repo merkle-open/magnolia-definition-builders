@@ -41,6 +41,16 @@ views.<COLUMN_NAME>.label
 views.<COLUMN_NAME>
 ```
 
+## FilterViewDefinitionKeyGenerator
+```properties
+<APP_NAME>.<SUBAPP_NAME>.workbench.filters.<FILTER_NAME>.label
+<APP_NAME>.<SUBAPP_NAME>.workbench.filters.<FILTER_NAME>
+<APP_NAME>.<SUBAPP_NAME>.workbench.filters.<FILTER_NAME>.placeholder
+filters.<FILTER_NAME>.label
+filters.<FILTER_NAME>
+filters.<FILTER_NAME>.placeholder
+```
+
 ## Setup
 
 ### DI-Bindings
