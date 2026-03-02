@@ -9,10 +9,12 @@ import info.magnolia.ui.contentapp.configuration.ListViewDefinition;
 import info.magnolia.ui.contentapp.configuration.WorkbenchDefinition;
 import info.magnolia.ui.contentapp.configuration.column.ColumnDefinition;
 import info.magnolia.ui.contentapp.configuration.column.ConfiguredColumnDefinition;
+import info.magnolia.ui.editor.ConfiguredFormDefinition;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +25,9 @@ class ColumnDefinitionKeyGeneratorTest extends AbstractKeyGeneratorTest {
 
     @BeforeEach
     void setUp() {
-        keyGenerator = new ColumnDefinitionKeyGenerator();
+        keyGenerator = new ColumnDefinitionKeyGenerator(
+                new KeyGeneratorUtil("FallbackDialog", "FallbackApp","^idPrefix", Set.of(ConfiguredFormDefinition.class))
+        );
     }
 
     @Test
@@ -34,12 +38,16 @@ class ColumnDefinitionKeyGeneratorTest extends AbstractKeyGeneratorTest {
 
         assertEquals(
                 List.of(
+                        "idPrefix.dialogs.SomeDialog.views.someColumn.label",
+                        "idPrefix.dialogs.SomeDialog.views.someColumn",
+                        "SomeDialog.views.workbench.list.someColumn.label",
+                        "SomeDialog.views.workbench.list.someColumn",
+                        "SomeDialog.views.someColumn.label",
+                        "SomeDialog.views.someColumn",
                         "workbenchchooser.views.someColumn.label",
                         "workbenchchooser.views.someColumn",
                         "views.someColumn.label",
-                        "views.someColumn",
-                        "idPrefix.dialogs.SomeDialog.views.someColumn.label",
-                        "idPrefix.dialogs.SomeDialog.views.someColumn"
+                        "views.someColumn"
                 ),
                 List.of(keyGenerator.keysFor((String)null, columnDefinition, ColumnDefinition.class.getMethod("getLabel")))
         );

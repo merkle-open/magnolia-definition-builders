@@ -49,9 +49,22 @@ public class KeyGeneratorUtil extends AbstractI18nKeyGenerator<Object> {
         return !idPattern.matcher(getIdOrNameForUnknownRoot(definition, false)).find();
     }
 
+    public String getRootDefinitionModuleId(final Object definition) {
+        return getIdPart(definition, 0).orElse("undefined");
+    }
+    public String getRootDefinitionPath(final Object definition) {
+        return getIdPart(definition, 1).orElse("undefined");
+    }
     public String getRootDefinitionName(final Object definition) {
+        return getIdPart(definition, 2).orElse("undefined");
+    }
+    private Optional<String> getIdPart(final Object definition, final int index) {
         final String id = getIdOrNameForUnknownRoot(definition);
-        return StringUtils.defaultIfEmpty(StringUtils.substringAfterLast(id, "."), "undefined");
+        final String[] split = id.split("\\.");
+        if(split.length >= index) {
+            return Optional.of(split[index]);
+        }
+        return Optional.empty();
     }
 
     public String getFallbackName(final Object definition) {
@@ -63,6 +76,19 @@ public class KeyGeneratorUtil extends AbstractI18nKeyGenerator<Object> {
 
     public Set<Class<?>> getExcludedAncestors() {
         return excludedAncestors;
+    }
+
+    public String[] prepend(final String[] values, final String... valuesToPrefix) {
+        return Stream.concat(
+                Arrays.stream(valuesToPrefix),
+                Arrays.stream(values)
+        ).toArray(String[]::new);
+    }
+    public String[] append(final String[] values, final String... valuesToPrefix) {
+        return Stream.concat(
+                Arrays.stream(values),
+                Arrays.stream(valuesToPrefix)
+        ).toArray(String[]::new);
     }
 
     public Stream<String> streamAncestorNames(final Predicate<Object> filter, final Object definition) {

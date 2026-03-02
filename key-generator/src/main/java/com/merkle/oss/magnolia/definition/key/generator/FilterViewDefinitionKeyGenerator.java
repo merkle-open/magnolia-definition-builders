@@ -1,6 +1,7 @@
 package com.merkle.oss.magnolia.definition.key.generator;
 
 import info.magnolia.objectfactory.Components;
+import info.magnolia.ui.chooser.definition.ChooserDefinition;
 import info.magnolia.ui.filteringapp.filter.FilterViewDefinition;
 
 import java.lang.reflect.AnnotatedElement;
@@ -35,6 +36,7 @@ public class FilterViewDefinitionKeyGenerator extends info.magnolia.ui.filtering
         } else {
             final String rootDefinitionName = keyGeneratorUtil.getRootDefinitionName(definition);
             addKey(list, getKeys(rootDefinitionName, ignored -> true, definition, el));
+            addKey(list, getKeys(rootDefinitionName, d -> !(d instanceof ChooserDefinition), definition, el));
             addKey(list, "filters", definition.getName(), fieldOrGetterName(el));
         }
     }

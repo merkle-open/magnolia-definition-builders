@@ -35,6 +35,10 @@ tabs.<TAB_NAME>.label
 <APP_NAME>.<SUBAPP_NAME>.views.<COLUMN_NAME>
 <MODULE_NAME>.dialogs.<DIALOG_NAME>.views.<COLUMN_NAME>.label
 <MODULE_NAME>.dialogs.<DIALOG_NAME>.views.<COLUMN_NAME>
+<DIALOG_NAME>.views.workbench.<CONTENT_VIEW_TYPE>.<COLUMN_NAME>.label
+<DIALOG_NAME>.views.workbench.<CONTENT_VIEW_TYPE>.<COLUMN_NAME>
+<DIALOG_NAME>.views.<COLUMN_NAME>.label
+<DIALOG_NAME>.views.<COLUMN_NAME>
 chooser.views.<COLUMN_NAME>.label
 chooser.views.<COLUMN_NAME>
 views.<COLUMN_NAME>.label
@@ -46,6 +50,9 @@ views.<COLUMN_NAME>
 <APP_NAME>.<SUBAPP_NAME>.workbench.filters.<FILTER_NAME>.label
 <APP_NAME>.<SUBAPP_NAME>.workbench.filters.<FILTER_NAME>
 <APP_NAME>.<SUBAPP_NAME>.workbench.filters.<FILTER_NAME>.placeholder
+<DIALOG_NAME>.views.workbench.filters.<FILTER_NAME>.label
+<DIALOG_NAME>.views.workbench.filters.<FILTER_NAME>
+<DIALOG_NAME>.views.workbench.filters.<FILTER_NAME>.placeholder
 filters.<FILTER_NAME>.label
 filters.<FILTER_NAME>
 filters.<FILTER_NAME>.placeholder

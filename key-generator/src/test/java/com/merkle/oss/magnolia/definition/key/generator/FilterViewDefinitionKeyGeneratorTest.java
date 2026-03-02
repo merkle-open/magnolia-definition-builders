@@ -36,8 +36,8 @@ class FilterViewDefinitionKeyGeneratorTest extends AbstractKeyGeneratorTest {
         final FilterViewDefinition<?> decoratedTextField = i18nIfy("someMagnoliaModuleIdPrefix:apps/SomeApp", filterViewDefinition);
         assertEquals(
                 List.of(
-                        "SomeApp.browser.filters.someFilter.label",
-                        "SomeApp.browser.filters.someFilter",
+                        "someMagnoliaModuleIdPrefix.apps.SomeApp.browser.filters.someFilter.label",
+                        "someMagnoliaModuleIdPrefix.apps.SomeApp.browser.filters.someFilter",
                         "browser.filters.someFilter.label",
                         "browser.filters.someFilter",
                         "filters.someFilter.label",
