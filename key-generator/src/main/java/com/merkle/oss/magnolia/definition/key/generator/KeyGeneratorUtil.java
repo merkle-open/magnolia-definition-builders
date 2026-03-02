@@ -61,7 +61,7 @@ public class KeyGeneratorUtil extends AbstractI18nKeyGenerator<Object> {
     private Optional<String> getIdPart(final Object definition, final int index) {
         final String id = getIdOrNameForUnknownRoot(definition);
         final String[] split = id.split("\\.");
-        if(split.length >= index) {
+        if(split.length > index) {
             return Optional.of(split[index]);
         }
         return Optional.empty();
