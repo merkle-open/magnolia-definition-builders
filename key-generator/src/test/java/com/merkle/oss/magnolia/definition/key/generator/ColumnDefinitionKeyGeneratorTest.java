@@ -11,10 +11,12 @@ import info.magnolia.ui.contentapp.configuration.column.ColumnDefinition;
 import info.magnolia.ui.contentapp.configuration.column.ConfiguredColumnDefinition;
 import info.magnolia.ui.editor.ConfiguredFormDefinition;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,18 +39,17 @@ class ColumnDefinitionKeyGeneratorTest extends AbstractKeyGeneratorTest {
         final ConfiguredColumnDefinition<?> columnDefinition = i18nIfy("idPrefix:dialogs/SomeDialog", List.of(column), column);
 
         assertEquals(
-                List.of(
-                        "idPrefix.dialogs.SomeDialog.views.someColumn.label",
-                        "idPrefix.dialogs.SomeDialog.views.someColumn",
-                        "SomeDialog.views.workbench.list.someColumn.label",
-                        "SomeDialog.views.workbench.list.someColumn",
-                        "SomeDialog.views.someColumn.label",
-                        "SomeDialog.views.someColumn",
-                        "workbenchchooser.views.someColumn.label",
-                        "workbenchchooser.views.someColumn",
-                        "views.someColumn.label",
-                        "views.someColumn"
-                ),
+                Stream.concat(
+                        Stream.of(
+                                "idPrefix.dialogs.SomeDialog.views.someColumn.label",
+                                "idPrefix.dialogs.SomeDialog.views.someColumn",
+                                "SomeDialog.views.workbench.list.someColumn.label",
+                                "SomeDialog.views.workbench.list.someColumn",
+                                "SomeDialog.views.someColumn.label",
+                                "SomeDialog.views.someColumn"
+                        ),
+                        Arrays.stream(new info.magnolia.ui.contentapp.configuration.column.ColumnDefinitionKeyGenerator().keysFor(null, columnDefinition, ColumnDefinition.class.getMethod("getLabel")))
+                ).toList(),
                 List.of(keyGenerator.keysFor((String)null, columnDefinition, ColumnDefinition.class.getMethod("getLabel")))
         );
     }

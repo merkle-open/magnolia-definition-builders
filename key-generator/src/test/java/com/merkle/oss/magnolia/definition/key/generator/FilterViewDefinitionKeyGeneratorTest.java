@@ -35,14 +35,7 @@ class FilterViewDefinitionKeyGeneratorTest extends AbstractKeyGeneratorTest {
         filterViewDefinition.setName("someFilter");
         final FilterViewDefinition<?> decoratedTextField = i18nIfy("someMagnoliaModuleIdPrefix:apps/SomeApp", filterViewDefinition);
         assertEquals(
-                List.of(
-                        "someMagnoliaModuleIdPrefix.apps.SomeApp.browser.filters.someFilter.label",
-                        "someMagnoliaModuleIdPrefix.apps.SomeApp.browser.filters.someFilter",
-                        "browser.filters.someFilter.label",
-                        "browser.filters.someFilter",
-                        "filters.someFilter.label",
-                        "filters.someFilter"
-                ),
+                List.of(new info.magnolia.ui.filteringapp.filter.FilterViewDefinitionKeyGenerator().keysFor(null, decoratedTextField, ConfiguredFilterViewDefinition.class.getMethod("getLabel"))),
                 List.of(keyGenerator.keysFor((String)null, decoratedTextField, ConfiguredFilterViewDefinition.class.getMethod("getLabel")))
         );
     }

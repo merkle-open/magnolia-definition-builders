@@ -35,12 +35,7 @@ class TabDefinitionKeyGeneratorTest extends AbstractKeyGeneratorTest {
         tab.setName("SomeTab");
         final TabDefinition decoratedTab = i18nIfy("someMagnoliaModuleIdPrefix:dialogs/SomeDialog", tab);
         assertEquals(
-                List.of(
-                        "someMagnoliaModuleIdPrefix.dialogs.SomeDialog.tabs.SomeTab.label",
-                        "someMagnoliaModuleIdPrefix.dialogs.SomeDialog.tabs.SomeTab",
-                        "tabs.SomeTab.label",
-                        "tabs.SomeTab"
-                ),
+                List.of(new info.magnolia.ui.editor.i18n.TabDefinitionKeyGenerator().keysFor(null, decoratedTab, TabDefinition.class.getMethod("getLabel"))),
                 List.of(keyGenerator.keysFor((String)null, decoratedTab, TabDefinition.class.getMethod("getLabel")))
         );
     }

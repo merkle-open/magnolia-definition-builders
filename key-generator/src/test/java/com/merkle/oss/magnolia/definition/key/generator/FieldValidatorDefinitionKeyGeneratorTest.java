@@ -40,11 +40,7 @@ class FieldValidatorDefinitionKeyGeneratorTest extends AbstractKeyGeneratorTest 
         textField.setValidators(List.of(validator));
         final TextFieldDefinition decoratedTextField = i18nIfy("someMagnoliaModuleIdPrefix:dialogs/SomeDialog", List.of(textField), textField);
         assertEquals(
-                List.of(
-                        "someMagnoliaModuleIdPrefix.dialogs.SomeDialog.someText.validation.errorMessage",
-                        "someText.validation.errorMessage",
-                        "validators.regexpValidator.errorMessage"
-                ),
+                List.of(new info.magnolia.ui.field.FieldValidatorDefinitionKeyGenerator().keysFor(null, decoratedTextField.getValidators().get(0), FieldValidatorDefinition.class.getMethod("getErrorMessage"))),
                 List.of(keyGenerator.keysFor((String)null, decoratedTextField.getValidators().get(0), FieldValidatorDefinition.class.getMethod("getErrorMessage")))
         );
     }

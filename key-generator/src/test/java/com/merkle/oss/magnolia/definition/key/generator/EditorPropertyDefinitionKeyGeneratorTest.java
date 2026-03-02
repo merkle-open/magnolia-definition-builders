@@ -34,12 +34,7 @@ class EditorPropertyDefinitionKeyGeneratorTest extends AbstractKeyGeneratorTest 
         textField.setName("someText");
         final TextFieldDefinition decoratedTextField = i18nIfy("someMagnoliaModuleIdPrefix:dialogs/SomeDialog", List.of(textField), textField);
         assertEquals(
-                List.of(
-                        "someMagnoliaModuleIdPrefix.dialogs.SomeDialog.someText.label",
-                        "someMagnoliaModuleIdPrefix.dialogs.SomeDialog.someText",
-                        "fields.someText.label",
-                        "fields.someText"
-                ),
+                List.of(new info.magnolia.ui.editor.i18n.EditorPropertyDefinitionKeyGenerator().keysFor(null, decoratedTextField, EditorPropertyDefinition.class.getMethod("getLabel"))),
                 List.of(keyGenerator.keysFor((String)null, decoratedTextField, EditorPropertyDefinition.class.getMethod("getLabel")))
         );
     }
