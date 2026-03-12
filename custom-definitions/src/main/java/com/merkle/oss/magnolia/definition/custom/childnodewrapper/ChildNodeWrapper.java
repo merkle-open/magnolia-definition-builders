@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 import javax.jcr.Node;
 
 public class ChildNodeWrapper<T extends EditorPropertyDefinition> extends ConfiguredComplexPropertyDefinition<Node> implements FormDefinition<Node> {
-    private final JcrChildNodeProviderDefinition nodeProvider = new JcrChildNodeProviderDefinition();
+    private final JcrChildNodeProviderDefinition nodeProvider = new PermissionRespectingJcrChildNodeProvider.Definition();
     private final String name;
     private final T field;
 
