@@ -1,4 +1,4 @@
-package com.merkle.oss.magnolia.definition.custom.childnodewrapper;
+package com.merkle.oss.magnolia.definition.custom.itemprovider;
 
 import info.magnolia.cms.security.AccessManager;
 import info.magnolia.cms.security.Permission;

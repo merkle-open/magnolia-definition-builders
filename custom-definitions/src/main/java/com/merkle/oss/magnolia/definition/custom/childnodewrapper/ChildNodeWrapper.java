@@ -17,6 +17,8 @@ import java.util.stream.Stream;
 
 import javax.jcr.Node;
 
+import com.merkle.oss.magnolia.definition.custom.itemprovider.PermissionRespectingJcrChildNodeProvider;
+
 public class ChildNodeWrapper<T extends EditorPropertyDefinition> extends ConfiguredComplexPropertyDefinition<Node> implements FormDefinition<Node> {
     private final JcrChildNodeProviderDefinition nodeProvider = new PermissionRespectingJcrChildNodeProvider.Definition();
     private final String name;
