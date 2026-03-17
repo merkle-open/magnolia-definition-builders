@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 import jakarta.annotation.Nullable;
 
+import com.merkle.oss.magnolia.definition.custom.itemprovider.PermissionRespectingJcrChildNodeProvider;
 import com.merkle.oss.magnolia.definition.custom.switchable.AbstractSwitchableDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
 import com.merkle.oss.magnolia.definition.custom.switchable.PrefixFormNameExceptFieldPropertyNameDecorator;
@@ -22,7 +23,7 @@ public abstract class AbstractSwitchableLinkSetDefinitionBuilder<B extends Abstr
 
 	protected AbstractSwitchableLinkSetDefinitionBuilder(final String labelPrefix, final boolean switchableFieldI18n, final boolean removePreviouslySelected) {
 		super(labelPrefix, switchableFieldI18n);
-		final JcrChildNodeProviderDefinition childNodeProvider = new JcrChildNodeProviderDefinition();
+		final JcrChildNodeProviderDefinition childNodeProvider = new PermissionRespectingJcrChildNodeProvider.Definition();
 		childNodeProvider.setSupportI18N(false);
 		itemProvider(childNodeProvider);
 		propertyNameDecorator(PrefixFormNameExceptFieldPropertyNameDecorator.class);
