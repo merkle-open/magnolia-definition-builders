@@ -37,7 +37,7 @@
 	<properties>
 		<!-- (check for new versions:  mvn versions:display-property-updates )-->
 
-		<magnolia.version>6.4.3</magnolia.version>
+		<magnolia.version>6.4.4</magnolia.version>
 		<magnolia.workflow.version>6.0.8</magnolia.workflow.version>
     <spring.version>6.1.21</spring.version>
     <merkle.powernode.version>2.3.2</merkle.powernode.version>
