@@ -110,7 +110,10 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 				mlink.identifier = node.getIdentifier();
 				mlink.repository = node.getSession().getWorkspace().getName();
 				mlink.path = node.getPath();
-				mlink.caption = node.getName();
+				mlink.caption =  getDefinition().getMgnlLinkConfig()
+						.map(mgnlLinkConfig -> mgnlLinkConfig.linkTextProvider)
+						.flatMap(linkTextProvider -> linkTextProvider.apply(node))
+						.orElseGet(() -> Exceptions.wrap().get(node::getName));
 				return mlink;
 			});
 		}
