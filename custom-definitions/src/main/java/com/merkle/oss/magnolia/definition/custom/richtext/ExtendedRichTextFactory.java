@@ -10,7 +10,6 @@ import info.magnolia.i18nsystem.I18nizer;
 import info.magnolia.i18nsystem.SimpleTranslator;
 import info.magnolia.i18nsystem.TranslationService;
 import info.magnolia.init.MagnoliaConfigurationProperties;
-import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.ui.dialog.DialogDefinitionRegistry;
 import info.magnolia.ui.editor.LocaleContext;
 import info.magnolia.ui.field.RichTextFieldDefinition;
@@ -24,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import jakarta.inject.Inject;
 import javax.jcr.Node;
 
 import org.slf4j.Logger;
@@ -42,6 +40,8 @@ import com.merkle.oss.magnolia.definition.custom.richtext.config.link.MgnlLinkCo
 import com.merkle.oss.magnolia.definition.custom.richtext.config.table.TableConfig;
 import com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.ToolbarConfig;
 import com.vaadin.ui.Component;
+
+import jakarta.inject.Inject;
 
 public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 	private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -104,15 +104,16 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
 
 	@Override
 	protected MagnoliaLink createMagnoliaLink(final Object object) {
-		//TODO broken in magnolia info.magnolia.ui.field.factory.RichTextFieldFactory
-		if (object instanceof Node) {
+		if (object instanceof Node node) {
 			return Exceptions.wrap().get(() -> {
-				final Node node = (Node) object;
 				final MagnoliaLink mlink = new MagnoliaLink();
 				mlink.identifier = node.getIdentifier();
-				mlink.repository = RepositoryConstants.WEBSITE;
+				mlink.repository = node.getSession().getWorkspace().getName();
 				mlink.path = node.getPath();
-				mlink.caption = node.getName();
+				mlink.caption =  getDefinition().getMgnlLinkConfig()
+						.map(mgnlLinkConfig -> mgnlLinkConfig.linkTextProvider)
+						.flatMap(linkTextProvider -> linkTextProvider.apply(node))
+						.orElseGet(() -> Exceptions.wrap().get(node::getName));
 				return mlink;
 			});
 		}
@@ -136,7 +137,9 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
                     printDebugLogs
 			);
 		}
-        final MgnlLinkConfig mgnlLinkConfig = getDefinition().getMgnlLinkConfig().orElseGet(() -> new MgnlLinkConfig.Builder().build());
+        final MgnlLinkConfig mgnlLinkConfig = getDefinition().getMgnlLinkConfig().map(linkConfig ->
+				new MgnlLinkConfig.Builder(linkConfig).linkTextProvider(null).build()
+		).orElseGet(() -> new MgnlLinkConfig.Builder().build());
         final LinkConfig linkConfig = getDefinition().getLinkConfig().orElseGet(() -> new LinkConfig.Builder().build());
         return new ExtendedCKEditor5TextFieldConfig(
 				ckEditor5Config.getCkeditor5License(),

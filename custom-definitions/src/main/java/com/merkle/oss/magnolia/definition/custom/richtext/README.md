@@ -173,3 +173,22 @@ private Optional<SafeHtmlValidatorDefinition> getGlobalSafeHtmlValidator() {
             .findFirst();
 }
 ```
+
+### Custom link text provider
+Allows to provide a custom link text - default is the node's name.
+```java
+import java.util.Optional;
+
+@TabFactory("someTab")
+public List<EditorPropertyDefinition> someTab() {
+    return List.of(
+            new ExtendedRichTextDefinitionBuilder()
+                    .toolbarConfig(new SomeToolbar())
+                    .mgnlLinkConfig(new MgnlLinkConfig.Builder().linkTextProvider(node ->
+                            //TODO implement
+                            Optional.of("custom link text")
+                    ).build())
+                    .build("someRichText")
+    );
+}
+```
