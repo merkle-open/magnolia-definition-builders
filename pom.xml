@@ -42,7 +42,7 @@
     <spring.version>6.1.21</spring.version>
     <merkle.powernode.version>2.3.3</merkle.powernode.version>
 		<java.poet.version>1.12.1</java.poet.version>
-		<qrCodeGenerator.version>0.5.5</qrCodeGenerator.version>
+		<qrCodeGenerator.version>0.5.6</qrCodeGenerator.version>
 
 		<!--Test dependency versions-->
 		<junit.version>6.1.0</junit.version>
