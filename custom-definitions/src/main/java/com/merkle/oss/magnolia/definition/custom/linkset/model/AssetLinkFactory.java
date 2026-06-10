@@ -1,32 +1,28 @@
 package com.merkle.oss.magnolia.definition.custom.linkset.model;
 
-import com.merkle.oss.magnolia.definition.custom.configuration.LinkUtil;
+import static java.util.function.Predicate.not;
+
+import info.magnolia.dam.api.Asset;
+import info.magnolia.dam.templating.functions.DamTemplatingFunctions;
+
+import java.util.Locale;
+import java.util.Optional;
+import java.util.function.Supplier;
+
 import com.merkle.oss.magnolia.definition.custom.linkset.LinkSetDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.linkset.LinkType;
 import com.merkle.oss.magnolia.definition.custom.linkset.LinkTypes;
 import com.merkle.oss.magnolia.powernode.PowerNode;
 import com.merkle.oss.magnolia.powernode.ValueConverter;
-import info.magnolia.dam.api.Asset;
-import info.magnolia.dam.templating.functions.DamTemplatingFunctions;
 
 import jakarta.inject.Inject;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.function.Supplier;
-
-import static java.util.function.Predicate.not;
 
 public class AssetLinkFactory implements LinkModelFactory.LinkFactory {
 	private final DamTemplatingFunctions damTemplatingFunctions;
-	private final LinkUtil linkUtil;
 
 	@Inject
-	public AssetLinkFactory(
-			final DamTemplatingFunctions damTemplatingFunctions,
-			final LinkUtil linkUtil
-	) {
+	public AssetLinkFactory(final DamTemplatingFunctions damTemplatingFunctions) {
 		this.damTemplatingFunctions = damTemplatingFunctions;
-		this.linkUtil = linkUtil;
 	}
 
 	@Override
@@ -46,7 +42,6 @@ public class AssetLinkFactory implements LinkModelFactory.LinkFactory {
 										asset
 								),
 								asset.getLink(),
-								linkUtil.toExternalLink(asset.getLink()),
 								node.getProperty(LinkSetDefinitionBuilder.OPEN_IN_NEW_TAB_PROPERTY_NAME_PROVIDER.apply(propertyName), ValueConverter::getBoolean).orElse(false),
 								false,
 								LinkTypes.ASSET_DAM

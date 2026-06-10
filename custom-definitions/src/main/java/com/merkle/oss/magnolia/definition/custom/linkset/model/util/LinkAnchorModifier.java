@@ -11,8 +11,7 @@ public class LinkAnchorModifier {
 
 	public Link with(final Link link, final String anchorId) {
 		return link.withHref(
-				getUrlWithAnchor(link.getHref(), anchorId),
-				getUrlWithAnchor(link.getExternalHref(), anchorId)
+				getUrlWithAnchor(link.getHref(), anchorId)
 		);
 	}
 

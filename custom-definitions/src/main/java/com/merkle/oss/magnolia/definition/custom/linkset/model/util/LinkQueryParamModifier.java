@@ -20,8 +20,7 @@ public class LinkQueryParamModifier {
 
 	private Link modify(final Link link, final Map<String, String> queryParams, final boolean replace) {
 		return link.withHref(
-				setQueryParams(link.getHref(), queryParams, replace),
-				setQueryParams(link.getExternalHref(), queryParams, replace)
+				setQueryParams(link.getHref(), queryParams, replace)
 		);
 	}
 

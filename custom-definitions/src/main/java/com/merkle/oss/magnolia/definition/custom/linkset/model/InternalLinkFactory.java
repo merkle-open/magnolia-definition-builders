@@ -70,7 +70,6 @@ public class InternalLinkFactory implements LinkModelFactory.LinkFactory {
 		return new LinkModel(
 				getText(() -> Optional.ofNullable(text), locale, targetPage),
 				linkUtil.createInternalLink(locale, targetPage),
-				linkUtil.createExternalLink(locale, targetPage),
 				openInNewWindow,
 				false,
 				LinkTypes.INTERNAL

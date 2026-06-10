@@ -24,7 +24,6 @@ public class ExternalLinkFactory implements LinkModelFactory.LinkFactory {
 						new LinkModel(
 								getText(() -> node.getProperty(LinkSetDefinitionBuilder.LINK_TEXT_PROPERTY_NAME_PROVIDER.apply(propertyName), dialogLocale, ValueConverter::getString), locale, href),
 								href,
-								href,
 								node.getProperty(LinkSetDefinitionBuilder.OPEN_IN_NEW_TAB_PROPERTY_NAME_PROVIDER.apply(propertyName), ValueConverter::getBoolean).orElse(true),
 								true,
 								LinkTypes.EXTERNAL

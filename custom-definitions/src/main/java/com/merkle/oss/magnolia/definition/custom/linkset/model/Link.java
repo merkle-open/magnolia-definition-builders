@@ -5,11 +5,10 @@ import com.merkle.oss.magnolia.definition.custom.linkset.LinkType;
 public interface Link {
 	String getText();
 	String getHref();
-	String getExternalHref();
 	boolean isOpenInNewWindow();
 
 	Link withText(String text);
-	Link withHref(String href, String externalHref);
+	Link withHref(String href);
 	Link withOpenInNewWindow(boolean openInNewWindow);
 
 	LinkType getLinkType();

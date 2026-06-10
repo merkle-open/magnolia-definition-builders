@@ -11,12 +11,11 @@ public final class LinkModel extends AbstractLinkModel {
 	public LinkModel(
 			final String text,
 			final String href,
-			final String externalHref,
 			final boolean openInNewWindow,
 			final boolean isExternal,
 			final LinkType linkType
 	) {
-		super(text, href, externalHref, openInNewWindow, isExternal, linkType);
+		super(text, href, openInNewWindow, isExternal, linkType);
 	}
 
 	@Override

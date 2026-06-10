@@ -14,7 +14,6 @@ class ExtendedLinkQueryParamModifierTest {
     private static final Link LINK = new LinkModel(
             "linkText",
             "/de/test?param1=42",
-            "https://someDomain.com/de/test?param1=42",
             false,
             false,
             LinkTypes.INTERNAL
@@ -26,7 +25,6 @@ class ExtendedLinkQueryParamModifierTest {
                 new LinkModel(
                         "linkText",
                         "/de/test?param1=42&param2=43",
-                        "https://someDomain.com/de/test?param1=42&param2=43",
                         false,
                         false,
                         LinkTypes.INTERNAL
@@ -41,7 +39,6 @@ class ExtendedLinkQueryParamModifierTest {
                 new LinkModel(
                         "linkText",
                         "/de/test?param2=43",
-                        "https://someDomain.com/de/test?param2=43",
                         false,
                         false,
                         LinkTypes.INTERNAL
