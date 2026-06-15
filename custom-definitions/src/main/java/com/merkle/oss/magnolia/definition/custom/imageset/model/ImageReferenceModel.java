@@ -1,5 +1,6 @@
 package com.merkle.oss.magnolia.definition.custom.imageset.model;
 
+import java.io.Serializable;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,7 +15,7 @@ import com.merkle.oss.magnolia.definition.custom.imageset.ImageType;
 import com.merkle.oss.magnolia.powernode.PowerNode;
 import com.merkle.oss.magnolia.powernode.ValueConverter;
 
-public class ImageReferenceModel {
+public class ImageReferenceModel implements Serializable {
 	private final String assetId;
 	private final ImageType imageType;
 	@Nullable

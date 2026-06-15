@@ -7,6 +7,8 @@ import com.merkle.oss.magnolia.powernode.PowerNode;
 
 import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
+
+import java.io.Serializable;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -15,7 +17,7 @@ import java.util.function.Predicate;
 
 import org.apache.commons.lang3.NotImplementedException;
 
-public class VideoModel {
+public class VideoModel implements Serializable {
 	private final String src;
 	private final VideoType videoType;
 	@Nullable

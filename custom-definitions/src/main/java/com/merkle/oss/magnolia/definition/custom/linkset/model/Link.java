@@ -1,8 +1,10 @@
 package com.merkle.oss.magnolia.definition.custom.linkset.model;
 
+import java.io.Serializable;
+
 import com.merkle.oss.magnolia.definition.custom.linkset.LinkType;
 
-public interface Link {
+public interface Link extends Serializable {
 	String getText();
 	String getHref();
 	boolean isOpenInNewWindow();

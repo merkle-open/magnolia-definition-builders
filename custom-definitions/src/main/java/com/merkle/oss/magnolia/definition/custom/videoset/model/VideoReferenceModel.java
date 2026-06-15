@@ -1,5 +1,6 @@
 package com.merkle.oss.magnolia.definition.custom.videoset.model;
 
+import java.io.Serializable;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -15,7 +16,7 @@ import com.merkle.oss.magnolia.powernode.ValueConverter;
 import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
 
-public class VideoReferenceModel {
+public class VideoReferenceModel implements Serializable {
 	private final String assetId;
 	private final VideoType videoType;
 	@Nullable
