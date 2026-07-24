@@ -61,14 +61,16 @@ Internal magnolia DAM asset.
    import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
    import com.merkle.oss.magnolia.definition.custom.imageset.ImageType;
    import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageReferenceModel;
+   import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageSourceTransformer;
    
    public class CustomImageReferenceModelFactory extends ImageReferenceModel.Factory {
       @Inject
       public CustomImageReferenceModelFactory(
               final Set<ImageType.Resolver> imageTypeResolvers,
-              final LocaleProvider localeProvider
+              final LocaleProvider localeProvider,
+              final ImageSourceTransformer.Provider imageSourceTransformerProvider
       ) {
-         super(imageTypeResolvers, localeProvider, false);
+         super(imageTypeResolvers, localeProvider, imageSourceTransformerProvider, false);
       }
    }
    ```
@@ -78,15 +80,16 @@ Internal magnolia DAM asset.
    import jakarta.inject.Inject;
    import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
    import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageModel;
+   import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageSourceTransformer;
    
    public class CustomImageModelFactory extends ImageModel.Factory  {
        @Inject
        public CustomImageModelFactory(
                final LocaleProvider localeProvider,
                final CustomImageReferenceModelFactory imageReferenceFactory,
-               final Set<ImageModel.ImageSourceTransformer> imageSourceTransformers
+               final ImageSourceTransformer.Provider imageSourceTransformerProvider
        ) {
-           super(localeProvider, imageReferenceFactory, imageSourceTransformers);
+           super(localeProvider, imageReferenceFactory, imageSourceTransformerProvider);
        }
    }
    ```
@@ -188,21 +191,25 @@ Internal magnolia DAM asset.
 3. Implement custom ImageSourceTransformer
    ```java
    import com.merkle.oss.magnolia.definition.custom.imageset.ImageType;
-   import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageModel;
+   import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageSourceTransformer;
+   import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageSourceTransformer.ImageSource;
    
    import java.util.Locale;
    import java.util.Optional;
    
-   public class AprimoImageSourceTransformer implements ImageModel.ImageSourceTransformer {
+   public class AprimoImageSourceTransformer implements ImageSourceTransformer {
    
       @Override
-      public Optional<ImageModel.ImageSource> transform(final Locale locale, final String assetId) {
-         return Optional.of(new ImageModel.ImageSource(
+      public Optional<ImageSource> transform(final Locale locale, final String assetId) {
+         return Optional.of(new ImageSource(
                  "https://aprimo.com/asset/"+assetId,
                  null
          ));
       }
-   
+      @Override
+      public boolean exists(final String assetId) {
+        return true;
+      }
       @Override
       public boolean test(final ImageType imageType) {
          return CustomImageTypes.APRIMO.equals(imageType);
@@ -213,7 +220,7 @@ Internal magnolia DAM asset.
    ```java
    import com.google.inject.multibindings.Multibinder;
    import com.merkle.oss.magnolia.definition.custom.imageset.ImageType;
-   import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageModel;   
+   import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageSourceTransformer;   
    import info.magnolia.objectfactory.guice.AbstractGuiceComponentConfigurer;
    
    public class CustomLinkTypesGuiceComponentConfigurer extends AbstractGuiceComponentConfigurer {
@@ -223,7 +230,7 @@ Internal magnolia DAM asset.
          final Multibinder<ImageType.Resolver> imageTypeResolversMultibinder = Multibinder.newSetBinder(binder, ImageType.Resolver.class);
          imageTypeResolversMultibinder.addBinding().toProvider(() -> CustomImageTypes::fromValue);
    
-         final Multibinder<ImageModel.ImageSourceTransformer> imageSourceTransformersMultibinder = Multibinder.newSetBinder(binder, ImageModel.ImageSourceTransformer.class);
+         final Multibinder<ImageSourceTransformer> imageSourceTransformersMultibinder = Multibinder.newSetBinder(binder, ImageSourceTransformer.class);
          imageSourceTransformersMultibinder.addBinding().to(AprimoImageSourceTransformer.class);
       }
    }

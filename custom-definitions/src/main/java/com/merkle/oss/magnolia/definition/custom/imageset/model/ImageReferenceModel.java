@@ -6,14 +6,14 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import jakarta.annotation.Nullable;
-import jakarta.inject.Inject;
-
 import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
 import com.merkle.oss.magnolia.definition.custom.imageset.ImageSetDefinitionBuilder;
 import com.merkle.oss.magnolia.definition.custom.imageset.ImageType;
 import com.merkle.oss.magnolia.powernode.PowerNode;
 import com.merkle.oss.magnolia.powernode.ValueConverter;
+
+import jakarta.annotation.Nullable;
+import jakarta.inject.Inject;
 
 public class ImageReferenceModel implements Serializable {
 	private final String assetId;
@@ -68,23 +68,28 @@ public class ImageReferenceModel implements Serializable {
 	public static class Factory {
 		private final Set<ImageType.Resolver> imageTypeResolvers;
 		private final LocaleProvider localeProvider;
+        private final ImageSourceTransformer.Provider imageSourceTransformerProvider;
         private final boolean imageFieldI18n;
 
         @Inject
 		public Factory(
 				final Set<ImageType.Resolver> imageTypeResolvers,
-				final LocaleProvider localeProvider
+				final LocaleProvider localeProvider,
+				final ImageSourceTransformer.Provider imageSourceTransformerProvider
 		) {
-			this(imageTypeResolvers, localeProvider, true);
+			this(imageTypeResolvers, localeProvider, imageSourceTransformerProvider, true);
+
 		}
 
 		protected Factory(
 				final Set<ImageType.Resolver> imageTypeResolvers,
 				final LocaleProvider localeProvider,
+				final ImageSourceTransformer.Provider imageSourceTransformerProvider,
 				final boolean imageFieldI18n
 		) {
             this.imageTypeResolvers = imageTypeResolvers;
             this.localeProvider = localeProvider;
+            this.imageSourceTransformerProvider = imageSourceTransformerProvider;
             this.imageFieldI18n = imageFieldI18n;
         }
 
@@ -95,13 +100,15 @@ public class ImageReferenceModel implements Serializable {
 		public Optional<ImageReferenceModel> create(final String propertyName, final Locale dialogLocale, final PowerNode image) {
 			final Locale assetIdDialogLocale = imageFieldI18n ? dialogLocale : localeProvider.getDefaultLocale(image);
 			return image.getProperty(ImageSetDefinitionBuilder.SELECTION_PROPERTY_NAME_PROVIDER.apply(propertyName), assetIdDialogLocale, ValueConverter::getString).flatMap(this::resolve).flatMap(imageType ->
-					image.getProperty(propertyName + imageType.getValue(), assetIdDialogLocale, ValueConverter::getString).map(assetId ->
-							new ImageReferenceModel(
-									assetId,
-									imageType,
-									image.getProperty(ImageSetDefinitionBuilder.ALT_TEXT_PROPERTY_NAME_PROVIDER.apply(propertyName), dialogLocale, ValueConverter::getString).orElse(null)
+					image.getProperty(propertyName + imageType.getValue(), assetIdDialogLocale, ValueConverter::getString)
+							.filter(assetId -> imageSourceTransformerProvider.get(imageType).exists(assetId))
+							.map(assetId ->
+									new ImageReferenceModel(
+											assetId,
+											imageType,
+											image.getProperty(ImageSetDefinitionBuilder.ALT_TEXT_PROPERTY_NAME_PROVIDER.apply(propertyName), dialogLocale, ValueConverter::getString).orElse(null)
+									)
 							)
-					)
 			);
 		}
 

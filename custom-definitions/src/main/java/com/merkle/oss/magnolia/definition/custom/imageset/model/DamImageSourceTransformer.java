@@ -2,14 +2,14 @@ package com.merkle.oss.magnolia.definition.custom.imageset.model;
 
 import com.merkle.oss.magnolia.definition.custom.imageset.ImageType;
 import com.merkle.oss.magnolia.definition.custom.imageset.ImageTypes;
-import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageModel.ImageSource;
-import com.merkle.oss.magnolia.definition.custom.imageset.model.ImageModel.ImageSourceTransformer;
 import com.merkle.oss.magnolia.powernode.PowerNodeService;
 import com.merkle.oss.magnolia.powernode.ValueConverter;
 
 import info.magnolia.dam.api.Asset;
+import info.magnolia.dam.api.ItemKey;
 import info.magnolia.dam.jcr.AbstractJcrItem;
 import info.magnolia.dam.jcr.AssetNodeTypes;
+import info.magnolia.dam.jcr.DamConstants;
 import info.magnolia.dam.templating.functions.DamTemplatingFunctions;
 
 import jakarta.inject.Inject;
@@ -43,6 +43,11 @@ public class DamImageSourceTransformer implements ImageSourceTransformer {
 				.map(asset ->
 					new ImageSource(asset.getLink(), getAltText(locale, asset))
 				);
+	}
+
+	@Override
+	public boolean exists(final String assetId) {
+		return powerNodeService.getByIdentifier(DamConstants.WORKSPACE, ItemKey.from(assetId).getAssetId()).isPresent();
 	}
 
 	protected String getAltText(final Locale locale, final Asset asset) {

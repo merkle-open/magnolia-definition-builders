@@ -1,20 +1,16 @@
 package com.merkle.oss.magnolia.definition.custom.imageset.model;
 
+import java.io.Serializable;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Optional;
+
 import com.merkle.oss.magnolia.definition.custom.configuration.LocaleProvider;
 import com.merkle.oss.magnolia.definition.custom.imageset.ImageType;
 import com.merkle.oss.magnolia.powernode.PowerNode;
 
 import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
-
-import java.io.Serializable;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Predicate;
-
-import org.apache.commons.lang3.NotImplementedException;
 
 public class ImageModel implements Serializable {
 	private final String src;
@@ -65,17 +61,17 @@ public class ImageModel implements Serializable {
 	public static class Factory {
 		private final LocaleProvider localeProvider;
 		private final ImageReferenceModel.Factory imageReferenceFactory;
-		private final Set<ImageSourceTransformer> imageSourceTransformers;
+        private final ImageSourceTransformer.Provider imageSourceTransformerProvider;
 
 		@Inject
 		public Factory(
 				final LocaleProvider localeProvider,
 				final ImageReferenceModel.Factory imageReferenceFactory,
-				final Set<ImageSourceTransformer> imageSourceTransformers
+				final ImageSourceTransformer.Provider imageSourceTransformerProvider
 		) {
 			this.localeProvider = localeProvider;
 			this.imageReferenceFactory = imageReferenceFactory;
-			this.imageSourceTransformers = imageSourceTransformers;
+            this.imageSourceTransformerProvider = imageSourceTransformerProvider;
 		}
 
 		public Optional<ImageModel> create(final Locale locale, final String propertyName, final PowerNode image) {
@@ -89,36 +85,13 @@ public class ImageModel implements Serializable {
 		}
 
 		public Optional<ImageModel> create(final Locale locale, final ImageReferenceModel imageReference) {
-			return getSourceTransformer(imageReference.getImageType()).transform(locale, imageReference.getAssetId()).map(imageSource ->
+			return imageSourceTransformerProvider.get(imageReference.getImageType()).transform(locale, imageReference.getAssetId()).map(imageSource ->
 					new ImageModel(
-							imageSource.src,
+							imageSource.getSrc(),
 							imageReference.getImageType(),
-							imageReference.getAltText().orElse(imageSource.altText)
+							imageReference.getAltText().or(imageSource::getAltText).orElse(null)
 					)
 			);
-		}
-
-		private ImageSourceTransformer getSourceTransformer(final ImageType imageType) {
-			return imageSourceTransformers.stream()
-					.filter(transformer -> transformer.test(imageType)).findFirst()
-					.orElseThrow(() ->
-							new NotImplementedException("No source transformer configured for " + imageType)
-					);
-		}
-	}
-
-	public interface ImageSourceTransformer extends Predicate<ImageType> {
-		Optional<ImageSource> transform(Locale locale, String assetId);
-	}
-
-	public static class ImageSource {
-		private final String src;
-		@Nullable
-		private final String altText;
-
-		public ImageSource(final String src, @Nullable final String altText) {
-			this.src = src;
-			this.altText = altText;
 		}
 	}
 }
