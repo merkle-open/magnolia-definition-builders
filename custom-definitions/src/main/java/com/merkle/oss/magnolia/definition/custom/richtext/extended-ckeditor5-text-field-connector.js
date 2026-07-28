@@ -40,7 +40,6 @@ function mapPropertyPattern(propertyPattern) {
 function mapToolbarItems(toolbarItems) {
   return toolbarItems.map(mapToolbarItem);
 }
-
 function mapToolbarItem(toolbarItem) {
   if(toolbarItem.flatValue) {
     return toolbarItem.flatValue;
@@ -60,6 +59,23 @@ function updateHeadingOptions(options) {
   options.forEach((option) => option.class = option.clazz);
 }
 
+function updateDefaultFontOptions(options) {
+  return options.map(updateDefaultFontOption);
+}
+function updateDefaultFontOption(option) {
+  if(option.model === 'default' || option.color === 'default') {
+    return 'default';
+  }
+  return option;
+}
+
+function updateColorPicker(colorPicker) {
+  if(colorPicker === undefined) {
+    return false;
+  }
+  return colorPicker;
+}
+
 // copied from info.magnolia.ui.vaadin.ckeditor ckeditor5-text-field-connector
 com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
   function () {
@@ -71,6 +87,10 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
       //different from magnolia
       let config = state.extendedConfig;
       updateHeadingOptions(config.heading.options);
+      config.fontFamily.options = updateDefaultFontOptions(config.fontFamily.options);
+      config.fontSize.options = updateDefaultFontOptions(config.fontSize.options);
+      config.fontColor.colors = updateDefaultFontOptions(config.fontColor.colors);
+      config.fontColor.colorPicker = updateColorPicker(config.fontColor.colorPicker);
 
       config.toolbar.items = mapToolbarItems(config.toolbar.items);
 
@@ -129,14 +149,16 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
         document.head.appendChild(style);
       }
 
-      CKEDITOR5.create(this.getElement(), config)
-        .then(newEditor => {
-          let data = this.getState().value;
-          if (data != null) {
-            newEditor.setData(data);
+      let data = this.getState().value;
+      CKEDITOR5.create(
+          this.getElement(),
+          {
+            ...config,
+            ...(data != null ? { initialData: data } : {})
           }
+      ).then(newEditor => {
           newEditor.model.document.on('change:data', () => {
-            connector.onDataChange(editor.getData());
+            connector.onDataChange(newEditor.getData());
           });
           newEditor.keystrokes.set('Enter', (evt, data) => {
             // prevent the enter key from submitting the form
@@ -152,6 +174,17 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
           this.onReceiveEventFromServer = function (name, value) {
             // dispatch the event to the corresponding editor plugin listener
             newEditor.fire(name, value);
+          };
+
+          // Synchronize server-side updates into the live CKEditor instance.
+          this.repopulateFromServer = function(value) {
+            if (newEditor.plugins.has('RealTimeCollaborativeEditing')) {
+              return;
+            }
+            const incoming = value ?? '';
+            if (incoming !== newEditor.getData()) {
+              newEditor.setData(incoming);
+            }
           };
 
           // Pass user interaction to the server-side
@@ -173,7 +206,10 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
       this.onUnregister = function () {
         editor.destroy().catch(error => console.error(error));
         //remove the data-mgnl-ckeditor-css
-        document.querySelector('style[data-mgnl-ckeditor-css]').remove();
+        let mgnlCkeditorCSS = document.querySelector('style[data-mgnl-ckeditor-css]');
+        if (mgnlCkeditorCSS) {
+          mgnlCkeditorCSS.remove();
+        }
       }
     } catch (err) {
       console.error("Failed to init richtext editor", err);
