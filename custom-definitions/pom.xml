@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.merkle.oss.magnolia</groupId>
         <artifactId>magnolia-definition-builders-parent</artifactId>
-        <version>1.2.36-M6_3-SNAPSHOT</version>
+        <version>1.2.38-M6_3-SNAPSHOT</version>
     </parent>
 
     <artifactId>custom-definition-builders</artifactId>
