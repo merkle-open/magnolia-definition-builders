@@ -54,7 +54,7 @@
 		<mvn.surefire.plugin.version>3.5.6</mvn.surefire.plugin.version>
 		<mvn.javadoc.version>3.12.0</mvn.javadoc.version>
 		<mvn.gpg.plugin.version>3.2.5</mvn.gpg.plugin.version>
-		<mvn.sonatype.publishing.plugin.version>0.5.0</mvn.sonatype.publishing.plugin.version>
+		<mvn.sonatype.publishing.plugin.version>0.11.0</mvn.sonatype.publishing.plugin.version>
 		<mvn.plugin.version>3.9.0</mvn.plugin.version>
 
 		<javaVersion>17</javaVersion>
