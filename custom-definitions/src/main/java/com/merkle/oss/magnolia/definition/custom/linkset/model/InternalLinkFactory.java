@@ -1,6 +1,6 @@
 package com.merkle.oss.magnolia.definition.custom.linkset.model;
 
-import static info.magnolia.repository.RepositoryConstants.WEBSITE;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -53,17 +53,17 @@ public class InternalLinkFactory implements LinkModelFactory.LinkFactory {
 	@Override
 	public Optional<Link> create(final Locale locale, final Locale dialogLocale, final PowerNode node, final String name) {
 		return node.getProperty(name, singleTree ? localeProvider.getDefaultLocale(node) : dialogLocale, ValueConverter::getString)
-				.flatMap(identifier ->
-						powerNodeService.getByIdentifier(WEBSITE, identifier)
-				)
-				.map(targetPage ->
-						create(
-								locale,
-								targetPage,
-								node.getProperty(LinkSetDefinitionBuilder.LINK_TEXT_PROPERTY_NAME_PROVIDER.apply(name), dialogLocale, ValueConverter::getString).orElse(null),
-								node.getProperty(LinkSetDefinitionBuilder.OPEN_IN_NEW_TAB_PROPERTY_NAME_PROVIDER.apply(name), ValueConverter::getBoolean).orElse(false)
-						)
-				);
+				.flatMap(identifier ->powerNodeService.getByIdentifier(RepositoryConstants.WEBSITE, identifier))
+				.map(targetPage -> create(locale, dialogLocale, node, targetPage, name));
+	}
+
+	protected Link create(final Locale locale, final Locale dialogLocale, final PowerNode node, final PowerNode targetPage, final String name) {
+		return create(
+				locale,
+				targetPage,
+				node.getProperty(LinkSetDefinitionBuilder.LINK_TEXT_PROPERTY_NAME_PROVIDER.apply(name), dialogLocale, ValueConverter::getString).orElse(null),
+				node.getProperty(LinkSetDefinitionBuilder.OPEN_IN_NEW_TAB_PROPERTY_NAME_PROVIDER.apply(name), ValueConverter::getBoolean).orElse(false)
+		);
 	}
 
 	public Link create(final Locale locale, final PowerNode targetPage, @Nullable final String text, final boolean openInNewWindow) {
