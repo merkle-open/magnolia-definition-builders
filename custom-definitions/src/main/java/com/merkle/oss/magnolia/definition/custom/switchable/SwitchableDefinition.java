@@ -4,6 +4,7 @@ import info.magnolia.ui.datasource.optionlist.Option;
 import info.magnolia.ui.datasource.optionlist.OptionListDefinition;
 import info.magnolia.ui.editor.CurrentItemProviderDefinition;
 import info.magnolia.ui.editor.FormDefinition;
+import info.magnolia.ui.editor.MayHaveI18NProperties;
 import info.magnolia.ui.editor.SwitchableFormDefinition;
 import info.magnolia.ui.editor.SwitchableFormView;
 import info.magnolia.ui.field.AbstractSelectFieldDefinition;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 
 import javax.jcr.Node;
 
-public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<Node> implements SwitchableFormDefinition<Node> {
+public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<Node> implements SwitchableFormDefinition<Node>, MayHaveI18NProperties {
 	private final Class<? extends PropertyNameDecorator> propertyNameDecoratorClass;
 	private final AbstractSelectFieldDefinition optionsField; // Can't add generics because magnolia is stripping type info in AbstractOptionGroupFieldDefinition
 	private final List<SwitchableForm> forms;
@@ -65,6 +66,11 @@ public class SwitchableDefinition extends ConfiguredComplexPropertyDefinition<No
 			applyField(field -> field.setI18n(i18n));
 		}
 		applyForms(switchableForm -> switchableForm.setI18n(i18n));
+	}
+
+	@Override
+	public boolean hasI18NProperties() {
+		return forms.stream().anyMatch(SwitchableForm::isI18n);
 	}
 
 	public void setReadOnly(final boolean readOnly) {
