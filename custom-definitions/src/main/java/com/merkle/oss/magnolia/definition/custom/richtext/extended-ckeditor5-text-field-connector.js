@@ -118,7 +118,8 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
       }
       // different from magnolia
 
-      CKEDITOR5.create(this.getElement(), config)
+      let data = this.getState().value;
+      CKEDITOR5.create(this.getElement(), { ...config, ...(data != null ? { initialData: data } : {})})
         .then(newEditor => {
           // Import CSS to the head
           if (!document.querySelector('style[data-mgnl-ckeditor-css]')) {
@@ -154,9 +155,11 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
             document.head.appendChild(style);
           }
 
-          let data = this.getState().value;
-          if (data != null) {
-            newEditor.setData(data);
+          if (this.getState().readOnly) {
+            newEditor.enableReadOnlyMode('ckeditor5-text-field-connector');
+
+            const toolbarElement = newEditor.ui.view.toolbar?.element;
+            if (toolbarElement) toolbarElement.style.display = 'none';
           }
           newEditor.model.document.on('change:data', () => {
             connector.onDataChange(editor.getData());
@@ -185,6 +188,25 @@ com_merkle_oss_magnolia_definition_custom_richtext_ExtendedCKEditor5TextField =
             }
             connector.onReceiveEventFromClient(connectorEvent, data);
           })
+
+          // Re-sync server-initiated value updates (e.g. formView.populate(node))
+          // into the live editor. Called explicitly by the server via
+          // callFunction so user typing — which does not mark shared state
+          // dirty — never reaches this path and never fights keystrokes.
+          this.repopulateFromServer = function (value) {
+            // Real-time collaboration: CK5's RTC plugin forbids setData()
+            // after init because it would overwrite concurrent edits from
+            // other users. When the RealTimeCollaborativeEditing plugin is
+            // loaded we no-op; callers needing programmatic updates under
+            // RTC must go through the collaboration API instead.
+            if (newEditor.plugins.has('RealTimeCollaborativeEditing')) {
+              return;
+            }
+            const incoming = value ?? '';
+            if (incoming !== newEditor.getData()) {
+              newEditor.setData(incoming);
+            }
+          };
 
           editor = newEditor;
         })
