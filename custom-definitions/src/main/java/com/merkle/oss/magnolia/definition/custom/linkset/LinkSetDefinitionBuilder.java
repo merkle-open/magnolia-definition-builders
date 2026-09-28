@@ -19,9 +19,9 @@ import com.merkle.oss.magnolia.definition.custom.switchable.FieldOption;
 import com.merkle.oss.magnolia.definition.custom.validator.ValidateEmptyFieldBinder;
 
 public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitionBuilder<LinkSetDefinitionBuilder> {
-	private static final String ANCHOR_ID_PROPERTY = "anchorId";
-	private static final String LINK_TEXT_PROPERTY = "text";
-	private static final String OPEN_IN_NEW_TAB_PROPERTY = "in_new_window";
+	protected static final String ANCHOR_ID_PROPERTY = "anchorId";
+	protected static final String LINK_TEXT_PROPERTY = "text";
+	protected static final String OPEN_IN_NEW_TAB_PROPERTY = "in_new_window";
 	public static final UnaryOperator<String> ANCHOR_ID_PROPERTY_NAME_PROVIDER = name -> name + "_" + ANCHOR_ID_PROPERTY;
 	public static final UnaryOperator<String> LINK_TEXT_PROPERTY_NAME_PROVIDER = name -> name + "_" + LINK_TEXT_PROPERTY;
 	public static final UnaryOperator<String> OPEN_IN_NEW_TAB_PROPERTY_NAME_PROVIDER = name -> name + "_" + OPEN_IN_NEW_TAB_PROPERTY;
@@ -128,7 +128,7 @@ public class LinkSetDefinitionBuilder extends AbstractSwitchableLinkSetDefinitio
 	protected TextFieldDefinition anchor(final String name) {
 		return new TextFieldDefinitionBuilder()
 				.validator(new RegexpValidatorDefinitionBuilder()
-						.pattern("^[a-zA-Z0-9]*$")
+						.pattern("^[a-zA-Z0-9-]*$")
 						.build("anchorPattern")
 				)
 				.label(LABEL_PREFIX + "anchorId.label")
