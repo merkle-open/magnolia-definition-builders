@@ -38,7 +38,7 @@
 		<!-- (check for new versions:  mvn versions:display-property-updates )-->
 		<magnolia.version>6.4.10</magnolia.version>
     <spring.version>7.0.9</spring.version>
-    <merkle.powernode.version>2.3.6</merkle.powernode.version>
+    <merkle.powernode.version>2.3.7</merkle.powernode.version>
 		<qrCodeGenerator.version>0.5.6</qrCodeGenerator.version>
 
 		<!--Test dependency versions-->
