@@ -37,19 +37,24 @@ public class HasPropertyValidator extends AbstractValidator<Node> {
 
     @Override
     public ValidationResult apply(final Node value, final ValueContext valueContext) {
-        return toResult(value, isValid(powerNodeService.convertToPowerNode(value)));
+        return toResult(value, isValid(value));
     }
 
-    private boolean isValid(final PowerNode node) {
-        if (i18n) {
-            return Optional
-                    .ofNullable(siteManager.getAssignedSite(node))
-                    .stream()
-                    .map(Site::getI18n)
-                    .map(I18nContentSupport::getLocales)
-                    .flatMap(Collection::stream)
-                    .allMatch(locale -> node.hasProperty(propertyName, locale));
+    private boolean isValid(final Node value) {
+        try {
+            final PowerNode node = powerNodeService.convertToPowerNode(value);
+            if (i18n) {
+                return Optional
+                        .ofNullable(siteManager.getAssignedSite(node))
+                        .stream()
+                        .map(Site::getI18n)
+                        .map(I18nContentSupport::getLocales)
+                        .flatMap(Collection::stream)
+                        .allMatch(locale -> node.hasProperty(propertyName, locale));
+            }
+            return node.hasProperty(propertyName);
+        } catch (Exception e) {
+            return false;
         }
-        return node.hasProperty(propertyName);
     }
 }

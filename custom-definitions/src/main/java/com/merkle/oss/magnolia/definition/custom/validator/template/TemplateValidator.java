@@ -27,6 +27,10 @@ public class TemplateValidator extends AbstractValidator<Node> {
 	}
 
 	private boolean isValid(final Node value) {
-		return value == null || templateIds.contains(PropertyUtil.getString(value, NodeTypes.Renderable.TEMPLATE));
+		try {
+			return value == null || templateIds.contains(PropertyUtil.getString(value, NodeTypes.Renderable.TEMPLATE));
+		} catch (final Exception e) {
+			return false;
+		}
 	}
 }

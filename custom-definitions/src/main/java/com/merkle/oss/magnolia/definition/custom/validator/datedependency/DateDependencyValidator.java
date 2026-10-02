@@ -25,8 +25,12 @@ public class DateDependencyValidator extends AbstractValidator<Temporal> {
 	}
 
 	private boolean isValid(final Temporal value) {
-		definition.getState().update(definition.getPropertyName(), convert(value));
-		return definition.getValidator().test(definition.getState());
+		try {
+			definition.getState().update(definition.getPropertyName(), convert(value));
+			return definition.getValidator().test(definition.getState());
+		} catch (final Exception e) {
+			return false;
+        }
 	}
 
 	private LocalDateTime convert(final Temporal value) {

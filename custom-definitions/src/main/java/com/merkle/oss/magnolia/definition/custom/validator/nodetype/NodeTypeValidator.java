@@ -24,6 +24,10 @@ public class NodeTypeValidator extends AbstractValidator<Node> {
 	}
 
 	private boolean isValid(@Nullable final Node value) {
-		return value == null || nodeTypePredicate.evaluateTyped(value);
+		try {
+			return value == null || nodeTypePredicate.evaluateTyped(value);
+		} catch (final Exception e) {
+			return false;
+		}
 	}
 }

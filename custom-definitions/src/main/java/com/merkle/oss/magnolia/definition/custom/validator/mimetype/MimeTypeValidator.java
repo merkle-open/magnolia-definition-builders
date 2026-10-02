@@ -23,6 +23,10 @@ public class MimeTypeValidator extends AbstractValidator<Asset> {
 	}
 
 	private boolean isValid(final Asset value) {
-		return value == null || mimeTypes.contains(value.getMimeType());
+		try {
+			return value == null || mimeTypes.contains(value.getMimeType());
+		} catch (final Exception e) {
+			return false;
+		}
 	}
 }
