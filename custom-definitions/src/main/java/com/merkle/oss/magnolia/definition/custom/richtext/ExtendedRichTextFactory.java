@@ -144,7 +144,7 @@ public class ExtendedRichTextFactory extends DamRichTextFieldFactory {
         return new ExtendedCKEditor5TextFieldConfig(
 				ckEditor5Config.getCkeditor5License(),
 				getDefinition().getToolbarConfig().orElseGet(() -> new ToolbarConfig.Builder().build()),
-				getDefinition().getHeadings(),
+				getDefinition().getExtendedHeadings(),
                 getDefinition().getFontFamily().orElseGet(() -> new FontFamily.Builder().build()),
                 getDefinition().getFontSize().orElseGet(() -> new FontSize.Builder().build()),
                 getDefinition().getFontColor().orElseGet(() -> new FontColor.Builder().build()),

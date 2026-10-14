@@ -32,7 +32,7 @@ public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
     private TableConfig tableConfig;
 	@Nullable
 	private HtmlSupport htmlSupport;
-	private List<HeadingOption> headings = List.of(
+	private List<HeadingOption> extendedHeadings = List.of(
 			HeadingOption.PARAGRAPH,
 			HeadingOption.HEADING_1,
 			HeadingOption.HEADING_2,
@@ -84,11 +84,11 @@ public class ExtendedRichTextDefinition extends DamRichTextFieldDefinition {
         this.tableConfig = tableConfig;
     }
 
-	public List<HeadingOption> getHeadings() {
-		return headings;
+	public List<HeadingOption> getExtendedHeadings() {
+		return extendedHeadings;
 	}
-	public void setHeadings(final List<HeadingOption> headings) {
-		this.headings = headings;
+	public void setExtendedHeadings(final List<HeadingOption> extendedHeadings) {
+		this.extendedHeadings = extendedHeadings;
 	}
 
     public Optional<FontFamily> getFontFamily() {

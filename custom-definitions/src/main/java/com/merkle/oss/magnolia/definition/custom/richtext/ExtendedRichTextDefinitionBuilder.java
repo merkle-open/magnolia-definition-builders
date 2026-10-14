@@ -53,7 +53,7 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 	public ExtendedRichTextDefinitionBuilder(final ExtendedRichTextDefinition definition) {
 		super(definition);
 		definition.getToolbarConfig().ifPresent(this::toolbarConfig);
-		headings(definition.getHeadings());
+		headings(definition.getExtendedHeadings());
 		linkFieldDefinitions(definition.getLinkFieldDefinitions());
 		height(definition.getHeight());
 	}
@@ -135,7 +135,7 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 		Optional.ofNullable(tableConfig).ifPresent(definition::setTableConfig);
 		Optional.ofNullable(mgnlLinkConfig).ifPresent(definition::setMgnlLinkConfig);
 		Optional.ofNullable(htmlSupport).ifPresent(definition::setHtmlSupport);
-		Optional.ofNullable(headings).ifPresent(definition::setHeadings);
+		Optional.ofNullable(headings).ifPresent(definition::setExtendedHeadings);
 		Optional.ofNullable(fontFamily).ifPresent(definition::setFontFamily);
 		Optional.ofNullable(fontSize).ifPresent(definition::setFontSize);
 		Optional.ofNullable(fontColor).ifPresent(definition::setFontColor);
@@ -149,11 +149,8 @@ public class ExtendedRichTextDefinitionBuilder extends AbstractConfiguredFieldDe
 	}
 
 	private boolean contains(final ToolbarConfigItem.NestedToolbarConfigItem toolbarConfigItem) {
-        return toolbarConfigItem.streamValues().anyMatch(this::contains);
+        return Optional.ofNullable(toolbarConfig)
+				.map(toolbar -> toolbar.containsToolbarConfigItem(toolbarConfigItem))
+				.orElse(false);
     }
-	private boolean contains(final String toolbarConfigItem) {
-		return Optional.ofNullable(toolbarConfig)
-                .map(toolbar -> toolbar.containsToolbarConfigItem(toolbarConfigItem))
-                .orElse(false);
-	}
 }

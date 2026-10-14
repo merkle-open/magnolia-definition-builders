@@ -33,7 +33,7 @@ class ExtendedRichTextDefinitionBuilderTest {
 				.htmlSupport(htmlSupport)
 				.build("extendedRichText");
 
-		assertEquals(List.of(HeadingOption.PARAGRAPH, HeadingOption.HEADING_1, HeadingOption.HEADING_2), definition.getHeadings());
+		assertEquals(List.of(HeadingOption.PARAGRAPH, HeadingOption.HEADING_1, HeadingOption.HEADING_2), definition.getExtendedHeadings());
 		assertEquals(Optional.of(toolbarConfig), definition.getToolbarConfig());
 		assertEquals(Optional.of(linkConfig), definition.getLinkConfig());
 		assertEquals(Optional.of(tableConfig), definition.getTableConfig());
