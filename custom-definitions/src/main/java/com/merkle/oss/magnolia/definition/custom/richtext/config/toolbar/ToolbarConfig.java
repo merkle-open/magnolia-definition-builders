@@ -1,9 +1,13 @@
 package com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar;
 
+import static com.merkle.oss.magnolia.definition.custom.richtext.config.toolbar.ToolbarConfigItem.SEPARATOR_ITEM_VALUE;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -32,8 +36,11 @@ public class ToolbarConfig {
         this.icon = icon;
     }
 
-    public boolean containsToolbarConfigItem(final String item) {
-        return items.stream().flatMap(ToolbarConfigItem::streamValues).anyMatch(item::equals);
+    public boolean containsToolbarConfigItem(final ToolbarConfigItem.NestedToolbarConfigItem toolbarConfigItem) {
+        return toolbarConfigItem.streamValues().filter(Predicate.not(SEPARATOR_ITEM_VALUE::equals)).anyMatch(this::containsToolbarConfigItem);
+    }
+    private boolean containsToolbarConfigItem(final String... checkItems) {
+        return items.stream().flatMap(ToolbarConfigItem::streamValues).anyMatch(Set.of(checkItems)::contains);
     }
 
     public static class Builder {

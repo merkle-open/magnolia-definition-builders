@@ -10,6 +10,7 @@ import jakarta.annotation.Nullable;
 
 // https://github.com/ckeditor/ckeditor5/blob/3df56dac515177a96ca56e2bfa7004dbad82973b/packages/ckeditor5-core/src/editor/editorconfig.ts#L919
 public class ToolbarConfigItem {
+    public static final String SEPARATOR_ITEM_VALUE = "|";
     @Nullable
     public final String flatValue;
     @Nullable
@@ -149,7 +150,7 @@ public class ToolbarConfigItem {
                 return new NestedToolbarConfigItem(
                         Stream.concat(
                                 items.stream(),
-                                appendItemSeparator ? Stream.of(new ToolbarConfigItem("|")) : Stream.empty()
+                                appendItemSeparator ? Stream.of(new ToolbarConfigItem(SEPARATOR_ITEM_VALUE)) : Stream.empty()
                         ).collect(Collectors.toList()),
                         label,
                         icon,
