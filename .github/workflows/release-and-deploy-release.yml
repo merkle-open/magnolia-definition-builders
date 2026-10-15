@@ -29,7 +29,7 @@ jobs:
               "password": "${{secrets.MGNL_NEXUS_PASS}}"
             }]
       - name: Maven verify
-        run: mvn verify --batch-mode
+        run: ./mvnw verify --batch-mode
       # Install xmllint
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install libxml2-utils
@@ -74,7 +74,7 @@ jobs:
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
       - name: Release Maven package
-        run: mvn deploy -Pdeploy
+        run: ./mvnw deploy -Pdeploy
         env:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USER }}
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}

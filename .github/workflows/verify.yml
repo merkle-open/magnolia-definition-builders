@@ -28,4 +28,4 @@ jobs:
               "password": "${{secrets.MGNL_NEXUS_PASS}}"
             }]
       - name: Maven verify
-        run: mvn verify --batch-mode
+        run: ./mvnw verify --batch-mode
