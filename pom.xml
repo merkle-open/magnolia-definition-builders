@@ -29,6 +29,7 @@
 	</developers>
 	<modules>
 		<module>magnolia-builders</module>
+		<module>magnolia-ai-builders</module>
 		<module>custom-definitions</module>
 		<module>key-generator</module>
 		<module>custom-definitions-spring</module>
@@ -37,8 +38,9 @@
 	<properties>
 		<!-- (check for new versions:  mvn versions:display-property-updates )-->
 		<magnolia.version>6.4.11</magnolia.version>
-    <spring.version>7.0.9</spring.version>
-    <merkle.powernode.version>2.3.7</merkle.powernode.version>
+		<magnolia.ai.accelarator.version>3.2.1</magnolia.ai.accelarator.version>
+		<spring.version>7.0.9</spring.version>
+		<merkle.powernode.version>2.3.7</merkle.powernode.version>
 		<qrCodeGenerator.version>0.5.7</qrCodeGenerator.version>
 
 		<!--Test dependency versions-->
@@ -52,6 +54,7 @@
 		<mvn.javadoc.version>3.12.0</mvn.javadoc.version>
 		<mvn.gpg.plugin.version>3.2.5</mvn.gpg.plugin.version>
 		<mvn.sonatype.publishing.plugin.version>0.11.0</mvn.sonatype.publishing.plugin.version>
+		<mvn.jar.plugin.version>3.5.1</mvn.jar.plugin.version>
 
 		<javaVersion>17</javaVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -77,6 +80,11 @@
 				<groupId>uk.org.okapibarcode</groupId>
 				<artifactId>okapibarcode</artifactId>
 				<version>${qrCodeGenerator.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>info.magnolia.ai</groupId>
+				<artifactId>magnolia-ai-accelerator-ui</artifactId>
+				<version>${magnolia.ai.accelarator.version}</version>
 			</dependency>
 
 			<dependency>
@@ -142,6 +150,18 @@
 						<id>attach-javadocs</id>
 						<goals>
 							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${mvn.jar.plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
 						</goals>
 					</execution>
 				</executions>
