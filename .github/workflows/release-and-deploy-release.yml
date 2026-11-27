@@ -65,8 +65,6 @@ jobs:
             }]
       - name: build
         run: ./mvnw clean package
-      - name: Download dependencies #somehow required by the magnolia-ai-accelerator dependency for the deploy !?
-        run: ./mvnw dependency:copy-dependencies
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
