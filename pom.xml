@@ -54,7 +54,6 @@
 		<mvn.javadoc.version>3.12.0</mvn.javadoc.version>
 		<mvn.gpg.plugin.version>3.2.5</mvn.gpg.plugin.version>
 		<mvn.sonatype.publishing.plugin.version>0.11.0</mvn.sonatype.publishing.plugin.version>
-		<mvn.jar.plugin.version>3.5.1</mvn.jar.plugin.version>
 
 		<javaVersion>17</javaVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -150,18 +149,6 @@
 						<id>attach-javadocs</id>
 						<goals>
 							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>${mvn.jar.plugin.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>test-jar</goal>
 						</goals>
 					</execution>
 				</executions>

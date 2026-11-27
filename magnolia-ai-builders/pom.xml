@@ -14,25 +14,17 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.merkle.oss.magnolia</groupId>
+            <artifactId>magnolia-definition-builders</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>info.magnolia.ai</groupId>
             <artifactId>magnolia-ai-accelerator-ui</artifactId>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.merkle.oss.magnolia</groupId>
-            <artifactId>magnolia-definition-builders</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
 
         <!-- TESTING DEPENDENCIES -->
-        <dependency>
-            <groupId>com.merkle.oss.magnolia</groupId>
-            <artifactId>magnolia-definition-builders</artifactId>
-            <version>${project.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
