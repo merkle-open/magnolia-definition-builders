@@ -63,6 +63,8 @@ jobs:
               "username": "${{secrets.MGNL_NEXUS_USER}}",
               "password": "${{secrets.MGNL_NEXUS_PASS}}"
             }]
+      - name: build
+        run: ./mvnw clean package
       - name: Download dependencies #somehow required by the magnolia-ai-accelerator dependency for the deploy !?
         run: ./mvnw dependency:copy-dependencies
       - name: Set up JDK 17
