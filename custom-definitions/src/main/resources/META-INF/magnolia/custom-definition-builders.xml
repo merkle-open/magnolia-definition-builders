@@ -66,4 +66,12 @@
             <implementation>com.merkle.oss.magnolia.definition.custom.videoset.model.VideoReferenceModel$Factory</implementation>
         </component>
     </components>
+
+    <components>
+        <id>datasource-site</id>
+        <component>
+            <type>info.magnolia.ui.field.SelectFieldSupport</type>
+            <implementation>com.merkle.oss.magnolia.definition.custom.datasource.site.SiteDatasourceDefinition$SiteSelectFieldSupport</implementation>
+        </component>
+    </components>
 </module>
